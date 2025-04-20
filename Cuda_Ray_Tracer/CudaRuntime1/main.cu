@@ -5,7 +5,6 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
-
 #include "source/include/Color.cuh"
 #include "source/include/ray.cuh"
 
@@ -29,21 +28,35 @@ __device__ unsigned char float_to_unchar(float c)
 	return static_cast<unsigned char>(255.999f * fminf(fmaxf(c, 0.0f), 1.0f));
 }
 
-__device__ bool hit_sphere(const point3& center, float radius, const ray& r)
+__device__ float hit_sphere(const point3& center, float radius, const ray& r)
 {
 	//distance between the ray and the center of circle
-	vec3 oc = r.get_origin() - center;
-	auto a = dot(r.get_direction(), r.get_direction());
-	auto b = 2.0f * dot(oc, r.get_direction());
-	auto c = dot(oc, oc) - radius * radius;
-	auto discriminant = b * b - 4 * a * c;
-	return (discriminant > 0);
+	vec3 oc = center - r.get_origin();
+	auto a = r.get_direction().length_squared(); // == dot(r.get_direction(), r.get_direction());
+	auto h = dot(r.get_direction(), oc); //auto b = 2.0f * dot(oc, r.get_direction());
+	auto c = oc.length_squared() - radius * radius; // oc.lengtj_squared() == dot(oc, oc);
+	auto discriminant = h*h - a*c; //auto discriminant = b * b - 4 * a * c;
+	if (discriminant < 0)
+	{
+		return -1.0f;
+	}
+	else
+	{
+		// return a closest hitpoint 
+		return (h - std::sqrt(discriminant)) / a; //return (-b - sqrt(discriminant)) / (2.0f * a);
+	}
 }
 
 __device__ color ray_color(const ray& r)
 {
-	if (hit_sphere(point3(0, 0, -1), 0.5f, r)) {
-		return color(1.0f, 0.0f, 0.0f);
+	point3 sphereCenter = point3(0, 0, -1);
+	float radius = 0.5f;
+	float t = hit_sphere(sphereCenter, radius, r);
+	// we only care about points that are in front of camera
+	if (t > 0.0f)
+	{
+		vec3 N = unit_vector(r.at(t) - sphereCenter);
+		return 0.5f * color(N.x() + 1, N.y() + 1, N.z() + 1);
 	}
 	vec3 unit_direction = unit_vector(r.get_direction());
 	auto a = 0.5f * (unit_direction.y() + 1.0f);

@@ -10,7 +10,7 @@ private:
 	float m_radius;
 public:
 	sphere(const point3& center, float radius);
-	bool hit(const ray& r, float ray_tmin, float ray_tmax, hit_record& rec) const override;
+	__host__ __device__ bool hit(const ray& r, float ray_tmin, float ray_tmax, hit_record& rec) const override;
 };
 
 #endif

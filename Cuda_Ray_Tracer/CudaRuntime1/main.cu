@@ -8,6 +8,11 @@
 #include "source/include/Color.cuh"
 #include "source/include/ray.cuh"
 
+//#include "source/include/general_includes.cuh"
+//#include "source/include/hittable.cuh"
+//#include "source/include/hittable_list.cuh"
+//#include "source/include/sphere.cuh"
+
 #define checkCudaErrors(val) check_cuda( (val), #val, __FILE__, __LINE__)
 
 inline void check_cuda(cudaError_t result, const char* func, const char* file, const int line)

@@ -78,15 +78,22 @@
       <TargetMachinePlatform>64</TargetMachinePlatform>
       <GenerateRelocatableDeviceCode>true</GenerateRelocatableDeviceCode>
       <CodeGeneration>compute_75,sm_75</CodeGeneration>
+      <Include>$(ProjectDir)source\include\</Include>
     </CudaCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
     <CudaCompile Include="main.cu" />
+    <CudaCompile Include="source\hittable_list.cu" />
+    <CudaCompile Include="source\sphere.cu" />
     <CudaCompile Include="source\vec3.cu" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\include\Color.cuh" />
+    <ClInclude Include="source\include\general_includes.cuh" />
+    <ClInclude Include="source\include\hittable.cuh" />
+    <ClInclude Include="source\include\hittable_list.cuh" />
     <ClInclude Include="source\include\ray.cuh" />
+    <ClInclude Include="source\include\sphere.cuh" />
     <ClInclude Include="source\include\vec3.cuh" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

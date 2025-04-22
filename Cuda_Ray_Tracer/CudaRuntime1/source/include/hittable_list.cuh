@@ -17,7 +17,7 @@ public:
 
 	//__host__ __device__ void clear() { m_objects_vec.clear(); }
 	//__host__ __device__ void add(std::shared_ptr<hittable> object) { m_objects_vec.push_back(object); }
-	__host__ __device__ bool hit(const ray& r, float ray_tmin, float ray_tmax, hit_record& rec) const override;
+	__host__ __device__ bool hit(const ray& r, interval ray_t, hit_record& rec) const override;
 };
 
 #endif

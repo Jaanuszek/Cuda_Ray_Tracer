@@ -13,7 +13,7 @@ private:
 public:
 	__host__ __device__ sphere() {}
 	__host__ __device__ sphere(const point3& center, float radius);
-	__host__ __device__ bool hit(const ray& r, float ray_tmin, float ray_tmax, hit_record& rec) const override;
+	__host__ __device__ bool hit(const ray& r, interval ray_t, hit_record& rec) const override;
 };
 
 #endif

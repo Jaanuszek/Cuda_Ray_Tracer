@@ -22,9 +22,8 @@ public:
 class hittable
 {
 public:
-	//__host__ __device__ virtual ~hittable() = default;
 	__device__ ~hittable() {}
-	__host__ __device__ virtual bool hit(const ray& r, float ray_tmin, float ray_tmax, hit_record& rec) const = 0;
+	__host__ __device__ virtual bool hit(const ray& r, interval ray_t, hit_record& rec) const = 0;
 };
 
 #endif // !HITTABLE_CUH

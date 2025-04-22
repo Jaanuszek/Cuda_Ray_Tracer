@@ -67,19 +67,6 @@ __global__ void create_world(hittable** d_list, hittable** d_world)
 
 __global__ void clear_world(hittable** d_list, hittable** d_world)
 {
-	//if (threadIdx.x == 0 && blockIdx.x == 0)
-	//{
-	//	hittable_list* world = *d_world;
-	//	hittable** list = world->m_objects_ptr;
-	//	for (int i = 0; i < world->list_size; i++)
-	//	{
-	//		delete list[i];
-	//		list[i] = nullptr;
-	//	}
-	//	//delete[] list;
-	//	world->m_objects_ptr = nullptr;
-	//	delete * d_world;
-	//}
 	if (threadIdx.x == 0 && blockIdx.x == 0)
 	{
 		delete* (d_list);

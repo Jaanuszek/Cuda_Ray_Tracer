@@ -1,6 +1,6 @@
 #include "include/hittable_list.cuh"
 
-__host__ __device__ bool hittable_list::hit(const ray& r, interval ray_t, hit_record& rec) const {
+__device__ bool hittable_list::hit(const ray& r, interval ray_t, hit_record& rec) const {
 	hit_record temp_rec;
 	bool hit_anything = false;
 	auto closest_so_far = ray_t.max;

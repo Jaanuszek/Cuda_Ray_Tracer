@@ -11,9 +11,9 @@ private:
 	point3 m_center;
 	float m_radius;
 public:
-	__host__ __device__ sphere() {}
-	__host__ __device__ sphere(const point3& center, float radius);
-	__host__ __device__ bool hit(const ray& r, interval ray_t, hit_record& rec) const override;
+	__device__ sphere() {}
+	__device__ sphere(const point3& center, float radius);
+	__device__ bool hit(const ray& r, interval ray_t, hit_record& rec) const override;
 };
 
 #endif

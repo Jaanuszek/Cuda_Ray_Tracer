@@ -1,10 +1,10 @@
 #include "include/sphere.cuh"
 
-__host__ __device__ sphere::sphere(const point3& center, float radius)
+__device__ sphere::sphere(const point3& center, float radius)
 	: m_center(center), m_radius(radius) {
 }
 
-__host__ __device__ bool sphere::hit(const ray& r, interval ray_t, hit_record& rec) const {
+__device__ bool sphere::hit(const ray& r, interval ray_t, hit_record& rec) const {
 	vec3 oc = m_center - r.get_origin();
 	auto a = r.get_direction().length_squared(); // == dot(r.get_direction(), r.get_direction());
 	auto h = dot(r.get_direction(), oc); //auto b = 2.0f * dot(oc, r.get_direction());

@@ -2,16 +2,11 @@
 #include "cuda_runtime.h"
 #include "device_launch_parameters.h"
 #include <stdio.h>
-#include <iostream>
-#include <fstream>
+#include "source/include/general_includes.cuh"
 #include <vector>
-#include "source/include/Color.cuh"
-#include "source/include/ray.cuh"
-
-//#include "source/include/general_includes.cuh"
-//#include "source/include/hittable.cuh"
-//#include "source/include/hittable_list.cuh"
-//#include "source/include/sphere.cuh"
+#include "source/include/hittable.cuh"
+#include "source/include/hittable_list.cuh"
+#include "source/include/sphere.cuh"
 
 #define checkCudaErrors(val) check_cuda( (val), #val, __FILE__, __LINE__)
 
@@ -33,35 +28,12 @@ __device__ unsigned char float_to_unchar(float c)
 	return static_cast<unsigned char>(255.999f * fminf(fmaxf(c, 0.0f), 1.0f));
 }
 
-__device__ float hit_sphere(const point3& center, float radius, const ray& r)
+__device__ color ray_color(const ray& r, hittable** world)
 {
-	//distance between the ray and the center of circle
-	vec3 oc = center - r.get_origin();
-	auto a = r.get_direction().length_squared(); // == dot(r.get_direction(), r.get_direction());
-	auto h = dot(r.get_direction(), oc); //auto b = 2.0f * dot(oc, r.get_direction());
-	auto c = oc.length_squared() - radius * radius; // oc.lengtj_squared() == dot(oc, oc);
-	auto discriminant = h*h - a*c; //auto discriminant = b * b - 4 * a * c;
-	if (discriminant < 0)
+	hit_record rec;
+	if ((*world)->hit(r, 0.0f, FLT_MAX, rec))
 	{
-		return -1.0f;
-	}
-	else
-	{
-		// return a closest hitpoint 
-		return (h - std::sqrt(discriminant)) / a; //return (-b - sqrt(discriminant)) / (2.0f * a);
-	}
-}
-
-__device__ color ray_color(const ray& r)
-{
-	point3 sphereCenter = point3(0, 0, -1);
-	float radius = 0.5f;
-	float t = hit_sphere(sphereCenter, radius, r);
-	// we only care about points that are in front of camera
-	if (t > 0.0f)
-	{
-		vec3 N = unit_vector(r.at(t) - sphereCenter);
-		return 0.5f * color(N.x() + 1, N.y() + 1, N.z() + 1);
+		return 0.5f * (rec.normal + color(1, 1, 1));
 	}
 	vec3 unit_direction = unit_vector(r.get_direction());
 	auto a = 0.5f * (unit_direction.y() + 1.0f);
@@ -69,7 +41,7 @@ __device__ color ray_color(const ray& r)
 }
 
 __global__ void render_framebuffer(vec3* d_fb, int image_width, int image_height, vec3 pixel00_loc,
-	vec3 deltaU, vec3 deltaV, vec3 origin)
+	vec3 deltaU, vec3 deltaV, vec3 origin, hittable** d_world)
 {
 	int i = threadIdx.x + blockDim.x * blockIdx.x; // width
 	int j = threadIdx.y + blockDim.y * blockIdx.y; //height
@@ -80,7 +52,40 @@ __global__ void render_framebuffer(vec3* d_fb, int image_width, int image_height
 	auto viewPortPixelIndex = pixel00_loc + (i * deltaU) + (j * deltaV);
 	auto ray_direction = viewPortPixelIndex - origin;
 	ray r(origin, ray_direction);
-	d_fb[pixel_index] = ray_color(r);
+	d_fb[pixel_index] = ray_color(r, d_world);
+}
+
+__global__ void create_world(hittable** d_list, hittable** d_world)
+{
+	if (threadIdx.x == 0 && blockIdx.x == 0)
+	{
+		*(d_list) = new sphere(point3(0, 0, -1), 0.5f);
+		*(d_list + 1) = new sphere(point3(0, -100.5f, -1), 100);
+		*d_world = new hittable_list(d_list, 2);
+	}
+}
+
+__global__ void clear_world(hittable** d_list, hittable** d_world)
+{
+	//if (threadIdx.x == 0 && blockIdx.x == 0)
+	//{
+	//	hittable_list* world = *d_world;
+	//	hittable** list = world->m_objects_ptr;
+	//	for (int i = 0; i < world->list_size; i++)
+	//	{
+	//		delete list[i];
+	//		list[i] = nullptr;
+	//	}
+	//	//delete[] list;
+	//	world->m_objects_ptr = nullptr;
+	//	delete * d_world;
+	//}
+	if (threadIdx.x == 0 && blockIdx.x == 0)
+	{
+		delete* (d_list);
+		delete* (d_list + 1);
+		delete* d_world;
+	}
 }
 
 int main()
@@ -113,8 +118,18 @@ int main()
 	auto viewport_upper_left = cameraCenter - vec3(0,0, focal_length) - (viewport_u / 2) - (viewport_v / 2);
 	auto pixel00_loc = viewport_upper_left + 0.5 * (pixel_delta_u + pixel_delta_v);
 
+	// on GPU
+	hittable** d_list;
+	size_t listSizeInBytes = sizeof(hittable*) * 2;
+	checkCudaErrors(cudaMalloc(&d_list, listSizeInBytes));
+	hittable** d_world;
+	checkCudaErrors(cudaMalloc(&d_world, sizeof(hittable*)));
+
+	create_world <<<1, 1 >>> (d_list, d_world);
+	checkCudaErrors(cudaGetLastError());
+	checkCudaErrors(cudaDeviceSynchronize());
+
 	std::cout << "P3\n" << image_width << " " << image_height << "\n255\n";
-	//vec3* fb = new vec3[num_pixel];
 	std::vector<vec3> fb(num_pixel);
 	vec3* d_fb;
 	checkCudaErrors(cudaMalloc(&d_fb, pixelsSizeInBytes));
@@ -123,8 +138,9 @@ int main()
 		(image_height + threadsPerBlock.y - 1) / threadsPerBlock.y);
 	cudaEventRecord(start);
 	render_framebuffer << <numBlocks, threadsPerBlock >> > (d_fb, image_width, image_height, pixel00_loc,
-		pixel_delta_u, pixel_delta_v, cameraCenter);
+		pixel_delta_u, pixel_delta_v, cameraCenter, d_world);
 	checkCudaErrors(cudaGetLastError());
+	checkCudaErrors(cudaDeviceSynchronize());
 	checkCudaErrors(cudaMemcpy(fb.data(), d_fb, pixelsSizeInBytes, cudaMemcpyDeviceToHost));
 	cudaEventRecord(stop);
 	cudaEventSynchronize(stop);
@@ -137,5 +153,12 @@ int main()
 			write_color(std::cout, pixel_color);
 		}
 	}
+
+	clear_world << <1, 1 >> > (d_list, d_world);
+	checkCudaErrors(cudaGetLastError());
+	checkCudaErrors(cudaDeviceSynchronize());
+
+	checkCudaErrors(cudaFree(d_list));
+	checkCudaErrors(cudaFree(d_world));
 	checkCudaErrors(cudaFree(d_fb));
 }

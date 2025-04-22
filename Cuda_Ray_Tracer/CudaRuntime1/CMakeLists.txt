@@ -7,6 +7,15 @@ set(CMAKE_CUDA_STANDARD 17)
 set(CMAKE_CUDA_SEPARABLE_COMPILATION ON)
 set(CMAKE_CUDA_RUNTIME_LIBRARY Shared)
 
-add_executable(${CMAKE_PROJECT_NAME} main.cu)
+file(GLOB SRC_FILES
+    source/*.cu
+)
+
+include_directories(source/include)
+
+add_executable(${CMAKE_PROJECT_NAME} 
+    main.cu
+    ${SRC_FILES}
+)
 
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES CUDA_ARCHITECTURES "native")

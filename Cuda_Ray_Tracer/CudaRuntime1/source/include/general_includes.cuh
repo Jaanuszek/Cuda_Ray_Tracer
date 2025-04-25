@@ -8,6 +8,21 @@
 
 #include "cuda_runtime.h"
 
+#define checkCudaErrors(val) check_cuda( (val), #val, __FILE__, __LINE__)
+
+inline void check_cuda(cudaError_t result, const char* func, const char* file, const int line)
+{
+	// spróbowac kiedys tutaj dodaæ rzucanie wyj¹tku a nie exit, ale to tak dla sportu
+	if (result != cudaSuccess) {
+		std::cerr << "CUDA error (" << static_cast<unsigned int>(result) << "): "
+			<< cudaGetErrorString(result)
+			<< " at " << file << ":" << line
+			<< " in call to '" << func << "'\n";
+		cudaDeviceReset();
+		exit(EXIT_FAILURE);
+	}
+}
+
 namespace constants {
 	constexpr float infinity = std::numeric_limits<float>::infinity();
 	constexpr float pi = 3.1415926535897932385f;

@@ -41,7 +41,7 @@ __device__ color ray_color(const ray& r, hittable** world)
 }
 
 __global__ void render_framebuffer(vec3* d_fb, int image_width, int image_height, vec3 pixel00_loc,
-	vec3 deltaU, vec3 deltaV, vec3 origin, hittable** d_world)
+	vec3 deltaU, vec3 deltaV, vec3 B, hittable** d_world)
 {
 	int i = threadIdx.x + blockDim.x * blockIdx.x; // width
 	int j = threadIdx.y + blockDim.y * blockIdx.y; //height
@@ -50,8 +50,8 @@ __global__ void render_framebuffer(vec3* d_fb, int image_width, int image_height
 
 	int pixel_index = j * image_width + i;
 	auto viewPortPixelIndex = pixel00_loc + (i * deltaU) + (j * deltaV);
-	auto ray_direction = viewPortPixelIndex - origin;
-	ray r(origin, ray_direction);
+	auto ray_direction = viewPortPixelIndex - B;
+	ray r(B, ray_direction);
 	d_fb[pixel_index] = ray_color(r, d_world);
 }
 

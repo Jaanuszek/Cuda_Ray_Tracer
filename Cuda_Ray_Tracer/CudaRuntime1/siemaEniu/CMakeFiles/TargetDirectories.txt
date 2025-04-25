@@ -1,3 +1,0 @@
-C:/Users/Kuba/Desktop/Cuda_Ray_Tracer/Cuda_Ray_Tracer/CudaRuntime1/siemaEniu/CMakeFiles/cuda_ray_tracer.dir
-C:/Users/Kuba/Desktop/Cuda_Ray_Tracer/Cuda_Ray_Tracer/CudaRuntime1/siemaEniu/CMakeFiles/ALL_BUILD.dir
-C:/Users/Kuba/Desktop/Cuda_Ray_Tracer/Cuda_Ray_Tracer/CudaRuntime1/siemaEniu/CMakeFiles/ZERO_CHECK.dir

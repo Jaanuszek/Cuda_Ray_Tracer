@@ -1,10 +1,10 @@
 #include "include/sphere.cuh"
 
-sphere::sphere(const point3& center, float radius)
-	: m_center(center), m_radius(std::fmax(0,radius)) {
+__device__ sphere::sphere(const point3& center, float radius)
+	: m_center(center), m_radius(radius) {
 }
 
-bool sphere::hit(const ray& r, float ray_tmin, float ray_tmax, hit_record& rec) const {
+__device__ bool sphere::hit(const ray& r, interval ray_t, hit_record& rec) const {
 	vec3 oc = m_center - r.get_origin();
 	auto a = r.get_direction().length_squared(); // == dot(r.get_direction(), r.get_direction());
 	auto h = dot(r.get_direction(), oc); //auto b = 2.0f * dot(oc, r.get_direction());
@@ -20,9 +20,9 @@ bool sphere::hit(const ray& r, float ray_tmin, float ray_tmax, hit_record& rec) 
 
 	// if root is not in acceptable renage, return false
 	auto root = (h - sqrtDelta) / a;
-	if (root <= ray_tmin || root >= ray_tmax) {
+	if (!ray_t.surrounds(root)) {
 		root = (h + sqrtDelta) / a;
-		if (root <= ray_tmin || root >= ray_tmax)
+		if (!ray_t.surrounds(root))
 			return false;
 	}
 

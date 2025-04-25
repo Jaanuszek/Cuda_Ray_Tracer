@@ -1,11 +1,12 @@
 #ifndef COLOR_CUH
 #define COLOR_CUH
 
-#include "vec3.cuh"
+
+#include "general_includes.cuh"
 
 using color = vec3;
 
-__host__ __device__ void write_color(std::ostream& out, const color& pixel_color)
+__host__ inline void write_color(std::ostream& out, const color& pixel_color)
 {
 	float r = pixel_color.x();
 	float g = pixel_color.y();

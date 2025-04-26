@@ -1,6 +1,16 @@
 #include "include/camera.cuh"
 
 namespace renderKernelFunctions {
+    __global__ void init_rand_state(curandState* rand_state, int width, int height)
+    {
+        int i = threadIdx.x + blockDim.x * blockIdx.x;
+        int j = threadIdx.y + blockDim.y * blockIdx.y;
+
+        if (i >= width || j >= height) return;
+
+        int pixel_index = j * width + i;
+        curand_init(2025, pixel_index, 0, &rand_state[pixel_index]);
+    }
     __device__ color ray_color(const ray& r, hittable** world)
     {
         hit_record rec;
@@ -13,7 +23,7 @@ namespace renderKernelFunctions {
         return (1.0f - a) * color(1.0f, 1.0f, 1.0f) + a * color(0.5f, 0.7f, 1.0f);
     }
 
-    __global__ void render_framebuffer(vec3* d_fb, hittable** d_world, camera_params camParams)
+    __global__ void render_framebuffer(vec3* d_fb, hittable** d_world, camera_params camParams, curandState *rand_state)
     {
         int i = threadIdx.x + blockDim.x * blockIdx.x; // width
         int j = threadIdx.y + blockDim.y * blockIdx.y; //height
@@ -21,10 +31,27 @@ namespace renderKernelFunctions {
         if (i >= camParams.image_width || j >= camParams.image_height) return;
 
         int pixel_index = j * camParams.image_width + i;
-        auto viewPortPixelIndex = camParams.pixel00_loc + (i * camParams.pixel_delta_u) + (j * camParams.pixel_delta_v);
-        auto ray_direction = viewPortPixelIndex - camParams.cameraCenter;
-        ray r(camParams.cameraCenter, ray_direction);
-        d_fb[pixel_index] = renderKernelFunctions::ray_color(r, d_world);
+
+        curandState local_rand_state = rand_state[pixel_index];
+
+        vec3 color(0, 0, 0);
+
+        int spp = camParams.samples_per_pixel;
+
+        for (int sample = 0; sample < spp; sample++)
+        {
+            float x = curand_uniform(&local_rand_state) -0.5f;
+            float y = curand_uniform(&local_rand_state) -0.5f;
+            // dla czytelnosci podmienic to z get_ray w przyszlosci
+            vec3 viewPortPixelIndex = camParams.pixel00_loc + ((i + x) * camParams.pixel_delta_u) + ((j + y) * camParams.pixel_delta_v);
+            vec3 ray_direction = viewPortPixelIndex - camParams.cameraCenter;
+            ray r(camParams.cameraCenter, ray_direction);
+            color += renderKernelFunctions::ray_color(r, d_world);
+        }
+
+        d_fb[pixel_index] = color / float(spp);
+
+        rand_state[pixel_index] = local_rand_state;
     }
 
     __global__ void create_world(hittable** d_list, hittable** d_world)
@@ -53,6 +80,8 @@ void camera::Init()
     image_height = static_cast<int>(image_width / aspect_ratio);
     image_height = (image_height < 1) ? 1 : image_height;
 
+    piexel_samples_scale = 1.0f / samples_per_pixel;
+
     cameraCenter = point3(0, 0, 0);
 
     float focal_length = 1.0f;
@@ -67,17 +96,33 @@ void camera::Init()
 
     vec3 viewport_upper_left = cameraCenter - vec3(0, 0, focal_length) - (viewport_u / 2) - (viewport_v / 2);
     pixel00_loc = viewport_upper_left + 0.5f * (pixel_delta_u + pixel_delta_v);
+
+    blockSize = dim3(16, 16);
+    gridSize = dim3((image_width + blockSize.x - 1) / blockSize.x, (image_height + blockSize.y - 1) / blockSize.y);
+}
+__device__ ray camera::get_ray(int index_i, int index_j, float offset_x, float offset_y) const
+{
+    // jak wyrzuce camera** d_camera z pola klasy camera i przeniose to gdzie indziej
+    // i uda mi sie ogarnac stworzenie tej klasy camera na gpu, to wtedy uzyæ t¹ funkcje (this)
+    // w kernelu render_framebuffer
+    vec3 viewPortPixelIndex = pixel00_loc + ((index_i + offset_x) * pixel_delta_u) + ((index_j + offset_y) * pixel_delta_v);
+    vec3 ray_direction = viewPortPixelIndex - cameraCenter;
+    return ray(cameraCenter, ray_direction);
 }
 
 camera::camera()
 {
     Init();
+    checkCudaErrors(cudaMalloc((void**)&d_rand_state, image_width * image_height * sizeof(curandState)));
     checkCudaErrors(cudaMalloc((void**)&d_list, 2 * sizeof(hittable*)));
     checkCudaErrors(cudaMalloc((void**)&d_world, sizeof(hittable*)));
+    //checkCudaErrors(cudaMemcpy(d_camera, this, sizeof(camera*), cudaMemcpyHostToDevice));
     renderKernelFunctions::create_world << <1, 1 >> > (d_list, d_world);
     checkCudaErrors(cudaGetLastError());
     checkCudaErrors(cudaDeviceSynchronize());
-
+    renderKernelFunctions::init_rand_state << <gridSize, blockSize >> > (d_rand_state, image_width, image_height);
+    checkCudaErrors(cudaGetLastError());
+    checkCudaErrors(cudaDeviceSynchronize());
     checkCudaErrors(cudaMalloc((void**)&d_fb, image_width * image_height * sizeof(vec3)));
 }
 
@@ -86,6 +131,7 @@ camera::~camera()
     renderKernelFunctions::clear_world << <1, 1 >> > (d_list, d_world);
     checkCudaErrors(cudaGetLastError());
     checkCudaErrors(cudaDeviceSynchronize());
+    checkCudaErrors(cudaFree(d_rand_state));
     checkCudaErrors(cudaFree(d_list));
     checkCudaErrors(cudaFree(d_world));
     checkCudaErrors(cudaFree(d_fb));
@@ -100,12 +146,11 @@ void camera::render() // moze to world powinno sie tworzyc poza klasa ( w mainie
     camParams.pixel00_loc = pixel00_loc;
     camParams.pixel_delta_u = pixel_delta_u;
     camParams.pixel_delta_v = pixel_delta_v;
+    camParams.samples_per_pixel = samples_per_pixel;
 
     std::vector<vec3> fb(image_width * image_height);
 
-    dim3 blockSize(16, 16);
-    dim3 gridSize((image_width + blockSize.x - 1) / blockSize.x, (image_height + blockSize.y - 1) / blockSize.y);
-    renderKernelFunctions::render_framebuffer << <gridSize, blockSize >> > (d_fb, d_world, camParams);
+    renderKernelFunctions::render_framebuffer << <gridSize, blockSize >> > (d_fb, d_world, camParams, d_rand_state);
     checkCudaErrors(cudaGetLastError());
     checkCudaErrors(cudaDeviceSynchronize());
     checkCudaErrors(cudaMemcpy(fb.data(), d_fb, image_width * image_height * sizeof(vec3), cudaMemcpyDeviceToHost));
@@ -113,7 +158,7 @@ void camera::render() // moze to world powinno sie tworzyc poza klasa ( w mainie
     for (int j = 0; j < image_height; j++) {
         for (int i = 0; i < image_width; i++) {
             size_t pixel_index = j * image_width + i;
-            auto pixel_color = fb[pixel_index];
+            vec3 pixel_color = fb[pixel_index];
             write_color(std::cout, pixel_color);
         }
     }

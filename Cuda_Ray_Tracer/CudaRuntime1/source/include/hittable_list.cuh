@@ -4,6 +4,7 @@
 #include "hittable.cuh"
 
 #include "general_includes.cuh"
+#include "ray.cuh"
 #include <vector>
 
 class hittable_list : public hittable

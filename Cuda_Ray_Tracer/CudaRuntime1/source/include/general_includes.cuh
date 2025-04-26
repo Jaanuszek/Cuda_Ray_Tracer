@@ -5,6 +5,7 @@
 #include <iostream>
 #include <limits>
 #include <memory>
+#include <random>
 
 #include "cuda_runtime.h"
 
@@ -31,9 +32,20 @@ __host__ __device__ inline float degrees_to_radians(float degrees) {
 	return degrees * constants::pi / 180.0f;
 }
 
-#include "vec3.cuh"
-#include "ray.cuh"
-#include "color.cuh"
-#include "interval.cuh"
+__host__ __device__ inline float random_float()
+{
+    std::uniform_real_distribution<float> distribution(0.0f, 1.0f);
+    std::mt19937 generator;
+    return distribution(generator);
+}
+
+__host__ __device__ inline float random_float(float min, float max)
+{
+    return min + (max - min) * random_float();
+}
+
+//#include "vec3.cuh"
+//#include "ray.cuh"
+//#include "interval.cuh"
 
 #endif

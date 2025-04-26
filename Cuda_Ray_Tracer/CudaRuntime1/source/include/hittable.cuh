@@ -3,6 +3,9 @@
 
 
 #include "general_includes.cuh"
+#include "vec3.cuh"
+#include "ray.cuh"
+#include "interval.cuh"
 
 class hit_record
 {

@@ -10,9 +10,12 @@
 #include "source/include/hittable_list.cuh"
 #include "source/include/sphere.cuh"
 #include "source/include/camera.cuh"
+#include "source/include/GPU_variables.cuh"
 
 int main()
 {
+	GPU_variables::init();
+    //GPU_variables& gpu_vars = GPU_variables::getInstance();
 	camera cam;
 	cam.render();
 }

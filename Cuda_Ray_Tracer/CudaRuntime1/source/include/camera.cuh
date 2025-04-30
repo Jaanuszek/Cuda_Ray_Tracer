@@ -8,7 +8,6 @@
 #include "ray.cuh"
 #include "hittable.cuh"
 #include "sphere.cuh"
-#include "hittable.cuh"
 #include "hittable_list.cuh"
 
 struct camera_params {
@@ -43,12 +42,12 @@ private:
     dim3 blockSize;
     dim3 gridSize;
 
-    // cuda variables
-    curandState *d_rand_state;
-    hittable **d_list;
-    hittable **d_world;
-    vec3 *d_fb;
-    camera** d_camera; //wywalic to
+    //// cuda variables
+    //curandState *d_rand_state;
+    //hittable **d_list;
+    //hittable **d_world;
+    //vec3 *d_fb;
+    //camera** d_camera; //wywalic to
 
     void Init();
     __device__ ray get_ray(int index_i, int index_j, float offset_x, float offset_y) const;

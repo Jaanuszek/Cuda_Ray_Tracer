@@ -11,6 +11,14 @@
 
 #define checkCudaErrors(val) check_cuda( (val), #val, __FILE__, __LINE__)
 
+enum class ptr_type
+{
+    Unknown = 0,
+    Host = 1,
+    Device = 2,
+    Managed = 3
+};
+
 inline void check_cuda(cudaError_t result, const char* func, const char* file, const int line)
 {
 	// spróbowac kiedys tutaj dodaæ rzucanie wyj¹tku a nie exit, ale to tak dla sportu
@@ -22,6 +30,28 @@ inline void check_cuda(cudaError_t result, const char* func, const char* file, c
 		cudaDeviceReset();
 		exit(EXIT_FAILURE);
 	}
+}
+
+inline ptr_type check_ptr_type(void* ptr)
+{
+    cudaPointerAttributes attributes;
+    cudaError_t result = cudaPointerGetAttributes(&attributes, ptr);
+    if (result != cudaSuccess) {
+        std::cerr << "Error getting pointer attributes: " << cudaGetErrorString(result) << std::endl;
+        return ptr_type::Unknown;
+    }
+    std::cout << attributes.type << std::endl;
+    switch (attributes.type) {
+    case cudaMemoryTypeHost:
+        return ptr_type::Host;
+    case cudaMemoryTypeDevice:
+        return ptr_type::Device;
+    case cudaMemoryTypeManaged:
+        return ptr_type::Managed;
+    default:
+        std::cerr << "Unknown pointer type" << std::endl;
+        return ptr_type::Unknown;
+    }
 }
 
 namespace constants {

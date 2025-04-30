@@ -1,3 +1,4 @@
+#include "include/GPU_variables.cuh"
 #include "include/camera.cuh"
 
 namespace renderKernelFunctions {
@@ -113,28 +114,20 @@ __device__ ray camera::get_ray(int index_i, int index_j, float offset_x, float o
 camera::camera()
 {
     Init();
-    checkCudaErrors(cudaMalloc((void**)&d_rand_state, image_width * image_height * sizeof(curandState)));
-    checkCudaErrors(cudaMalloc((void**)&d_list, 2 * sizeof(hittable*)));
-    checkCudaErrors(cudaMalloc((void**)&d_world, sizeof(hittable*)));
-    //checkCudaErrors(cudaMemcpy(d_camera, this, sizeof(camera*), cudaMemcpyHostToDevice));
-    renderKernelFunctions::create_world << <1, 1 >> > (d_list, d_world);
+    GPU_variables::init(image_width, image_height, 2);
+    GPU_variables& gpu_vars = GPU_variables::getInstance();
+    render_params* h_render_params = gpu_vars.getRenderParams();
+
+    renderKernelFunctions::create_world << <1, 1 >> > (h_render_params->d_list, h_render_params->d_world);
     checkCudaErrors(cudaGetLastError());
     checkCudaErrors(cudaDeviceSynchronize());
-    renderKernelFunctions::init_rand_state << <gridSize, blockSize >> > (d_rand_state, image_width, image_height);
+    renderKernelFunctions::init_rand_state << <gridSize, blockSize >> > (h_render_params->d_rand_state, image_width, image_height);
     checkCudaErrors(cudaGetLastError());
     checkCudaErrors(cudaDeviceSynchronize());
-    checkCudaErrors(cudaMalloc((void**)&d_fb, image_width * image_height * sizeof(vec3)));
 }
 
 camera::~camera()
 {
-    renderKernelFunctions::clear_world << <1, 1 >> > (d_list, d_world);
-    checkCudaErrors(cudaGetLastError());
-    checkCudaErrors(cudaDeviceSynchronize());
-    checkCudaErrors(cudaFree(d_rand_state));
-    checkCudaErrors(cudaFree(d_list));
-    checkCudaErrors(cudaFree(d_world));
-    checkCudaErrors(cudaFree(d_fb));
 }
 
 void camera::render() // moze to world powinno sie tworzyc poza klasa ( w mainie)
@@ -149,6 +142,13 @@ void camera::render() // moze to world powinno sie tworzyc poza klasa ( w mainie
     camParams.samples_per_pixel = samples_per_pixel;
 
     std::vector<vec3> fb(image_width * image_height);
+
+    GPU_variables& gpu_vars = GPU_variables::getInstance();
+    render_params* h_render_params = gpu_vars.getRenderParams();
+    // uzyc check_ptr_type w jakis madry sposob o tu
+    vec3* d_fb = h_render_params->d_fb;
+    hittable** d_world = h_render_params->d_world;
+    curandState* d_rand_state = h_render_params->d_rand_state;
 
     renderKernelFunctions::render_framebuffer << <gridSize, blockSize >> > (d_fb, d_world, camParams, d_rand_state);
     checkCudaErrors(cudaGetLastError());

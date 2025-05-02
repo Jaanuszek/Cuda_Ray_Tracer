@@ -2,16 +2,15 @@
 #define VEC3_CUH
 
 #include <cstddef>
-
 #include "general_includes.cuh"
 #include "cuda_runtime.h"
+#include <curand_kernel.h>
 #include "device_launch_parameters.h"
 
 class vec3 {
 private:
 	float element[3];
 public:
-	//float m_x, m_y, m_z;
 	__host__ __device__ vec3() : element{ 0,0,0 } {}
 	__host__ __device__ vec3(float x, float y, float z) : element{ x,y,z } {}
 
@@ -93,6 +92,33 @@ __host__ __device__ inline vec3 cross(const vec3& u, const vec3& v) {
 
 __host__ __device__ inline vec3 unit_vector(vec3 v) {
 	return v / v.length();
+}
+
+__device__ inline vec3 random_unit_vec(curandState* r_state)
+{
+	while (true)
+	{
+		vec3 p(
+			2 * curand_uniform(r_state) - 1.0f,
+			2 * curand_uniform(r_state) - 1.0f,
+			2 * curand_uniform(r_state) - 1.0f
+		);
+		if (p.length_squared() <= 1)
+			return p / sqrt(p.length_squared());
+	}
+}
+
+__device__ inline vec3 random_on_hemisphere(const vec3& normal, curandState* r_state)
+{
+	vec3 rand_vec = random_unit_vec(r_state);
+	if (dot(rand_vec, normal) > 0.0f)
+	{
+		return rand_vec;
+	}
+	else
+	{
+		return -rand_vec;
+	}
 }
 
 #endif

@@ -12,16 +12,27 @@ namespace renderKernelFunctions {
         int pixel_index = j * width + i;
         curand_init(2025, pixel_index, 0, &rand_state[pixel_index]);
     }
-    __device__ color ray_color(const ray& r, hittable** world)
+    __device__ color ray_color(const ray& r, hittable** world, curandState *r_state)
     {
-        hit_record rec;
-        if ((*world)->hit(r, interval(0, constants::infinity), rec))
-        {
-            return 0.5f * (rec.normal + color(1, 1, 1));
+        ray cur_ray = r;
+        float cur_attenuation = 1.0f;
+        for (int i = 0; i < 50; i++) {
+            hit_record rec;
+            if ((*world)->hit(cur_ray, interval(0.0001f, constants::infinity), rec))
+            {
+                //vec3 direction = random_on_hemisphere(rec.normal, r_state);
+				vec3 direction = rec.normal + random_unit_vec(r_state);
+				cur_attenuation *= 0.5f;
+				cur_ray = ray(rec.p, direction);
+            }
+            else {
+                vec3 unit_direction = unit_vector(r.get_direction());
+                float a = 0.5f * (unit_direction.y() + 1.0f);
+				vec3 col = (1.0f - a) * color(1.0f, 1.0f, 1.0f) + a * color(0.5f, 0.7f, 1.0f);
+                return cur_attenuation * col;
+            }
         }
-        vec3 unit_direction = unit_vector(r.get_direction());
-        auto a = 0.5f * (unit_direction.y() + 1.0f);
-        return (1.0f - a) * color(1.0f, 1.0f, 1.0f) + a * color(0.5f, 0.7f, 1.0f);
+        return vec3(0.0f, 0.0f, 0.0f);
     }
 
     __global__ void render_framebuffer(vec3* d_fb, hittable** d_world, camera_params camParams, curandState *rand_state)
@@ -47,7 +58,7 @@ namespace renderKernelFunctions {
             vec3 viewPortPixelIndex = camParams.pixel00_loc + ((i + x) * camParams.pixel_delta_u) + ((j + y) * camParams.pixel_delta_v);
             vec3 ray_direction = viewPortPixelIndex - camParams.cameraCenter;
             ray r(camParams.cameraCenter, ray_direction);
-            color += renderKernelFunctions::ray_color(r, d_world);
+            color += renderKernelFunctions::ray_color(r, d_world, &local_rand_state);
         }
 
         d_fb[pixel_index] = color / float(spp);

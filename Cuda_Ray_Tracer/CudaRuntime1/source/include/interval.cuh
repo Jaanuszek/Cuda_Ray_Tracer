@@ -21,6 +21,8 @@ public:
         return min < x && x < max;
     }
 
+    __host__ __device__ float clamp(float x) const;
+
     static const interval empty, universe;
 };
 

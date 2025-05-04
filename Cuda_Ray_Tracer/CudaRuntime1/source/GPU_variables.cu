@@ -28,12 +28,18 @@ GPU_variables::GPU_variables(int width, int height, int objCount)
 
 GPU_variables::~GPU_variables()
 {
+    //printf("GPU_variables destructor\n");
     if (h_render_params) {
         checkCudaErrors(cudaFree(h_render_params->d_rand_state));
+        h_render_params->d_rand_state = nullptr;
         checkCudaErrors(cudaFree(h_render_params->d_list));
+        h_render_params->d_list = nullptr;
         checkCudaErrors(cudaFree(h_render_params->d_world));
+        h_render_params->d_world = nullptr;
         checkCudaErrors(cudaFree(h_render_params->d_fb));
+        h_render_params->d_fb = nullptr;
         checkCudaErrors(cudaFree(h_render_params->d_camera));
+        h_render_params->d_camera = nullptr;
         delete h_render_params;
         h_render_params = nullptr;
     }
@@ -59,4 +65,13 @@ GPU_variables& GPU_variables::getInstance()
         throw std::runtime_error("GPU_variables not initialized. Call init() first.");
     }
     return *instance;
+}
+
+void GPU_variables::destroy()
+{
+    if (instance)
+    {
+        delete instance;
+        instance = nullptr;
+    }
 }

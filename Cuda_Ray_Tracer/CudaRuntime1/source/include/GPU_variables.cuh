@@ -34,6 +34,7 @@ public:
     __host__ static void init(int width, int height, int objCount);
     __host__ static GPU_variables& getInstance();
     __host__ __device__ render_params* getRenderParams() const { return h_render_params; }
+    __host__ void destroy();
 };
 
 #endif

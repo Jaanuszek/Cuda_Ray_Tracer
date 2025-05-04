@@ -1,5 +1,8 @@
 #include "include/GPU_variables.cuh"
 #include "include/camera.cuh"
+//#include "include/material.cuh"
+#include "include/lambertian.cuh"
+#include "include/metal.cuh"
 
 namespace renderKernelFunctions {
     __global__ void init_rand_state(curandState* rand_state, int width, int height)
@@ -15,20 +18,26 @@ namespace renderKernelFunctions {
     __device__ color ray_color(const ray& r, hittable** world, curandState *r_state)
     {
         ray cur_ray = r;
-        float cur_attenuation = 1.0f;
+        vec3 cur_attenuation = vec3(1.0f, 1.0f,1.0f);
         for (int i = 0; i < 50; i++) {
             hit_record rec;
             if ((*world)->hit(cur_ray, interval(0.0001f, constants::infinity), rec))
             {
-                //vec3 direction = random_on_hemisphere(rec.normal, r_state);
-				vec3 direction = rec.normal + random_unit_vec(r_state);
-				cur_attenuation *= 0.5f;
-				cur_ray = ray(rec.p, direction);
+                ray scattered;
+                vec3 attenutation;
+                if (rec.mat_ptr->scatter(cur_ray, rec, attenutation, scattered, r_state)) {
+                    cur_attenuation = attenutation * cur_attenuation;
+                    cur_ray = scattered;
+                }
+                else
+                {
+                    return vec3(0.0f, 0.0f, 0.0f);
+                }
             }
             else {
                 vec3 unit_direction = unit_vector(r.get_direction());
                 float a = 0.5f * (unit_direction.y() + 1.0f);
-				vec3 col = (1.0f - a) * color(1.0f, 1.0f, 1.0f) + a * color(0.5f, 0.7f, 1.0f);
+                vec3 col = (1.0f - a) * color(1.0f, 1.0f, 1.0f) + a * color(0.5f, 0.7f, 1.0f);
                 return cur_attenuation * col;
             }
         }
@@ -70,9 +79,15 @@ namespace renderKernelFunctions {
     {
         if (threadIdx.x == 0 && blockIdx.x == 0)
         {
-            *(d_list) = new sphere(point3(0, 0, -1), 0.5f);
-            *(d_list + 1) = new sphere(point3(0, -100.5f, -1), 100);
-            *d_world = new hittable_list(d_list, 2);
+            lambertian* material_ground = new lambertian(vec3(0.8f, 0.8f, 0.0f));
+            lambertian* material_center = new lambertian(vec3(0.1f, 0.2f, 0.5f));
+            metal* material_left = new metal (vec3(0.8f, 0.8f, 0.8f), 0.3f);
+            metal* material_right = new metal(vec3(0.8f, 0.6f, 0.2f), 1.0f);
+            *(d_list) = new sphere(point3(0.0f, -100.5f, -1.0f), 100.0f, material_ground);
+            *(d_list + 1) = new sphere(point3(0.0f, 0.0f, -1.2f), 0.5f, material_center);
+            *(d_list + 2) = new sphere(point3(-1.0f, 0.0f, -1.0f), 0.5f, material_left);
+            *(d_list + 3) = new sphere(point3(1.0f, 0.0f, -1.0f), 0.5f, material_right);
+            *d_world = new hittable_list(d_list, 4);
         }
     }
 
@@ -80,9 +95,14 @@ namespace renderKernelFunctions {
     {
         if (threadIdx.x == 0 && blockIdx.x == 0)
         {
-            delete* (d_list);
-            delete* (d_list + 1);
-            delete* d_world;
+            hittable_list* world = (hittable_list*)(*d_world);
+            for (int i = 0; i < world->list_size; i++)
+            {
+                sphere* s = (sphere*)(world->m_objects_ptr[i]);
+                delete s->mat_ptr;
+                delete s;
+            }
+            delete world;
         }
     }
 }
@@ -125,7 +145,7 @@ __device__ ray camera::get_ray(int index_i, int index_j, float offset_x, float o
 camera::camera()
 {
     Init();
-    GPU_variables::init(image_width, image_height, 2);
+    GPU_variables::init(image_width, image_height, 4);
     GPU_variables& gpu_vars = GPU_variables::getInstance();
     render_params* h_render_params = gpu_vars.getRenderParams();
 
@@ -139,6 +159,15 @@ camera::camera()
 
 camera::~camera()
 {
+    GPU_variables& gpu_vars = GPU_variables::getInstance();
+    render_params* h_render_params = gpu_vars.getRenderParams();
+    hittable** d_list = h_render_params->d_list;
+    hittable** d_world = h_render_params->d_world;
+
+    renderKernelFunctions::clear_world << <1, 1 >> > (d_list, d_world);
+    checkCudaErrors(cudaGetLastError());
+    checkCudaErrors(cudaDeviceSynchronize());
+    gpu_vars.destroy();
 }
 
 void camera::render() // moze to world powinno sie tworzyc poza klasa ( w mainie)

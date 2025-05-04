@@ -1,7 +1,7 @@
 #include "include/sphere.cuh"
 
-__device__ sphere::sphere(const point3& center, float radius)
-	: m_center(center), m_radius(radius) {
+__device__ sphere::sphere(const point3& center, float radius, material* mat)
+	: m_center(center), m_radius(radius), mat_ptr(mat) {
 }
 
 __device__ bool sphere::hit(const ray& r, interval ray_t, hit_record& rec) const {
@@ -31,6 +31,7 @@ __device__ bool sphere::hit(const ray& r, interval ray_t, hit_record& rec) const
 	rec.normal = (rec.p - m_center) / m_radius;
 	vec3 outward_normal = (rec.p - m_center) / m_radius;
 	rec.set_face_normal(r, outward_normal);
+	rec.mat_ptr = mat_ptr;
 
 	return true;
 }

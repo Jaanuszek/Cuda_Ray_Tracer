@@ -7,11 +7,14 @@
 #include "ray.cuh"
 #include "interval.cuh"
 
+class material;
+
 class hit_record
 {
 public:
 	point3 p; // hit point
 	vec3 normal; // normal at hit point
+	material* mat_ptr;
 	float t;
 	bool front_face;
 

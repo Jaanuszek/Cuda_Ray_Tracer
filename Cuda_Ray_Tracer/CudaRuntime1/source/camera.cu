@@ -1,5 +1,8 @@
 #include "include/GPU_variables.cuh"
 #include "include/camera.cuh"
+//#include "include/material.cuh"
+#include "include/lambertian.cuh"
+#include "include/metal.cuh"
 
 namespace renderKernelFunctions {
     __global__ void init_rand_state(curandState* rand_state, int width, int height)
@@ -15,15 +18,24 @@ namespace renderKernelFunctions {
     __device__ color ray_color(const ray& r, hittable** world, curandState *r_state)
     {
         ray cur_ray = r;
-        float cur_attenuation = 1.0f;
+        vec3 cur_attenuation = vec3(1.0f, 1.0f,1.0f);
         for (int i = 0; i < 50; i++) {
             hit_record rec;
             if ((*world)->hit(cur_ray, interval(0.0001f, constants::infinity), rec))
             {
-                //vec3 direction = random_on_hemisphere(rec.normal, r_state);
-				vec3 direction = rec.normal + random_unit_vec(r_state);
-				cur_attenuation *= 0.5f;
-				cur_ray = ray(rec.p, direction);
+                ray scattered;
+                vec3 attenutation;
+                if (rec.mat_ptr->scatter(cur_ray, rec, attenutation, scattered, r_state)) {
+                    cur_attenuation = attenutation * cur_attenuation;
+                    cur_ray = scattered;
+                }
+                else
+                {
+                    return vec3(0.0f, 0.0f, 0.0f);
+                }
+				//vec3 direction = rec.normal + random_unit_vec(r_state);
+				//cur_attenuation *= 0.5f;
+				//cur_ray = ray(rec.p, direction);
             }
             else {
                 vec3 unit_direction = unit_vector(r.get_direction());
@@ -70,9 +82,15 @@ namespace renderKernelFunctions {
     {
         if (threadIdx.x == 0 && blockIdx.x == 0)
         {
-            *(d_list) = new sphere(point3(0, 0, -1), 0.5f);
-            *(d_list + 1) = new sphere(point3(0, -100.5f, -1), 100);
-            *d_world = new hittable_list(d_list, 2);
+            lambertian* material_ground = new lambertian(vec3(0.8f, 0.8f, 0.0f));
+            lambertian* material_center = new lambertian(vec3(0.1f, 0.2f, 0.5f));
+            metal* material_left = new metal (vec3(0.8f, 0.8f, 0.8f));
+            metal* material_right = new metal(vec3(0.8f, 0.6f, 0.2f));
+            *(d_list) = new sphere(point3(0.0f, -100.5f, -1.0f), 100.0f, material_ground);
+            *(d_list + 1) = new sphere(point3(0.0f, 0.0f, -1.2f), 0.5f, material_center);
+            *(d_list + 2) = new sphere(point3(-1.0f, 0.0f, -1.0f), 0.5f, material_left);
+            *(d_list + 3) = new sphere(point3(1.0f, 0.0f, -1.0f), 0.5f, material_right);
+            *d_world = new hittable_list(d_list, 4);
         }
     }
 
@@ -80,8 +98,12 @@ namespace renderKernelFunctions {
     {
         if (threadIdx.x == 0 && blockIdx.x == 0)
         {
+            // czy nie trzeba tu dwalniac pointerow do lambertian i metal????
+            // TODO
             delete* (d_list);
             delete* (d_list + 1);
+            delete* (d_list + 2);
+            delete* (d_list + 3);
             delete* d_world;
         }
     }
@@ -125,7 +147,7 @@ __device__ ray camera::get_ray(int index_i, int index_j, float offset_x, float o
 camera::camera()
 {
     Init();
-    GPU_variables::init(image_width, image_height, 2);
+    GPU_variables::init(image_width, image_height, 4);
     GPU_variables& gpu_vars = GPU_variables::getInstance();
     render_params* h_render_params = gpu_vars.getRenderParams();
 

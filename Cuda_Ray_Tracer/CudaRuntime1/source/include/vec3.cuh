@@ -47,6 +47,13 @@ public:
 	__host__ __device__ float length_squared() const {
 		return element[0] * element[0] + element[1] * element[1] + element[2] * element[2];
 	}
+	__device__ bool near_zero() const
+	{
+		float s = 1e-8;
+		return (fabs(element[0]) < s &&
+				fabs(element[1]) < s &&
+				fabs(element[2]) < s);
+	}
 };
 
 using point3 = vec3;
@@ -119,6 +126,16 @@ __device__ inline vec3 random_on_hemisphere(const vec3& normal, curandState* r_s
 	{
 		return -rand_vec;
 	}
+}
+
+// Dot zwraca skalar. Mno¿¹c to razy N, otrzymujemy wektor równoleg³y do normalnej
+// -, bo chcemy zeby wektor wynikowy byl skierowany od powierzchni
+// dot(v,n) * n to jest czêœæ V któa idzie w kierunku N
+// mnozymy razy dwa, bo inaczej nie moglby powstac promien odbity
+// powstalby taki wektor skierowany w prawo przy powierzchni - bez snesu
+__device__ inline vec3 reflect(const vec3& v, const vec3& n)
+{
+	return v - 2 * dot(v, n) * n;
 }
 
 #endif

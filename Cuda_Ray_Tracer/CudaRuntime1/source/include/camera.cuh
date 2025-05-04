@@ -9,6 +9,7 @@
 #include "hittable.cuh"
 #include "sphere.cuh"
 #include "hittable_list.cuh"
+#include "material.cuh"
 
 struct camera_params {
     int image_width;

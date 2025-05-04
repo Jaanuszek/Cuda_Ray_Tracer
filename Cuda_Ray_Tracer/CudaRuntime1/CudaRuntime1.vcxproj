@@ -92,6 +92,7 @@
   <ItemGroup>
     <ClInclude Include="source\include\camera.cuh" />
     <ClInclude Include="source\include\Color.cuh" />
+    <ClInclude Include="source\include\dielectric.cuh" />
     <ClInclude Include="source\include\general_includes.cuh" />
     <ClInclude Include="source\include\GPU_variables.cuh" />
     <ClInclude Include="source\include\hittable.cuh" />

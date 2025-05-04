@@ -138,4 +138,17 @@ __device__ inline vec3 reflect(const vec3& v, const vec3& n)
     return v - 2 * dot(v, n) * n;
 }
 
+// uv promien padaj¹cy
+// n normalna
+// etai_over_etat wspó³czynnik za³amania
+// dot(-uv,n) minus przed uv, bo chcemy kat miedzy promieniem nadchodz¹cym do powierzchni a normaln¹
+// bez tego minusa, wartosc dot by³aby ujemna.
+__device__ inline vec3 refract(const vec3& uv, const vec3& n, float etai_over_etat)
+{
+    float cos_theta = fminf(dot(-uv, n), 1.0f);
+    vec3 r_out_perp = etai_over_etat * (uv + cos_theta * n);
+    vec3 r_out_parallel = -sqrtf(fabs(1.0f - r_out_perp.length_squared())) * n;
+    return r_out_perp + r_out_parallel;
+}
+
 #endif

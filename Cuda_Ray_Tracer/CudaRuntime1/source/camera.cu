@@ -3,6 +3,7 @@
 //#include "include/material.cuh"
 #include "include/lambertian.cuh"
 #include "include/metal.cuh"
+#include "include/dielectric.cuh"
 
 namespace renderKernelFunctions {
     __global__ void init_rand_state(curandState* rand_state, int width, int height)
@@ -81,13 +82,16 @@ namespace renderKernelFunctions {
         {
             lambertian* material_ground = new lambertian(vec3(0.8f, 0.8f, 0.0f));
             lambertian* material_center = new lambertian(vec3(0.1f, 0.2f, 0.5f));
-            metal* material_left = new metal (vec3(0.8f, 0.8f, 0.8f), 0.3f);
-            metal* material_right = new metal(vec3(0.8f, 0.6f, 0.2f), 1.0f);
+            //metal* material_left = new metal (vec3(0.8f, 0.8f, 0.8f), 0.3f);
+            dielectric* material_left = new dielectric(1.50f);
+            dielectric* material_bubble = new dielectric(1.00f / 1.50f);
+            metal* material_right = new metal(vec3(0.8f, 0.6f, 0.2f), 0.3f);
             *(d_list) = new sphere(point3(0.0f, -100.5f, -1.0f), 100.0f, material_ground);
             *(d_list + 1) = new sphere(point3(0.0f, 0.0f, -1.2f), 0.5f, material_center);
             *(d_list + 2) = new sphere(point3(-1.0f, 0.0f, -1.0f), 0.5f, material_left);
-            *(d_list + 3) = new sphere(point3(1.0f, 0.0f, -1.0f), 0.5f, material_right);
-            *d_world = new hittable_list(d_list, 4);
+            *(d_list + 3) = new sphere(point3(-1.0f, 0.0f, -1.0f), 0.4f, material_bubble);
+            *(d_list + 4) = new sphere(point3(1.0f, 0.0f, -1.0f), 0.5f, material_right);
+            *d_world = new hittable_list(d_list, 5);
         }
     }
 
@@ -145,7 +149,7 @@ __device__ ray camera::get_ray(int index_i, int index_j, float offset_x, float o
 camera::camera()
 {
     Init();
-    GPU_variables::init(image_width, image_height, 4);
+    GPU_variables::init(image_width, image_height, 5);
     GPU_variables& gpu_vars = GPU_variables::getInstance();
     render_params* h_render_params = gpu_vars.getRenderParams();
 

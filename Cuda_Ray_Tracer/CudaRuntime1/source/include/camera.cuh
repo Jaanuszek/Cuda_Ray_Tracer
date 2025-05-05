@@ -39,6 +39,7 @@ private:
     vec3 pixel_delta_u;
     vec3 pixel_delta_v;
     float piexel_samples_scale;
+    vec3 u, v, w;
 
     dim3 blockSize;
     dim3 gridSize;
@@ -49,6 +50,10 @@ public:
     float aspect_ratio = 16.0f / 9.0f;
     int image_width = 400;
     int samples_per_pixel = 100;
+    float vfov = 90.0f;
+    vec3 lookfrom = vec3(-2, 2, 1);
+    vec3 lookat = vec3(0, 0, -1);
+    vec3 vup = vec3(0, 1, 0);
     __host__ __device__ camera();
     __host__ __device__ ~camera(); // TODO w destruktorze wywolac cudaFree i clear_world
 

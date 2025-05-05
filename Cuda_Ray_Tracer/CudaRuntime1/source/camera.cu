@@ -118,19 +118,24 @@ void camera::Init()
 
     piexel_samples_scale = 1.0f / samples_per_pixel;
 
-    cameraCenter = point3(0, 0, 0);
+    cameraCenter = lookfrom;
 
-    float focal_length = 1.0f;
-    float viewport_height = 2.0f;
+    float focal_length = (lookfrom - lookat).length();
+    float theta = degrees_to_radians(vfov);
+    float h = tan(theta / 2);
+    float viewport_height = 2.0f * h * focal_length;
     float viewport_width = viewport_height * (static_cast<float>(image_width) / image_height);
 
-    vec3 viewport_u(viewport_width, 0, 0); // viewport width
-    vec3 viewport_v(0, -viewport_height, 0); // viewport height
+    w = unit_vector(lookfrom - lookat); // unit vector pointing opposite to the view direction
+    u = unit_vector(cross(vup, w)); // unit vector right
+    v = cross(w, u); // unit vector up
 
+    vec3 viewport_u = u * viewport_width; // viewport width
+    vec3 viewport_v = -v * viewport_height; // viewport height minus becasue we are going from left upper corner to right bottom corner
     pixel_delta_u = viewport_u / image_width;
     pixel_delta_v = viewport_v / image_height;
 
-    vec3 viewport_upper_left = cameraCenter - vec3(0, 0, focal_length) - (viewport_u / 2) - (viewport_v / 2);
+    vec3 viewport_upper_left = cameraCenter - (focal_length * w) - (viewport_u / 2) - (viewport_v / 2);
     pixel00_loc = viewport_upper_left + 0.5f * (pixel_delta_u + pixel_delta_v);
 
     blockSize = dim3(16, 16);

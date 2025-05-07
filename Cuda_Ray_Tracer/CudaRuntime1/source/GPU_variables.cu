@@ -6,10 +6,8 @@ GPU_variables::GPU_variables(int width, int height, int objCount)
 {
     int picSize = width * height;
 
-    d_render_params = nullptr;
-    // tymczasowa struktura na cpu
-    //render_params host_params;
     h_render_params = new render_params;
+    // memset zeby wyzerowaæ wszystkie pola struktury, bo render_params nie ma konstruktora
     memset(h_render_params, 0, sizeof(render_params));
 
     // alokacja wskaznikow w tymczasowej strukturze
@@ -20,15 +18,14 @@ GPU_variables::GPU_variables(int width, int height, int objCount)
     checkCudaErrors(cudaMalloc((void**)&h_render_params->d_camera, sizeof(camera*)));
 
     // Zarezerowanie pamiêci na GPU dla d_render_params
-    checkCudaErrors(cudaMalloc((void**)&d_render_params, sizeof(render_params)));
+    //checkCudaErrors(cudaMalloc((void**)&d_render_params, sizeof(render_params)));
 
     // Skopiowanie wskaŸników z tymczasowej struktury do GPU
-    checkCudaErrors(cudaMemcpy(d_render_params, h_render_params, sizeof(render_params), cudaMemcpyHostToDevice));
+    //checkCudaErrors(cudaMemcpy(d_render_params, h_render_params, sizeof(render_params), cudaMemcpyHostToDevice));
 }
 
 GPU_variables::~GPU_variables()
 {
-    //printf("GPU_variables destructor\n");
     if (h_render_params) {
         checkCudaErrors(cudaFree(h_render_params->d_rand_state));
         h_render_params->d_rand_state = nullptr;
@@ -43,10 +40,10 @@ GPU_variables::~GPU_variables()
         delete h_render_params;
         h_render_params = nullptr;
     }
-    if (d_render_params) {
-        checkCudaErrors(cudaFree(d_render_params));
-        d_render_params = nullptr;
-    }
+    //if (d_render_params) {
+    //    checkCudaErrors(cudaFree(d_render_params));
+    //    d_render_params = nullptr;
+    //}
     instance = nullptr;
 }
 

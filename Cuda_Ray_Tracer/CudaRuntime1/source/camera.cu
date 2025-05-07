@@ -132,8 +132,8 @@ void camera::Init()
 
     vec3 viewport_u = u * viewport_width; // viewport width
     vec3 viewport_v = -v * viewport_height; // viewport height minus becasue we are going from left upper corner to right bottom corner
-    pixel_delta_u = viewport_u / image_width;
-    pixel_delta_v = viewport_v / image_height;
+    pixel_delta_u = viewport_u / (float)image_width;
+    pixel_delta_v = viewport_v / (float)image_height;
 
     vec3 viewport_upper_left = cameraCenter - (focal_length * w) - (viewport_u / 2) - (viewport_v / 2);
     pixel00_loc = viewport_upper_left + 0.5f * (pixel_delta_u + pixel_delta_v);

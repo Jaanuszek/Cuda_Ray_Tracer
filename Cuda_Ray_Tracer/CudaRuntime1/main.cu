@@ -14,9 +14,6 @@
 
 int main()
 {
-    //GPU_variables::init(400, 300, 2);
-    //GPU_variables& gpu_vars = GPU_variables::getInstance();
-    //render_params* h_render_params = gpu_vars.getRenderParams();
 	camera cam;
 	cam.render();
 }

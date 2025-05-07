@@ -7,6 +7,16 @@
 #include <curand_kernel.h>
 #include "device_launch_parameters.h"
 
+/** 
+    * @file vec3.cuh
+    * @brief Definicja klasy vec3
+*/
+
+//! \brief Klasa wektora 3D
+//! \details Zawiera metody do obliczen wektorowych
+//! oraz operatory do dodawania, odejmowania, mnozenia i dzielenia.
+//! Wszystkie metody sa oznaczone jako __host__ i __device__, co oznacza, ze
+//! moga byc uzywane zarowno na CPU, jak i GPU.
 class vec3 {
 private:
     float element[3];
@@ -101,6 +111,10 @@ __host__ __device__ inline vec3 unit_vector(vec3 v) {
     return v / v.length();
 }
 
+//! \brief Funkcja losujaca wektor jednostkowy
+//! \details Funkcja losuje wektor jednostkowy korzytaj¹c z
+//! generatora liczb losowych curand. Wektor jest losowany
+//! z kuli jednostkowej.
 __device__ inline vec3 random_unit_vec(curandState* r_state)
 {
     while (true)
@@ -114,7 +128,11 @@ __device__ inline vec3 random_unit_vec(curandState* r_state)
             return p / sqrt(p.length_squared());
     }
 }
-
+//! \brief Funkcja losujaca wektor jednostkowy
+//! \details Funkcja losuje wektor jednostkowy korzytaj¹c z
+//! generatora liczb losowych curand. Wektor jest losowany
+//! z kuli jednostkowej. Jezeli wylosowany wektor znajduje siê wewn¹trz badanej po³kuli
+//! to zwraca go, w przeciwnym razie zwraca jego negacjê.
 __device__ inline vec3 random_on_hemisphere(const vec3& normal, curandState* r_state)
 {
     vec3 rand_vec = random_unit_vec(r_state);
@@ -133,6 +151,9 @@ __device__ inline vec3 random_on_hemisphere(const vec3& normal, curandState* r_s
 // dot(v,n) * n to jest czêœæ V któa idzie w kierunku N
 // mnozymy razy dwa, bo inaczej nie moglby powstac promien odbity
 // powstalby taki wektor skierowany w prawo przy powierzchni - bez snesu
+
+//! \brief Funkcja odbicia
+//! \details Funkcja odbicia zwraca wektor odbity od powierzchni.
 __device__ inline vec3 reflect(const vec3& v, const vec3& n)
 {
     return v - 2 * dot(v, n) * n;
@@ -143,6 +164,9 @@ __device__ inline vec3 reflect(const vec3& v, const vec3& n)
 // etai_over_etat wspó³czynnik za³amania
 // dot(-uv,n) minus przed uv, bo chcemy kat miedzy promieniem nadchodz¹cym do powierzchni a normaln¹
 // bez tego minusa, wartosc dot by³aby ujemna.
+
+//! \brief Funkcja zalamania
+//! \details Funkcja za³amania zwraca wektor zalamany od powierzchni.
 __device__ inline vec3 refract(const vec3& uv, const vec3& n, float etai_over_etat)
 {
     float cos_theta = fminf(dot(-uv, n), 1.0f);

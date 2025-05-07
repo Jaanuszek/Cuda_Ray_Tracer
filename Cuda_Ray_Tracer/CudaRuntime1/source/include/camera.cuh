@@ -18,13 +18,13 @@ struct camera_params {
     vec3 pixel00_loc;
     vec3 pixel_delta_u;
     vec3 pixel_delta_v;
-    float samples_per_pixel;
+    int samples_per_pixel;
 };
 
 class camera;
 
 namespace renderKernelFunctions {
-    __device__ color ray_color(const ray& r, hittable** world);
+    __device__ color ray_color(const ray& r, hittable** world, curandState* r_state);
     __global__ void init_rand_state(curandState* rand_state, int width, int height);
     __global__ void render_framebuffer(vec3* d_fb, hittable** d_world, camera_params camParams, curandState* rand_state);
     __global__ void create_world(hittable** d_list, hittable** d_world);
@@ -54,8 +54,8 @@ public:
     vec3 lookfrom = vec3(-2, 2, 1);
     vec3 lookat = vec3(0, 0, -1);
     vec3 vup = vec3(0, 1, 0);
-    __host__ __device__ camera();
-    __host__ __device__ ~camera(); // TODO w destruktorze wywolac cudaFree i clear_world
+    __host__  camera();
+    __host__  ~camera();
 
     __host__ void render();
 };

@@ -14,6 +14,6 @@
 
 int main()
 {
-	camera cam;
-	cam.render();
+    camera cam;
+    cam.render();
 }

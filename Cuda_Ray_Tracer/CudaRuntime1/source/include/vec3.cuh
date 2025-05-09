@@ -120,9 +120,9 @@ __device__ inline vec3 random_unit_vec(curandState* r_state)
     while (true)
     {
         vec3 p(
-            2 * curand_uniform(r_state) - 1.0f,
-            2 * curand_uniform(r_state) - 1.0f,
-            2 * curand_uniform(r_state) - 1.0f
+            2.0f * curand_uniform(r_state) - 1.0f,
+            2.0f * curand_uniform(r_state) - 1.0f,
+            2.0f * curand_uniform(r_state) - 1.0f
         );
         if (p.length_squared() <= 1)
             return p / sqrt(p.length_squared());

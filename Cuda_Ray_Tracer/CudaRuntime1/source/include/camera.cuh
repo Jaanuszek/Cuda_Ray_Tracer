@@ -53,7 +53,7 @@ namespace renderKernelFunctions {
     //! @details Funkcja inicjalizuje obiekty klas, oraz liste obiektow (d_list) przechowywanych na scenie (d_world).
     //! Obiekty klas sa wykorzystywane na GPU, dlatego nalezalo zaalokowac ich pamiec na GPU. W tym miejscu, mozliwe jest 
     //! dodanie, ustawianie pozycji i materialow obiektow, ktore maja byc renderowane.
-    __global__ void create_world(hittable** d_list, hittable** d_world);
+    __global__ void create_world(hittable** d_list, hittable** d_world, curandState* rand_state);
     //! @brief Funkcja czyszczaca pamiec GPU
     //! @details Funkcja zwalnia pamiec GPU, ktora byla zaalokowana dla obiektow klas, oraz listy obiektow w kernelu create_world.
     __global__ void clear_world(hittable** d_list, hittable** d_world);
@@ -80,11 +80,11 @@ private:
     __device__ ray get_ray(int index_i, int index_j, float offset_x, float offset_y) const;
 public:
     float aspect_ratio = 16.0f / 9.0f;
-    int image_width = 400;
-    int samples_per_pixel = 100;
-    float vfov = 90.0f;
-    vec3 lookfrom = vec3(-2, 2, 1);
-    vec3 lookat = vec3(0, 0, -1);
+    int image_width = 1920;
+    int samples_per_pixel = 500;
+    float vfov = 80.0f;
+    vec3 lookfrom = vec3(0, 2, 1);
+    vec3 lookat = vec3(0, 0, -2);
     vec3 vup = vec3(0, 1, 0);
 
     //! @brief Konstruktor klasy camera

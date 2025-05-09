@@ -4,6 +4,12 @@
 #include "hittable.cuh"
 #include "ray.cuh"
 
+//! @file material.cuh
+//! @brief Definicja klasy material oraz funkcji scatter
+
+//! @brief Klasa material jest klasa bazowa dla wszystkich materialow.
+//! @details Klasa material jest klasa bazowa dla wszystkich materialow. Zawiera abstrakcyjna funkcje scatter,
+//! ktora z zalozenia jest odpowiedzialna za rozproszenie promienia w zaleznosci od materialu.
 class material {
 public:
 	__device__ virtual bool scatter(

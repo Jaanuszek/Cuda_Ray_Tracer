@@ -109,13 +109,16 @@ $(function(){initNavTree('classmetal.html',''); initResizable(true); });
   <div class="headertitle"><div class="title">metal Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Definicja klasy metal.  
+ <a href="#details">More...</a></p>
 <div class="dynheader">
 Inheritance diagram for metal:</div>
 <div class="dyncontent">
  <div class="center">
   <img src="classmetal.png" usemap="#metal_map" alt=""/>
   <map id="metal_map" name="metal_map">
-<area href="classmaterial.html" alt="material" shape="rect" coords="0,0,56,24"/>
+<area href="classmaterial.html" title="Klasa material jest klasa bazowa dla wszystkich materialow." alt="material" shape="rect" coords="0,0,56,24"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -123,8 +126,10 @@ Inheritance diagram for metal:</div>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ab7d5fadc81a74cad3e479b5f86eaafc0" id="r_ab7d5fadc81a74cad3e479b5f86eaafc0"><td class="memItemLeft" align="right" valign="top"><a id="ab7d5fadc81a74cad3e479b5f86eaafc0" name="ab7d5fadc81a74cad3e479b5f86eaafc0"></a>
 __device__&#160;</td><td class="memItemRight" valign="bottom"><b>metal</b> (const <a class="el" href="classvec3.html">vec3</a> &amp;albedo, float fuzz)</td></tr>
+<tr class="memdesc:ab7d5fadc81a74cad3e479b5f86eaafc0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Konstruktor klasy metal, przyjmujaca kolor albedo oraz "szorstkoœæ" fuzz ktora jest ograniczona do wartosci 1. <br /></td></tr>
 <tr class="separator:ab7d5fadc81a74cad3e479b5f86eaafc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaad93b5811e513a7dce7d224a21261da" id="r_aaad93b5811e513a7dce7d224a21261da"><td class="memItemLeft" align="right" valign="top">__device__ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aaad93b5811e513a7dce7d224a21261da">scatter</a> (const <a class="el" href="classray.html">ray</a> &amp;r_in, const <a class="el" href="classhit__record.html">hit_record</a> &amp;rec, <a class="el" href="classvec3.html">vec3</a> &amp;attenuation, <a class="el" href="classray.html">ray</a> &amp;scattered, curandState *r_state) const override</td></tr>
+<tr class="memdesc:aaad93b5811e513a7dce7d224a21261da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Przeciazona funkcja scatter, ktora oblicza oraz odbija promien.  <br /></td></tr>
 <tr class="separator:aaad93b5811e513a7dce7d224a21261da"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
@@ -136,7 +141,10 @@ Private Attributes</h2></td></tr>
 float&#160;</td><td class="memItemRight" valign="bottom"><b>fuzz</b></td></tr>
 <tr class="separator:a7b1a155f70bf086fc84c4c17d1e6f88c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Function Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Definicja klasy metal. </p>
+<p>Klasa metal dziedziczy po klasie material. Przechowuje informacje o albedo (kolorze) materialu oraz jego "szorstkoœci" (fuzz). </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="aaad93b5811e513a7dce7d224a21261da" name="aaad93b5811e513a7dce7d224a21261da"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aaad93b5811e513a7dce7d224a21261da">&#9670;&#160;</a></span>scatter()</h2>
 
@@ -178,6 +186,9 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>fuzz</b></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Przeciazona funkcja scatter, ktora oblicza oraz odbija promien. </p>
+<p>W przypadku gdy fuzz jest rowny 0, to promien jest idealnie odbijany (powstaje efekt lustrzany). Jezeli jednak fuzz jest wiekszy niz zero, to promien jest odbijany w losowym kierunku, przez co powstaje efekt rozproszenia swiatla a w konsekwencji brak idealnego zjawiska lustra. </p>
 
 <p>Implements <a class="el" href="classmaterial.html">material</a>.</p>
 

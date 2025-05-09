@@ -116,7 +116,7 @@ Inheritance diagram for sphere:</div>
  <div class="center">
   <img src="classsphere.png" usemap="#sphere_map" alt=""/>
   <map id="sphere_map" name="sphere_map">
-<area href="classhittable.html" alt="hittable" shape="rect" coords="0,0,52,24"/>
+<area href="classhittable.html" title="Klasa bazowa dla wszystkich obiektow, ktore moga byc trafione przez promien." alt="hittable" shape="rect" coords="0,0,52,24"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -126,7 +126,12 @@ Public Member Functions</h2></td></tr>
 __device__&#160;</td><td class="memItemRight" valign="bottom"><b>sphere</b> (const <a class="el" href="classvec3.html">point3</a> &amp;center, float radius, <a class="el" href="classmaterial.html">material</a> *mat)</td></tr>
 <tr class="separator:a6e4d768d46179457d84ebc195720281c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3cedff90987d6623b1c1848f3c92e2a9" id="r_a3cedff90987d6623b1c1848f3c92e2a9"><td class="memItemLeft" align="right" valign="top">__device__ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3cedff90987d6623b1c1848f3c92e2a9">hit</a> (const <a class="el" href="classray.html">ray</a> &amp;r, <a class="el" href="classinterval.html">interval</a> ray_t, <a class="el" href="classhit__record.html">hit_record</a> &amp;rec) const override</td></tr>
+<tr class="memdesc:a3cedff90987d6623b1c1848f3c92e2a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Przeciazona funkcja sprawdzajaca czy promien trafia w sferê.  <br /></td></tr>
 <tr class="separator:a3cedff90987d6623b1c1848f3c92e2a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_classhittable"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_classhittable')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classhittable.html">hittable</a></td></tr>
+<tr class="memitem:a07c7588f46f92488980297dc9f655012 inherit pub_methods_classhittable" id="r_a07c7588f46f92488980297dc9f655012"><td class="memItemLeft" align="right" valign="top">__device__&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classhittable.html#a07c7588f46f92488980297dc9f655012">~hittable</a> ()</td></tr>
+<tr class="memdesc:a07c7588f46f92488980297dc9f655012 inherit pub_methods_classhittable"><td class="mdescLeft">&#160;</td><td class="mdescRight">Funkcja czyszczaca pamiec.  <br /></td></tr>
+<tr class="separator:a07c7588f46f92488980297dc9f655012 inherit pub_methods_classhittable"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -143,7 +148,9 @@ Private Attributes</h2></td></tr>
 float&#160;</td><td class="memItemRight" valign="bottom"><b>m_radius</b></td></tr>
 <tr class="separator:aa9074d0b95cc95ff95d918831073ea1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Function Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Klasa sphere dziedziczy po klasie hittable. Przechowuje informacje o sferze, takie jak: srodek sfery, promien oraz material. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a3cedff90987d6623b1c1848f3c92e2a9" name="a3cedff90987d6623b1c1848f3c92e2a9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3cedff90987d6623b1c1848f3c92e2a9">&#9670;&#160;</a></span>hit()</h2>
 
@@ -176,7 +183,10 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>m_radius</b></td></t
 </table>
 </div><div class="memdoc">
 
-<p>Implements <a class="el" href="classhittable.html">hittable</a>.</p>
+<p>Przeciazona funkcja sprawdzajaca czy promien trafia w sferê. </p>
+<p>Funkcja korzysta z rownania okregu, obliczajac przestrzen w ktorej sie znajduje dana kula, bazujac na pozycji jej srodka. Przyjmuje referencje na promien oraz czas, w ktorym promien trafia w obiekt. Jezeli promien trafi w obiekt, ustawia informacje o trafieniu w obiekcie (<a class="el" href="classhit__record.html" title="Klasa przechowujaca informacje o trafieniu promienia w obiekt.">hit_record</a>&amp; rec). Zwraca true, jezeli promien trafi w obiekt, false w przeciwnym razie. </p>
+
+<p>Implements <a class="el" href="classhittable.html#a68552145f364af6d0d4cbf05f7392366">hittable</a>.</p>
 
 </div>
 </div>

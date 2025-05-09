@@ -16,12 +16,6 @@ GPU_variables::GPU_variables(int width, int height, int objCount)
     checkCudaErrors(cudaMalloc((void**)&h_render_params->d_world, sizeof(hittable*)));
     checkCudaErrors(cudaMalloc((void**)&h_render_params->d_fb, sizeof(vec3) * picSize));
     checkCudaErrors(cudaMalloc((void**)&h_render_params->d_camera, sizeof(camera*)));
-
-    // Zarezerowanie pamiêci na GPU dla d_render_params
-    //checkCudaErrors(cudaMalloc((void**)&d_render_params, sizeof(render_params)));
-
-    // Skopiowanie wskaŸników z tymczasowej struktury do GPU
-    //checkCudaErrors(cudaMemcpy(d_render_params, h_render_params, sizeof(render_params), cudaMemcpyHostToDevice));
 }
 
 GPU_variables::~GPU_variables()
@@ -40,10 +34,6 @@ GPU_variables::~GPU_variables()
         delete h_render_params;
         h_render_params = nullptr;
     }
-    //if (d_render_params) {
-    //    checkCudaErrors(cudaFree(d_render_params));
-    //    d_render_params = nullptr;
-    //}
     instance = nullptr;
 }
 

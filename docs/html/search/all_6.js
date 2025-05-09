@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['lambertian_0',['lambertian',['../classlambertian.html',1,'']]],
-  ['linear_5fto_5fgamma_1',['linear_to_gamma',['../_color_8cuh.html#afec33fbacfd91673e438e84d9befaed2',1,'Color.cuh']]]
+  ['init_0',['Init',['../classcamera.html#aed0488ba5d9e67ac1e17c0c27fd4a604',1,'camera']]],
+  ['init_5frand_5fstate_1',['init_rand_state',['../namespacerender_kernel_functions.html#aa256731ba9351460a16ff3840fdacd99',1,'renderKernelFunctions']]],
+  ['interval_2',['interval',['../classinterval.html',1,'interval'],['../classinterval.html#ae6e7de305013392afcb7851fd997306d',1,'interval::interval()'],['../classinterval.html#aa758e2badd9c4abd3dff51a127916b6a',1,'interval::interval(float a, float b)']]],
+  ['interval_2ecuh_3',['interval.cuh',['../interval_8cuh.html',1,'']]]
 ];

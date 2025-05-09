@@ -108,24 +108,76 @@ $(function(){initNavTree('classmaterial.html',''); initResizable(true); });
   <div class="headertitle"><div class="title">material Class Reference<span class="mlabels"><span class="mlabel abstract">abstract</span></span></div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Klasa material jest klasa bazowa dla wszystkich materialow.  
+ <a href="#details">More...</a></p>
 <div class="dynheader">
 Inheritance diagram for material:</div>
 <div class="dyncontent">
  <div class="center">
   <img src="classmaterial.png" usemap="#material_map" alt=""/>
   <map id="material_map" name="material_map">
-<area href="classdielectric.html" alt="dielectric" shape="rect" coords="0,56,70,80"/>
-<area href="classlambertian.html" alt="lambertian" shape="rect" coords="80,56,150,80"/>
-<area href="classmetal.html" alt="metal" shape="rect" coords="160,56,230,80"/>
+<area href="classdielectric.html" title="Klasa dielectric dziedziczy po klasie material. Przechowuje informacje o wspolczynniku za³amania (ref..." alt="dielectric" shape="rect" coords="0,56,70,80"/>
+<area href="classlambertian.html" title="Klasa lambertian dziedziczy po klasie material. Przechowuje informacje o albedo (kolorze) materialu." alt="lambertian" shape="rect" coords="80,56,150,80"/>
+<area href="classmetal.html" title="Definicja klasy metal." alt="metal" shape="rect" coords="160,56,230,80"/>
   </map>
 </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a22a1f55055877b2b756ee8c8eaede0d5" id="r_a22a1f55055877b2b756ee8c8eaede0d5"><td class="memItemLeft" align="right" valign="top"><a id="a22a1f55055877b2b756ee8c8eaede0d5" name="a22a1f55055877b2b756ee8c8eaede0d5"></a>
-virtual __device__ bool&#160;</td><td class="memItemRight" valign="bottom"><b>scatter</b> (const <a class="el" href="classray.html">ray</a> &amp;r_in, const <a class="el" href="classhit__record.html">hit_record</a> &amp;rec, <a class="el" href="classvec3.html">vec3</a> &amp;attenuation, <a class="el" href="classray.html">ray</a> &amp;scattered, curandState *r_state) const =0</td></tr>
+<tr class="memitem:a22a1f55055877b2b756ee8c8eaede0d5" id="r_a22a1f55055877b2b756ee8c8eaede0d5"><td class="memItemLeft" align="right" valign="top">virtual __device__ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a22a1f55055877b2b756ee8c8eaede0d5">scatter</a> (const <a class="el" href="classray.html">ray</a> &amp;r_in, const <a class="el" href="classhit__record.html">hit_record</a> &amp;rec, <a class="el" href="classvec3.html">vec3</a> &amp;attenuation, <a class="el" href="classray.html">ray</a> &amp;scattered, curandState *r_state) const =0</td></tr>
 <tr class="separator:a22a1f55055877b2b756ee8c8eaede0d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Klasa material jest klasa bazowa dla wszystkich materialow. </p>
+<p>Klasa material jest klasa bazowa dla wszystkich materialow. Zawiera abstrakcyjna funkcje scatter, ktora z zalozenia jest odpowiedzialna za rozproszenie promienia w zaleznosci od materialu. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a22a1f55055877b2b756ee8c8eaede0d5" name="a22a1f55055877b2b756ee8c8eaede0d5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a22a1f55055877b2b756ee8c8eaede0d5">&#9670;&#160;</a></span>scatter()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual __device__ bool material::scatter </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classray.html">ray</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>r_in</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classhit__record.html">hit_record</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>rec</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classvec3.html">vec3</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>attenuation</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classray.html">ray</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>scattered</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">curandState *</td>          <td class="paramname"><span class="paramname"><em>r_state</em></span>&#160;) const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel pure-virtual">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Implemented in <a class="el" href="classdielectric.html#a91f80e47157b5976fea208961601ca8a">dielectric</a>, <a class="el" href="classlambertian.html#acf98c6bb21790d4c60b8b8eb7203b051">lambertian</a>, and <a class="el" href="classmetal.html#aaad93b5811e513a7dce7d224a21261da">metal</a>.</p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>C:/Users/kubex/Documents/GitHubRepos/Cuda_ray_tracer/Cuda_Ray_Tracer/Cuda_Ray_Tracer/CudaRuntime1/source/include/<a class="el" href="material_8cuh_source.html">material.cuh</a></li>
 </ul>

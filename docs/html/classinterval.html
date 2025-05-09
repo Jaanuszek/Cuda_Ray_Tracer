@@ -110,23 +110,35 @@ $(function(){initNavTree('classinterval.html',''); initResizable(true); });
   <div class="headertitle"><div class="title">interval Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Klasa interval jest pomocnicza klasa, ktora przechowuje informacje o zdefiniowanym przedziale.  
+ <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:ae6e7de305013392afcb7851fd997306d" id="r_ae6e7de305013392afcb7851fd997306d"><td class="memItemLeft" align="right" valign="top"><a id="ae6e7de305013392afcb7851fd997306d" name="ae6e7de305013392afcb7851fd997306d"></a>
+__host__ __device__&#160;</td><td class="memItemRight" valign="bottom"><b>interval</b> ()</td></tr>
+<tr class="memdesc:ae6e7de305013392afcb7851fd997306d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Domyslny konstruktor klasy interval, w ktorzym przedzial jest zdefiniowany jako nieskonczony. <br /></td></tr>
+<tr class="separator:ae6e7de305013392afcb7851fd997306d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa758e2badd9c4abd3dff51a127916b6a" id="r_aa758e2badd9c4abd3dff51a127916b6a"><td class="memItemLeft" align="right" valign="top"><a id="aa758e2badd9c4abd3dff51a127916b6a" name="aa758e2badd9c4abd3dff51a127916b6a"></a>
 __host__ __device__&#160;</td><td class="memItemRight" valign="bottom"><b>interval</b> (float a, float b)</td></tr>
+<tr class="memdesc:aa758e2badd9c4abd3dff51a127916b6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Konstruktor klasy interval ze zdefiniowanymi wartosciami przedzialu. <br /></td></tr>
 <tr class="separator:aa758e2badd9c4abd3dff51a127916b6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a539079a66effc65d0d5405ce2387df0b" id="r_a539079a66effc65d0d5405ce2387df0b"><td class="memItemLeft" align="right" valign="top"><a id="a539079a66effc65d0d5405ce2387df0b" name="a539079a66effc65d0d5405ce2387df0b"></a>
 __host__ __device__ float&#160;</td><td class="memItemRight" valign="bottom"><b>size</b> () const</td></tr>
+<tr class="memdesc:a539079a66effc65d0d5405ce2387df0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">oblicza rozmiar zdefiniowanego przedzialu. <br /></td></tr>
 <tr class="separator:a539079a66effc65d0d5405ce2387df0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac413df8e5c234e08bfe2d3d9ed75b590" id="r_ac413df8e5c234e08bfe2d3d9ed75b590"><td class="memItemLeft" align="right" valign="top"><a id="ac413df8e5c234e08bfe2d3d9ed75b590" name="ac413df8e5c234e08bfe2d3d9ed75b590"></a>
 __host__ __device__ bool&#160;</td><td class="memItemRight" valign="bottom"><b>contains</b> (float x) const</td></tr>
+<tr class="memdesc:ac413df8e5c234e08bfe2d3d9ed75b590"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sprawdza czy dany punkt znajduje sie w (DOMKNIETYM) przedziale. <br /></td></tr>
 <tr class="separator:ac413df8e5c234e08bfe2d3d9ed75b590"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afba917b811423e2b3d13aeea6b09fd4f" id="r_afba917b811423e2b3d13aeea6b09fd4f"><td class="memItemLeft" align="right" valign="top"><a id="afba917b811423e2b3d13aeea6b09fd4f" name="afba917b811423e2b3d13aeea6b09fd4f"></a>
 __host__ __device__ bool&#160;</td><td class="memItemRight" valign="bottom"><b>surrounds</b> (float x) const</td></tr>
+<tr class="memdesc:afba917b811423e2b3d13aeea6b09fd4f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sprawdza czy dany punkt znajduje sie w (OTWARTYM) przedziale. <br /></td></tr>
 <tr class="separator:afba917b811423e2b3d13aeea6b09fd4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af9b2fc5dbac81741a7d16bfe8a5b01d8" id="r_af9b2fc5dbac81741a7d16bfe8a5b01d8"><td class="memItemLeft" align="right" valign="top"><a id="af9b2fc5dbac81741a7d16bfe8a5b01d8" name="af9b2fc5dbac81741a7d16bfe8a5b01d8"></a>
 __host__ __device__ float&#160;</td><td class="memItemRight" valign="bottom"><b>clamp</b> (float x) const</td></tr>
+<tr class="memdesc:af9b2fc5dbac81741a7d16bfe8a5b01d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sprawdza czy dany punkt znajduje sie w przedziale, jezeli nie to w przypadku przekroczenia przedzialu zwraca wartosc min lub max. <br /></td></tr>
 <tr class="separator:af9b2fc5dbac81741a7d16bfe8a5b01d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
@@ -142,12 +154,16 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>max</b></td></tr>
 Static Public Attributes</h2></td></tr>
 <tr class="memitem:a6e23ba90dce932166d37f871b5ffc3e4" id="r_a6e23ba90dce932166d37f871b5ffc3e4"><td class="memItemLeft" align="right" valign="top"><a id="a6e23ba90dce932166d37f871b5ffc3e4" name="a6e23ba90dce932166d37f871b5ffc3e4"></a>
 static const <a class="el" href="classinterval.html">interval</a>&#160;</td><td class="memItemRight" valign="bottom"><b>empty</b> = <a class="el" href="classinterval.html">interval</a>(+constants::infinity, -constants::infinity)</td></tr>
+<tr class="memdesc:a6e23ba90dce932166d37f871b5ffc3e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Definicja przedzialu jako pustego. <br /></td></tr>
 <tr class="separator:a6e23ba90dce932166d37f871b5ffc3e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ade23700267da88e2d1a5b470aff38de6" id="r_ade23700267da88e2d1a5b470aff38de6"><td class="memItemLeft" align="right" valign="top"><a id="ade23700267da88e2d1a5b470aff38de6" name="ade23700267da88e2d1a5b470aff38de6"></a>
 static const <a class="el" href="classinterval.html">interval</a>&#160;</td><td class="memItemRight" valign="bottom"><b>universe</b> = <a class="el" href="classinterval.html">interval</a>(-constants::infinity, +constants::infinity)</td></tr>
+<tr class="memdesc:ade23700267da88e2d1a5b470aff38de6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Definicja przedzialu jako nieskonczonego. <br /></td></tr>
 <tr class="separator:ade23700267da88e2d1a5b470aff38de6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<hr/>The documentation for this class was generated from the following files:<ul>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Klasa interval jest pomocnicza klasa, ktora przechowuje informacje o zdefiniowanym przedziale. </p>
+</div><hr/>The documentation for this class was generated from the following files:<ul>
 <li>C:/Users/kubex/Documents/GitHubRepos/Cuda_ray_tracer/Cuda_Ray_Tracer/Cuda_Ray_Tracer/CudaRuntime1/source/include/<a class="el" href="interval_8cuh_source.html">interval.cuh</a></li>
 <li>C:/Users/kubex/Documents/GitHubRepos/Cuda_ray_tracer/Cuda_Ray_Tracer/Cuda_Ray_Tracer/CudaRuntime1/source/<b>interval.cu</b></li>
 </ul>

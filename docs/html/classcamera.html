@@ -111,11 +111,20 @@ $(function(){initNavTree('classcamera.html',''); initResizable(true); });
   <div class="headertitle"><div class="title">camera Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Klasa camera.  
+ <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a59518c58500781833a802fc2dcfa2528" id="r_a59518c58500781833a802fc2dcfa2528"><td class="memItemLeft" align="right" valign="top"><a id="a59518c58500781833a802fc2dcfa2528" name="a59518c58500781833a802fc2dcfa2528"></a>
-__host__ void&#160;</td><td class="memItemRight" valign="bottom"><b>render</b> ()</td></tr>
+<tr class="memitem:abc72563193b22c523ad004af04146009" id="r_abc72563193b22c523ad004af04146009"><td class="memItemLeft" align="right" valign="top">__host__&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abc72563193b22c523ad004af04146009">camera</a> ()</td></tr>
+<tr class="memdesc:abc72563193b22c523ad004af04146009"><td class="mdescLeft">&#160;</td><td class="mdescRight">Konstruktor klasy camera.  <br /></td></tr>
+<tr class="separator:abc72563193b22c523ad004af04146009"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a384b4ae0641bdf988461344fc9ba1e4e" id="r_a384b4ae0641bdf988461344fc9ba1e4e"><td class="memItemLeft" align="right" valign="top">__host__&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a384b4ae0641bdf988461344fc9ba1e4e">~camera</a> ()</td></tr>
+<tr class="memdesc:a384b4ae0641bdf988461344fc9ba1e4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destruktor klasy camera.  <br /></td></tr>
+<tr class="separator:a384b4ae0641bdf988461344fc9ba1e4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a59518c58500781833a802fc2dcfa2528" id="r_a59518c58500781833a802fc2dcfa2528"><td class="memItemLeft" align="right" valign="top">__host__ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a59518c58500781833a802fc2dcfa2528">render</a> ()</td></tr>
+<tr class="memdesc:a59518c58500781833a802fc2dcfa2528"><td class="mdescLeft">&#160;</td><td class="mdescRight">Funkcja renderujaca, zwracajaca wynikowy obraz.  <br /></td></tr>
 <tr class="separator:a59518c58500781833a802fc2dcfa2528"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
@@ -146,9 +155,11 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>vfov</b> = 90.0f</td
 Private Member Functions</h2></td></tr>
 <tr class="memitem:aed0488ba5d9e67ac1e17c0c27fd4a604" id="r_aed0488ba5d9e67ac1e17c0c27fd4a604"><td class="memItemLeft" align="right" valign="top"><a id="aed0488ba5d9e67ac1e17c0c27fd4a604" name="aed0488ba5d9e67ac1e17c0c27fd4a604"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>Init</b> ()</td></tr>
+<tr class="memdesc:aed0488ba5d9e67ac1e17c0c27fd4a604"><td class="mdescLeft">&#160;</td><td class="mdescRight">Funkcja inicjalizujaca i obliczajaca parametry kamery. <br /></td></tr>
 <tr class="separator:aed0488ba5d9e67ac1e17c0c27fd4a604"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af97f6eb35c0e7c511573431cdf401fbb" id="r_af97f6eb35c0e7c511573431cdf401fbb"><td class="memItemLeft" align="right" valign="top"><a id="af97f6eb35c0e7c511573431cdf401fbb" name="af97f6eb35c0e7c511573431cdf401fbb"></a>
 __device__ <a class="el" href="classray.html">ray</a>&#160;</td><td class="memItemRight" valign="bottom"><b>get_ray</b> (int index_i, int index_j, float offset_x, float offset_y) const</td></tr>
+<tr class="memdesc:af97f6eb35c0e7c511573431cdf401fbb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Funkcja obliczajaca i zwracajaca promien. <br /></td></tr>
 <tr class="separator:af97f6eb35c0e7c511573431cdf401fbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
@@ -187,6 +198,71 @@ dim3&#160;</td><td class="memItemRight" valign="bottom"><b>blockSize</b></td></t
 dim3&#160;</td><td class="memItemRight" valign="bottom"><b>gridSize</b></td></tr>
 <tr class="separator:a81649e35c075b68293200c1bf61b81d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Klasa camera. </p>
+<p>Klasa camera jest odpowiedzialna za renderowanie sceny. Zawiera wszystkie parametry kamery. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="abc72563193b22c523ad004af04146009" name="abc72563193b22c523ad004af04146009"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abc72563193b22c523ad004af04146009">&#9670;&#160;</a></span>camera()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">camera::camera </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Konstruktor klasy camera. </p>
+<p>tworzy obiekt signletona oraz wywoluje kernele inicjalizujace: "create_world" oraz "init_rand_state" </p>
+
+</div>
+</div>
+<a id="a384b4ae0641bdf988461344fc9ba1e4e" name="a384b4ae0641bdf988461344fc9ba1e4e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a384b4ae0641bdf988461344fc9ba1e4e">&#9670;&#160;</a></span>~camera()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">camera::~camera </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Destruktor klasy camera. </p>
+<p>zwalnia pamiec GPU, ktora byla zaalokowana dla obiektow klas, oraz listy obiektow w kernelu create_world. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a59518c58500781833a802fc2dcfa2528" name="a59518c58500781833a802fc2dcfa2528"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a59518c58500781833a802fc2dcfa2528">&#9670;&#160;</a></span>render()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void camera::render </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Funkcja renderujaca, zwracajaca wynikowy obraz. </p>
+<p>Funkcja kopiuje obliczona w kernelu "render_framebuffer" tablice d_fb na CPU, iteruje po niej oraz wypisuje na standardowe wyjscie konkretne wartosci RGB dla kazdego piksela. Obraz wynikowy jest w formacie PPM. W celu sprawdzenia poprawnosci dzialania programu, nalezy uruchomic program oraz przekierowac jego wyjscie do pliku. Nastepnie nalezy wgrac plik do PPM P3 viewer (np. <a href="https://www.cs.rhodes.edu/welshc/COMP141_F16/ppmReader.html">https://www.cs.rhodes.edu/welshc/COMP141_F16/ppmReader.html</a>) </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>C:/Users/kubex/Documents/GitHubRepos/Cuda_ray_tracer/Cuda_Ray_Tracer/Cuda_Ray_Tracer/CudaRuntime1/source/include/<a class="el" href="camera_8cuh_source.html">camera.cuh</a></li>
 <li>C:/Users/kubex/Documents/GitHubRepos/Cuda_ray_tracer/Cuda_Ray_Tracer/Cuda_Ray_Tracer/CudaRuntime1/source/<b>camera.cu</b></li>

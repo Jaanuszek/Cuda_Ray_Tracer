@@ -105,7 +105,7 @@ $(function(){initNavTree('camera_8cuh_source.html',''); initResizable(true); });
   <div class="headertitle"><div class="title">camera.cuh</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef CAMERA_CUH</span></div>
+<a href="camera_8cuh.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef CAMERA_CUH</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define CAMERA_CUH</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;curand_kernel.h&gt;</span></div>
@@ -113,81 +113,97 @@ $(function(){initNavTree('camera_8cuh_source.html',''); initResizable(true); });
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &quot;<a class="code" href="vec3_8cuh.html">vec3.cuh</a>&quot;</span></div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &quot;<a class="code" href="_color_8cuh.html">Color.cuh</a>&quot;</span></div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &quot;<a class="code" href="ray_8cuh.html">ray.cuh</a>&quot;</span></div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &quot;hittable.cuh&quot;</span></div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &quot;sphere.cuh&quot;</span></div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &quot;hittable_list.cuh&quot;</span></div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &quot;material.cuh&quot;</span></div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
-<div class="foldopen" id="foldopen00014" data-start="{" data-end="};">
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno"><a class="line" href="structcamera__params.html">   14</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structcamera__params.html">camera_params</a> {</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    <span class="keywordtype">int</span> image_width;</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    <span class="keywordtype">int</span> image_height;</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    point3 cameraCenter;</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    <a class="code hl_class" href="classvec3.html">vec3</a> pixel00_loc;</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    <a class="code hl_class" href="classvec3.html">vec3</a> pixel_delta_u;</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    <a class="code hl_class" href="classvec3.html">vec3</a> pixel_delta_v;</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    <span class="keywordtype">int</span> samples_per_pixel;</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>};</div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &quot;<a class="code" href="hittable_8cuh.html">hittable.cuh</a>&quot;</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &quot;<a class="code" href="sphere_8cuh.html">sphere.cuh</a>&quot;</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &quot;<a class="code" href="hittable__list_8cuh.html">hittable_list.cuh</a>&quot;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &quot;<a class="code" href="material_8cuh.html">material.cuh</a>&quot;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span></div>
+<div class="foldopen" id="foldopen00021" data-start="{" data-end="};">
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno"><a class="line" href="structcamera__params.html">   21</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structcamera__params.html">camera_params</a> {</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    <span class="keywordtype">int</span> image_width;</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    <span class="keywordtype">int</span> image_height;</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    point3 cameraCenter;</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    <a class="code hl_class" href="classvec3.html">vec3</a> pixel00_loc;</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    <a class="code hl_class" href="classvec3.html">vec3</a> pixel_delta_u;</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    <a class="code hl_class" href="classvec3.html">vec3</a> pixel_delta_v;</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    <span class="keywordtype">int</span> samples_per_pixel;</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>};</div>
 </div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="keyword">class </span><a class="code hl_class" href="classcamera.html">camera</a>;</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacerender_kernel_functions.html">renderKernelFunctions</a> {</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    __device__ color ray_color(<span class="keyword">const</span> <a class="code hl_class" href="classray.html">ray</a>&amp; r, <a class="code hl_class" href="classhittable.html">hittable</a>** world, curandState* r_state);</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    __global__ <span class="keywordtype">void</span> init_rand_state(curandState* rand_state, <span class="keywordtype">int</span> width, <span class="keywordtype">int</span> height);</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    __global__ <span class="keywordtype">void</span> render_framebuffer(<a class="code hl_class" href="classvec3.html">vec3</a>* d_fb, <a class="code hl_class" href="classhittable.html">hittable</a>** d_world, <a class="code hl_struct" href="structcamera__params.html">camera_params</a> camParams, curandState* rand_state);</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    __global__ <span class="keywordtype">void</span> create_world(<a class="code hl_class" href="classhittable.html">hittable</a>** d_list, <a class="code hl_class" href="classhittable.html">hittable</a>** d_world);</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    __global__ <span class="keywordtype">void</span> clear_world(<a class="code hl_class" href="classhittable.html">hittable</a>** d_list, <a class="code hl_class" href="classhittable.html">hittable</a>** d_world);</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>}</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
-<div class="foldopen" id="foldopen00034" data-start="{" data-end="};">
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno"><a class="line" href="classcamera.html">   34</a></span><span class="keyword">class </span>camera {</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    <span class="keywordtype">int</span> image_height;</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    point3 cameraCenter;</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    point3 pixel00_loc;</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    <a class="code hl_class" href="classvec3.html">vec3</a> pixel_delta_u;</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    <a class="code hl_class" href="classvec3.html">vec3</a> pixel_delta_v;</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    <span class="keywordtype">float</span> piexel_samples_scale;</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    <a class="code hl_class" href="classvec3.html">vec3</a> u, v, w;</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    dim3 blockSize;</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    dim3 gridSize;</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    <span class="keywordtype">void</span> Init();</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    __device__ <a class="code hl_class" href="classray.html">ray</a> get_ray(<span class="keywordtype">int</span> index_i, <span class="keywordtype">int</span> index_j, <span class="keywordtype">float</span> offset_x, <span class="keywordtype">float</span> offset_y) <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    <span class="keywordtype">float</span> aspect_ratio = 16.0f / 9.0f;</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    <span class="keywordtype">int</span> image_width = 400;</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    <span class="keywordtype">int</span> samples_per_pixel = 100;</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    <span class="keywordtype">float</span> vfov = 90.0f;</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    <a class="code hl_class" href="classvec3.html">vec3</a> lookfrom = <a class="code hl_class" href="classvec3.html">vec3</a>(-2, 2, 1);</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    <a class="code hl_class" href="classvec3.html">vec3</a> lookat = <a class="code hl_class" href="classvec3.html">vec3</a>(0, 0, -1);</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    <a class="code hl_class" href="classvec3.html">vec3</a> vup = <a class="code hl_class" href="classvec3.html">vec3</a>(0, 1, 0);</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    __host__  camera();</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    __host__  ~camera();</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    __host__ <span class="keywordtype">void</span> render();</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>};</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="keyword">class </span><a class="code hl_class" href="classcamera.html">camera</a>;</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span></div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacerender_kernel_functions.html">renderKernelFunctions</a> {</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    __device__ color <a class="code hl_function" href="namespacerender_kernel_functions.html#a0ba3445db0aa1e67812c98ac7381c4d4">ray_color</a>(<span class="keyword">const</span> <a class="code hl_class" href="classray.html">ray</a>&amp; r, <a class="code hl_class" href="classhittable.html">hittable</a>** world, curandState* r_state);</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    __global__ <span class="keywordtype">void</span> <a class="code hl_function" href="namespacerender_kernel_functions.html#aa256731ba9351460a16ff3840fdacd99">init_rand_state</a>(curandState* rand_state, <span class="keywordtype">int</span> width, <span class="keywordtype">int</span> height);</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    __global__ <span class="keywordtype">void</span> <a class="code hl_function" href="namespacerender_kernel_functions.html#a6a9bbef8cd942dc3b7d6ea0e4bc8d722">render_framebuffer</a>(<a class="code hl_class" href="classvec3.html">vec3</a>* d_fb, <a class="code hl_class" href="classhittable.html">hittable</a>** d_world, <a class="code hl_struct" href="structcamera__params.html">camera_params</a> camParams, curandState* rand_state);</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    __global__ <span class="keywordtype">void</span> <a class="code hl_function" href="namespacerender_kernel_functions.html#ac64988a0178dc42bbdf31e4547ebdd04">create_world</a>(<a class="code hl_class" href="classhittable.html">hittable</a>** d_list, <a class="code hl_class" href="classhittable.html">hittable</a>** d_world);</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    __global__ <span class="keywordtype">void</span> <a class="code hl_function" href="namespacerender_kernel_functions.html#a4ef18b3c2ee05d46e1ccd9741bff792d">clear_world</a>(<a class="code hl_class" href="classhittable.html">hittable</a>** d_list, <a class="code hl_class" href="classhittable.html">hittable</a>** d_world);</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>}</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span></div>
+<div class="foldopen" id="foldopen00064" data-start="{" data-end="};">
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno"><a class="line" href="classcamera.html">   64</a></span><span class="keyword">class </span><a class="code hl_function" href="classcamera.html#abc72563193b22c523ad004af04146009">camera</a> {</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>    <span class="keywordtype">int</span> image_height;</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    point3 cameraCenter;</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    point3 pixel00_loc;</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    <a class="code hl_class" href="classvec3.html">vec3</a> pixel_delta_u;</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>    <a class="code hl_class" href="classvec3.html">vec3</a> pixel_delta_v;</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>    <span class="keywordtype">float</span> piexel_samples_scale;</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>    <a class="code hl_class" href="classvec3.html">vec3</a> u, v, w;</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> </div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>    dim3 blockSize;</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>    dim3 gridSize;</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span></div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classcamera.html#aed0488ba5d9e67ac1e17c0c27fd4a604">Init</a>();</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>    __device__ <a class="code hl_class" href="classray.html">ray</a> <a class="code hl_function" href="classcamera.html#af97f6eb35c0e7c511573431cdf401fbb">get_ray</a>(<span class="keywordtype">int</span> index_i, <span class="keywordtype">int</span> index_j, <span class="keywordtype">float</span> offset_x, <span class="keywordtype">float</span> offset_y) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>    <span class="keywordtype">float</span> aspect_ratio = 16.0f / 9.0f;</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>    <span class="keywordtype">int</span> image_width = 400;</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>    <span class="keywordtype">int</span> samples_per_pixel = 100;</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>    <span class="keywordtype">float</span> vfov = 90.0f;</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>    <a class="code hl_class" href="classvec3.html">vec3</a> lookfrom = <a class="code hl_class" href="classvec3.html">vec3</a>(-2, 2, 1);</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>    <a class="code hl_class" href="classvec3.html">vec3</a> lookat = <a class="code hl_class" href="classvec3.html">vec3</a>(0, 0, -1);</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    <a class="code hl_class" href="classvec3.html">vec3</a> vup = <a class="code hl_class" href="classvec3.html">vec3</a>(0, 1, 0);</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span></div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>    __host__  <a class="code hl_function" href="classcamera.html#abc72563193b22c523ad004af04146009">camera</a>();</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>    __host__  <a class="code hl_function" href="classcamera.html#a384b4ae0641bdf988461344fc9ba1e4e">~camera</a>();</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span></div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>    __host__ <span class="keywordtype">void</span> <a class="code hl_function" href="classcamera.html#a59518c58500781833a802fc2dcfa2528">render</a>();</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>};</div>
 </div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span> </div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span><span class="preprocessor">#endif</span></div>
 <div class="ttc" id="a_color_8cuh_html"><div class="ttname"><a href="_color_8cuh.html">Color.cuh</a></div><div class="ttdoc">Definicja funkcji pomocniczych do obliczen kolorow.</div></div>
-<div class="ttc" id="aclasscamera_html"><div class="ttname"><a href="classcamera.html">camera</a></div><div class="ttdef"><b>Definition</b> camera.cuh:34</div></div>
-<div class="ttc" id="aclasshittable_html"><div class="ttname"><a href="classhittable.html">hittable</a></div><div class="ttdef"><b>Definition</b> hittable.cuh:29</div></div>
+<div class="ttc" id="aclasscamera_html"><div class="ttname"><a href="classcamera.html">camera</a></div><div class="ttdoc">Klasa camera.</div><div class="ttdef"><b>Definition</b> camera.cuh:64</div></div>
+<div class="ttc" id="aclasscamera_html_a384b4ae0641bdf988461344fc9ba1e4e"><div class="ttname"><a href="classcamera.html#a384b4ae0641bdf988461344fc9ba1e4e">camera::~camera</a></div><div class="ttdeci">__host__ ~camera()</div><div class="ttdoc">Destruktor klasy camera.</div><div class="ttdef"><b>Definition</b> camera.cu:169</div></div>
+<div class="ttc" id="aclasscamera_html_a59518c58500781833a802fc2dcfa2528"><div class="ttname"><a href="classcamera.html#a59518c58500781833a802fc2dcfa2528">camera::render</a></div><div class="ttdeci">__host__ void render()</div><div class="ttdoc">Funkcja renderujaca, zwracajaca wynikowy obraz.</div><div class="ttdef"><b>Definition</b> camera.cu:182</div></div>
+<div class="ttc" id="aclasscamera_html_abc72563193b22c523ad004af04146009"><div class="ttname"><a href="classcamera.html#abc72563193b22c523ad004af04146009">camera::camera</a></div><div class="ttdeci">__host__ camera()</div><div class="ttdoc">Konstruktor klasy camera.</div><div class="ttdef"><b>Definition</b> camera.cu:154</div></div>
+<div class="ttc" id="aclasscamera_html_aed0488ba5d9e67ac1e17c0c27fd4a604"><div class="ttname"><a href="classcamera.html#aed0488ba5d9e67ac1e17c0c27fd4a604">camera::Init</a></div><div class="ttdeci">void Init()</div><div class="ttdoc">Funkcja inicjalizujaca i obliczajaca parametry kamery.</div><div class="ttdef"><b>Definition</b> camera.cu:114</div></div>
+<div class="ttc" id="aclasscamera_html_af97f6eb35c0e7c511573431cdf401fbb"><div class="ttname"><a href="classcamera.html#af97f6eb35c0e7c511573431cdf401fbb">camera::get_ray</a></div><div class="ttdeci">__device__ ray get_ray(int index_i, int index_j, float offset_x, float offset_y) const</div><div class="ttdoc">Funkcja obliczajaca i zwracajaca promien.</div><div class="ttdef"><b>Definition</b> camera.cu:144</div></div>
+<div class="ttc" id="aclasshittable_html"><div class="ttname"><a href="classhittable.html">hittable</a></div><div class="ttdoc">Klasa bazowa dla wszystkich obiektow, ktore moga byc trafione przez promien.</div><div class="ttdef"><b>Definition</b> hittable.cuh:38</div></div>
 <div class="ttc" id="aclassray_html"><div class="ttname"><a href="classray.html">ray</a></div><div class="ttdoc">Klasa ray !</div><div class="ttdef"><b>Definition</b> ray.cuh:20</div></div>
 <div class="ttc" id="aclassvec3_html"><div class="ttname"><a href="classvec3.html">vec3</a></div><div class="ttdoc">Klasa wektora 3D.</div><div class="ttdef"><b>Definition</b> vec3.cuh:20</div></div>
 <div class="ttc" id="ageneral__includes_8cuh_html"><div class="ttname"><a href="general__includes_8cuh.html">general_includes.cuh</a></div><div class="ttdoc">Plik nag³owkowy zawieraj¹cy ogolne definicje i funkcje pomocnicze.</div></div>
-<div class="ttc" id="anamespacerender_kernel_functions_html"><div class="ttname"><a href="namespacerender_kernel_functions.html">renderKernelFunctions</a></div><div class="ttdef"><b>Definition</b> camera.cu:8</div></div>
+<div class="ttc" id="ahittable_8cuh_html"><div class="ttname"><a href="hittable_8cuh.html">hittable.cuh</a></div><div class="ttdoc">Definicja klasy hittable oraz hit_record.</div></div>
+<div class="ttc" id="ahittable__list_8cuh_html"><div class="ttname"><a href="hittable__list_8cuh.html">hittable_list.cuh</a></div><div class="ttdoc">Definicja klasy hittable_list.</div></div>
+<div class="ttc" id="amaterial_8cuh_html"><div class="ttname"><a href="material_8cuh.html">material.cuh</a></div><div class="ttdoc">Definicja klasy material oraz funkcji scatter.</div></div>
+<div class="ttc" id="anamespacerender_kernel_functions_html"><div class="ttname"><a href="namespacerender_kernel_functions.html">renderKernelFunctions</a></div><div class="ttdoc">Przestrzen nazw zawierajaca funkcje kernelowe do renderowania.</div><div class="ttdef"><b>Definition</b> camera.cu:8</div></div>
+<div class="ttc" id="anamespacerender_kernel_functions_html_a0ba3445db0aa1e67812c98ac7381c4d4"><div class="ttname"><a href="namespacerender_kernel_functions.html#a0ba3445db0aa1e67812c98ac7381c4d4">renderKernelFunctions::ray_color</a></div><div class="ttdeci">__device__ color ray_color(const ray &amp;r, hittable **world, curandState *r_state)</div><div class="ttdoc">Funkcja obliczajaca kolor promienia.</div><div class="ttdef"><b>Definition</b> camera.cu:9</div></div>
+<div class="ttc" id="anamespacerender_kernel_functions_html_a4ef18b3c2ee05d46e1ccd9741bff792d"><div class="ttname"><a href="namespacerender_kernel_functions.html#a4ef18b3c2ee05d46e1ccd9741bff792d">renderKernelFunctions::clear_world</a></div><div class="ttdeci">__global__ void clear_world(hittable **d_list, hittable **d_world)</div><div class="ttdoc">Funkcja czyszczaca pamiec GPU.</div><div class="ttdef"><b>Definition</b> camera.cu:98</div></div>
+<div class="ttc" id="anamespacerender_kernel_functions_html_a6a9bbef8cd942dc3b7d6ea0e4bc8d722"><div class="ttname"><a href="namespacerender_kernel_functions.html#a6a9bbef8cd942dc3b7d6ea0e4bc8d722">renderKernelFunctions::render_framebuffer</a></div><div class="ttdeci">__global__ void render_framebuffer(vec3 *d_fb, hittable **d_world, camera_params camParams, curandState *rand_state)</div><div class="ttdoc">Funkcja renderujaca bufor ramki.</div><div class="ttdef"><b>Definition</b> camera.cu:48</div></div>
+<div class="ttc" id="anamespacerender_kernel_functions_html_aa256731ba9351460a16ff3840fdacd99"><div class="ttname"><a href="namespacerender_kernel_functions.html#aa256731ba9351460a16ff3840fdacd99">renderKernelFunctions::init_rand_state</a></div><div class="ttdeci">__global__ void init_rand_state(curandState *rand_state, int width, int height)</div><div class="ttdoc">Funkcja inicjalizujaca stan generatora liczb losowych.</div><div class="ttdef"><b>Definition</b> camera.cu:37</div></div>
+<div class="ttc" id="anamespacerender_kernel_functions_html_ac64988a0178dc42bbdf31e4547ebdd04"><div class="ttname"><a href="namespacerender_kernel_functions.html#ac64988a0178dc42bbdf31e4547ebdd04">renderKernelFunctions::create_world</a></div><div class="ttdeci">__global__ void create_world(hittable **d_list, hittable **d_world)</div><div class="ttdoc">Funkcja tworzy zmienne przechowywane na GPU.</div><div class="ttdef"><b>Definition</b> camera.cu:79</div></div>
 <div class="ttc" id="aray_8cuh_html"><div class="ttname"><a href="ray_8cuh.html">ray.cuh</a></div><div class="ttdoc">Definicja klasy ray.</div></div>
-<div class="ttc" id="astructcamera__params_html"><div class="ttname"><a href="structcamera__params.html">camera_params</a></div><div class="ttdef"><b>Definition</b> camera.cuh:14</div></div>
+<div class="ttc" id="asphere_8cuh_html"><div class="ttname"><a href="sphere_8cuh.html">sphere.cuh</a></div><div class="ttdoc">Definicja klasy sphere.</div></div>
+<div class="ttc" id="astructcamera__params_html"><div class="ttname"><a href="structcamera__params.html">camera_params</a></div><div class="ttdoc">Struktura przechowujaca parametry kamery.</div><div class="ttdef"><b>Definition</b> camera.cuh:21</div></div>
 <div class="ttc" id="avec3_8cuh_html"><div class="ttname"><a href="vec3_8cuh.html">vec3.cuh</a></div><div class="ttdoc">Definicja klasy vec3.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_7c0bcd5aec8f9a1c4049209486f73536.html">Cuda_Ray_Tracer</a></li><li class="navelem"><a class="el" href="dir_af7492f879d5d930713f99de9dcc4f86.html">CudaRuntime1</a></li><li class="navelem"><a class="el" href="dir_b445e96fc1acdb0438f78a9dc65b8a4a.html">source</a></li><li class="navelem"><a class="el" href="dir_34b65383f0c43127e10198790258693d.html">include</a></li><li class="navelem"><b>camera.cuh</b></li>
+    <li class="navelem"><a class="el" href="dir_7c0bcd5aec8f9a1c4049209486f73536.html">Cuda_Ray_Tracer</a></li><li class="navelem"><a class="el" href="dir_af7492f879d5d930713f99de9dcc4f86.html">CudaRuntime1</a></li><li class="navelem"><a class="el" href="dir_b445e96fc1acdb0438f78a9dc65b8a4a.html">source</a></li><li class="navelem"><a class="el" href="dir_34b65383f0c43127e10198790258693d.html">include</a></li><li class="navelem"><a class="el" href="camera_8cuh.html">camera.cuh</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.13.2 </li>
   </ul>
 </div>

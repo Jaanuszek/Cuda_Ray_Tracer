@@ -6,20 +6,10 @@
 #include "include/dielectric.cuh"
 
 namespace renderKernelFunctions {
-    __global__ void init_rand_state(curandState* rand_state, int width, int height)
-    {
-        int i = threadIdx.x + blockDim.x * blockIdx.x;
-        int j = threadIdx.y + blockDim.y * blockIdx.y;
-
-        if (i >= width || j >= height) return;
-
-        int pixel_index = j * width + i;
-        curand_init(2025, pixel_index, 0, &rand_state[pixel_index]);
-    }
-    __device__ color ray_color(const ray& r, hittable** world, curandState *r_state)
+    __device__ color ray_color(const ray& r, hittable** world, curandState* r_state)
     {
         ray cur_ray = r;
-        vec3 cur_attenuation = vec3(1.0f, 1.0f,1.0f);
+        vec3 cur_attenuation = vec3(1.0f, 1.0f, 1.0f);
         for (int i = 0; i < 50; i++) {
             hit_record rec;
             if ((*world)->hit(cur_ray, interval(0.0001f, constants::infinity), rec))
@@ -43,6 +33,16 @@ namespace renderKernelFunctions {
             }
         }
         return vec3(0.0f, 0.0f, 0.0f);
+    }
+    __global__ void init_rand_state(curandState* rand_state, int width, int height)
+    {
+        int i = threadIdx.x + blockDim.x * blockIdx.x;
+        int j = threadIdx.y + blockDim.y * blockIdx.y;
+
+        if (i >= width || j >= height) return;
+
+        int pixel_index = j * width + i;
+        curand_init(2025, pixel_index, 0, &rand_state[pixel_index]);
     }
 
     __global__ void render_framebuffer(vec3* d_fb, hittable** d_world, camera_params camParams, curandState *rand_state)

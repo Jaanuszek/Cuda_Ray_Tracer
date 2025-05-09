@@ -107,25 +107,171 @@ $(function(){initNavTree('namespacerender_kernel_functions.html',''); initResiza
   <div class="headertitle"><div class="title">renderKernelFunctions Namespace Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Przestrzen nazw zawierajaca funkcje kernelowe do renderowania.  
+<a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:aa256731ba9351460a16ff3840fdacd99" id="r_aa256731ba9351460a16ff3840fdacd99"><td class="memItemLeft" align="right" valign="top"><a id="aa256731ba9351460a16ff3840fdacd99" name="aa256731ba9351460a16ff3840fdacd99"></a>
-__global__ void&#160;</td><td class="memItemRight" valign="bottom"><b>init_rand_state</b> (curandState *rand_state, int width, int height)</td></tr>
-<tr class="separator:aa256731ba9351460a16ff3840fdacd99"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0ba3445db0aa1e67812c98ac7381c4d4" id="r_a0ba3445db0aa1e67812c98ac7381c4d4"><td class="memItemLeft" align="right" valign="top"><a id="a0ba3445db0aa1e67812c98ac7381c4d4" name="a0ba3445db0aa1e67812c98ac7381c4d4"></a>
-__device__ <a class="el" href="classvec3.html">color</a>&#160;</td><td class="memItemRight" valign="bottom"><b>ray_color</b> (const <a class="el" href="classray.html">ray</a> &amp;r, <a class="el" href="classhittable.html">hittable</a> **world, curandState *r_state)</td></tr>
+<tr class="memitem:a0ba3445db0aa1e67812c98ac7381c4d4" id="r_a0ba3445db0aa1e67812c98ac7381c4d4"><td class="memItemLeft" align="right" valign="top">__device__ <a class="el" href="classvec3.html">color</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0ba3445db0aa1e67812c98ac7381c4d4">ray_color</a> (const <a class="el" href="classray.html">ray</a> &amp;r, <a class="el" href="classhittable.html">hittable</a> **world, curandState *r_state)</td></tr>
+<tr class="memdesc:a0ba3445db0aa1e67812c98ac7381c4d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Funkcja obliczajaca kolor promienia.  <br /></td></tr>
 <tr class="separator:a0ba3445db0aa1e67812c98ac7381c4d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6a9bbef8cd942dc3b7d6ea0e4bc8d722" id="r_a6a9bbef8cd942dc3b7d6ea0e4bc8d722"><td class="memItemLeft" align="right" valign="top"><a id="a6a9bbef8cd942dc3b7d6ea0e4bc8d722" name="a6a9bbef8cd942dc3b7d6ea0e4bc8d722"></a>
-__global__ void&#160;</td><td class="memItemRight" valign="bottom"><b>render_framebuffer</b> (<a class="el" href="classvec3.html">vec3</a> *d_fb, <a class="el" href="classhittable.html">hittable</a> **d_world, <a class="el" href="structcamera__params.html">camera_params</a> camParams, curandState *rand_state)</td></tr>
+<tr class="memitem:aa256731ba9351460a16ff3840fdacd99" id="r_aa256731ba9351460a16ff3840fdacd99"><td class="memItemLeft" align="right" valign="top">__global__ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa256731ba9351460a16ff3840fdacd99">init_rand_state</a> (curandState *rand_state, int width, int height)</td></tr>
+<tr class="memdesc:aa256731ba9351460a16ff3840fdacd99"><td class="mdescLeft">&#160;</td><td class="mdescRight">Funkcja inicjalizujaca stan generatora liczb losowych.  <br /></td></tr>
+<tr class="separator:aa256731ba9351460a16ff3840fdacd99"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a9bbef8cd942dc3b7d6ea0e4bc8d722" id="r_a6a9bbef8cd942dc3b7d6ea0e4bc8d722"><td class="memItemLeft" align="right" valign="top">__global__ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6a9bbef8cd942dc3b7d6ea0e4bc8d722">render_framebuffer</a> (<a class="el" href="classvec3.html">vec3</a> *d_fb, <a class="el" href="classhittable.html">hittable</a> **d_world, <a class="el" href="structcamera__params.html">camera_params</a> camParams, curandState *rand_state)</td></tr>
+<tr class="memdesc:a6a9bbef8cd942dc3b7d6ea0e4bc8d722"><td class="mdescLeft">&#160;</td><td class="mdescRight">Funkcja renderujaca bufor ramki.  <br /></td></tr>
 <tr class="separator:a6a9bbef8cd942dc3b7d6ea0e4bc8d722"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac64988a0178dc42bbdf31e4547ebdd04" id="r_ac64988a0178dc42bbdf31e4547ebdd04"><td class="memItemLeft" align="right" valign="top"><a id="ac64988a0178dc42bbdf31e4547ebdd04" name="ac64988a0178dc42bbdf31e4547ebdd04"></a>
-__global__ void&#160;</td><td class="memItemRight" valign="bottom"><b>create_world</b> (<a class="el" href="classhittable.html">hittable</a> **d_list, <a class="el" href="classhittable.html">hittable</a> **d_world)</td></tr>
+<tr class="memitem:ac64988a0178dc42bbdf31e4547ebdd04" id="r_ac64988a0178dc42bbdf31e4547ebdd04"><td class="memItemLeft" align="right" valign="top">__global__ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac64988a0178dc42bbdf31e4547ebdd04">create_world</a> (<a class="el" href="classhittable.html">hittable</a> **d_list, <a class="el" href="classhittable.html">hittable</a> **d_world)</td></tr>
+<tr class="memdesc:ac64988a0178dc42bbdf31e4547ebdd04"><td class="mdescLeft">&#160;</td><td class="mdescRight">Funkcja tworzy zmienne przechowywane na GPU.  <br /></td></tr>
 <tr class="separator:ac64988a0178dc42bbdf31e4547ebdd04"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4ef18b3c2ee05d46e1ccd9741bff792d" id="r_a4ef18b3c2ee05d46e1ccd9741bff792d"><td class="memItemLeft" align="right" valign="top"><a id="a4ef18b3c2ee05d46e1ccd9741bff792d" name="a4ef18b3c2ee05d46e1ccd9741bff792d"></a>
-__global__ void&#160;</td><td class="memItemRight" valign="bottom"><b>clear_world</b> (<a class="el" href="classhittable.html">hittable</a> **d_list, <a class="el" href="classhittable.html">hittable</a> **d_world)</td></tr>
+<tr class="memitem:a4ef18b3c2ee05d46e1ccd9741bff792d" id="r_a4ef18b3c2ee05d46e1ccd9741bff792d"><td class="memItemLeft" align="right" valign="top">__global__ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4ef18b3c2ee05d46e1ccd9741bff792d">clear_world</a> (<a class="el" href="classhittable.html">hittable</a> **d_list, <a class="el" href="classhittable.html">hittable</a> **d_world)</td></tr>
+<tr class="memdesc:a4ef18b3c2ee05d46e1ccd9741bff792d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Funkcja czyszczaca pamiec GPU.  <br /></td></tr>
 <tr class="separator:a4ef18b3c2ee05d46e1ccd9741bff792d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Przestrzen nazw zawierajaca funkcje kernelowe do renderowania. </p>
+</div><h2 class="groupheader">Function Documentation</h2>
+<a id="a4ef18b3c2ee05d46e1ccd9741bff792d" name="a4ef18b3c2ee05d46e1ccd9741bff792d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4ef18b3c2ee05d46e1ccd9741bff792d">&#9670;&#160;</a></span>clear_world()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__global__ void renderKernelFunctions::clear_world </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classhittable.html">hittable</a> **</td>          <td class="paramname"><span class="paramname"><em>d_list</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classhittable.html">hittable</a> **</td>          <td class="paramname"><span class="paramname"><em>d_world</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Funkcja czyszczaca pamiec GPU. </p>
+<p>Funkcja zwalnia pamiec GPU, ktora byla zaalokowana dla obiektow klas, oraz listy obiektow w kernelu create_world. </p>
+
+</div>
+</div>
+<a id="ac64988a0178dc42bbdf31e4547ebdd04" name="ac64988a0178dc42bbdf31e4547ebdd04"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac64988a0178dc42bbdf31e4547ebdd04">&#9670;&#160;</a></span>create_world()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__global__ void renderKernelFunctions::create_world </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classhittable.html">hittable</a> **</td>          <td class="paramname"><span class="paramname"><em>d_list</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classhittable.html">hittable</a> **</td>          <td class="paramname"><span class="paramname"><em>d_world</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Funkcja tworzy zmienne przechowywane na GPU. </p>
+<p>Funkcja inicjalizuje obiekty klas, oraz liste obiektow (d_list) przechowywanych na scenie (d_world). Obiekty klas sa wykorzystywane na GPU, dlatego nalezalo zaalokowac ich pamiec na GPU. W tym miejscu, mozliwe jest dodanie, ustawianie pozycji i materialow obiektow, ktore maja byc renderowane. </p>
+
+</div>
+</div>
+<a id="aa256731ba9351460a16ff3840fdacd99" name="aa256731ba9351460a16ff3840fdacd99"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa256731ba9351460a16ff3840fdacd99">&#9670;&#160;</a></span>init_rand_state()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__global__ void renderKernelFunctions::init_rand_state </td>
+          <td>(</td>
+          <td class="paramtype">curandState *</td>          <td class="paramname"><span class="paramname"><em>rand_state</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>width</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>height</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Funkcja inicjalizujaca stan generatora liczb losowych. </p>
+<p>Funkcja tworzy generator liczb losowych, ktory moze byc wykorzystywany po stronie GPU </p>
+
+</div>
+</div>
+<a id="a0ba3445db0aa1e67812c98ac7381c4d4" name="a0ba3445db0aa1e67812c98ac7381c4d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0ba3445db0aa1e67812c98ac7381c4d4">&#9670;&#160;</a></span>ray_color()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__device__ <a class="el" href="classvec3.html">color</a> renderKernelFunctions::ray_color </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classray.html">ray</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>r</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classhittable.html">hittable</a> **</td>          <td class="paramname"><span class="paramname"><em>world</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">curandState *</td>          <td class="paramname"><span class="paramname"><em>r_state</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Funkcja obliczajaca kolor promienia. </p>
+<p>Funkcja oblicza kolor konkretnego piksela na podstawie zasad panujacych w ray tracingu. Jezeli badany promien trafi w obiekt, ktory znajduje sie na scenie, to funkcja odbija promien w zaleznosci od materialu, ktory znajduje sie na tym obiekcie. Jezeli jednak promien nie trafil w obiekt, zwracany jest kolor tla. Dodatkowo, w cudzie wystepuja pewne ograniczenia zwiazane z wywolywaniem funkcji rekursywnych wewnatrz kenrela. Dlatego zastosowano petle, ktora ogranicza ilosc odbic do okreslonej liczby. </p>
+
+</div>
+</div>
+<a id="a6a9bbef8cd942dc3b7d6ea0e4bc8d722" name="a6a9bbef8cd942dc3b7d6ea0e4bc8d722"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6a9bbef8cd942dc3b7d6ea0e4bc8d722">&#9670;&#160;</a></span>render_framebuffer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">__global__ void renderKernelFunctions::render_framebuffer </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classvec3.html">vec3</a> *</td>          <td class="paramname"><span class="paramname"><em>d_fb</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classhittable.html">hittable</a> **</td>          <td class="paramname"><span class="paramname"><em>d_world</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structcamera__params.html">camera_params</a></td>          <td class="paramname"><span class="paramname"><em>camParams</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">curandState *</td>          <td class="paramname"><span class="paramname"><em>rand_state</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Funkcja renderujaca bufor ramki. </p>
+<p>Funkcja jest glownym kernelem programu. Kazde wywolanie funkcji oblicza jeden piksel. Funkcja oblicza indeksy badanych pikseli, promien jaki pada na dany piksel, oraz kolor przy pomocy funkcji ray_color. Kolor jest zapisywany w tablicy d_fb. Zastosowano dodatkowo petle, ktora wraz z generowaniem liczb losowych tworzy filtr antyliasingowy, dzieki ktoremu krawedzie obiektow sa interpolowane i wygladzane. </p>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

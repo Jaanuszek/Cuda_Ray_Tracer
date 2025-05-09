@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['_7egpu_5fvariables_0',['~GPU_variables',['../class_g_p_u__variables.html#ac8769f8d59d2770c3ad3f6de4069ef9a',1,'GPU_variables']]]
+  ['vec3_0',['vec3',['../classvec3.html',1,'']]],
+  ['vec3_2ecuh_1',['vec3.cuh',['../vec3_8cuh.html',1,'']]]
 ];

@@ -110,9 +110,9 @@ $(function(){initNavTree('_g_p_u__variables_8cuh_source.html',''); initResizable
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;curand_kernel.h&gt;</span></div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &quot;<a class="code" href="general__includes_8cuh.html">general_includes.cuh</a>&quot;</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &quot;hittable.cuh&quot;</span></div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &quot;hittable_list.cuh&quot;</span></div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &quot;sphere.cuh&quot;</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &quot;<a class="code" href="hittable_8cuh.html">hittable.cuh</a>&quot;</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &quot;<a class="code" href="hittable__list_8cuh.html">hittable_list.cuh</a>&quot;</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &quot;<a class="code" href="sphere_8cuh.html">sphere.cuh</a>&quot;</span></div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span></div>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="keyword">class </span><a class="code hl_class" href="classcamera.html">camera</a>;</div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span></div>
@@ -149,12 +149,15 @@ $(function(){initNavTree('_g_p_u__variables_8cuh_source.html',''); initResizable
 <div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span> </div>
 <div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span><span class="preprocessor">#endif</span></div>
 <div class="ttc" id="aclass_g_p_u__variables_html_ab10419f75c55254df7c9c10a3f94eebe"><div class="ttname"><a href="class_g_p_u__variables.html#ab10419f75c55254df7c9c10a3f94eebe">GPU_variables::GPU_variables</a></div><div class="ttdeci">__host__ GPU_variables(int width, int height, int objCount)</div><div class="ttdoc">Prywatny konstruktor klasy GPU_variables.</div><div class="ttdef"><b>Definition</b> GPU_variables.cu:5</div></div>
-<div class="ttc" id="aclass_g_p_u__variables_html_ac8769f8d59d2770c3ad3f6de4069ef9a"><div class="ttname"><a href="class_g_p_u__variables.html#ac8769f8d59d2770c3ad3f6de4069ef9a">GPU_variables::~GPU_variables</a></div><div class="ttdeci">__host__ ~GPU_variables()</div><div class="ttdoc">Prywatny destruktor klasy GPU_variables.</div><div class="ttdef"><b>Definition</b> GPU_variables.cu:27</div></div>
-<div class="ttc" id="aclasscamera_html"><div class="ttname"><a href="classcamera.html">camera</a></div><div class="ttdef"><b>Definition</b> camera.cuh:34</div></div>
-<div class="ttc" id="aclasshittable_html"><div class="ttname"><a href="classhittable.html">hittable</a></div><div class="ttdef"><b>Definition</b> hittable.cuh:29</div></div>
+<div class="ttc" id="aclass_g_p_u__variables_html_ac8769f8d59d2770c3ad3f6de4069ef9a"><div class="ttname"><a href="class_g_p_u__variables.html#ac8769f8d59d2770c3ad3f6de4069ef9a">GPU_variables::~GPU_variables</a></div><div class="ttdeci">__host__ ~GPU_variables()</div><div class="ttdoc">Prywatny destruktor klasy GPU_variables.</div><div class="ttdef"><b>Definition</b> GPU_variables.cu:21</div></div>
+<div class="ttc" id="aclasscamera_html"><div class="ttname"><a href="classcamera.html">camera</a></div><div class="ttdoc">Klasa camera.</div><div class="ttdef"><b>Definition</b> camera.cuh:64</div></div>
+<div class="ttc" id="aclasshittable_html"><div class="ttname"><a href="classhittable.html">hittable</a></div><div class="ttdoc">Klasa bazowa dla wszystkich obiektow, ktore moga byc trafione przez promien.</div><div class="ttdef"><b>Definition</b> hittable.cuh:38</div></div>
 <div class="ttc" id="aclassvec3_html"><div class="ttname"><a href="classvec3.html">vec3</a></div><div class="ttdoc">Klasa wektora 3D.</div><div class="ttdef"><b>Definition</b> vec3.cuh:20</div></div>
 <div class="ttc" id="ageneral__includes_8cuh_html"><div class="ttname"><a href="general__includes_8cuh.html">general_includes.cuh</a></div><div class="ttdoc">Plik nag³owkowy zawieraj¹cy ogolne definicje i funkcje pomocnicze.</div></div>
-<div class="ttc" id="astructrender__params_html"><div class="ttname"><a href="structrender__params.html">render_params</a></div><div class="ttdoc">Struktura przechowuj¹ca parametry renderowania.</div><div class="ttdef"><b>Definition</b> GPU_variables.cuh:20</div></div>
+<div class="ttc" id="ahittable_8cuh_html"><div class="ttname"><a href="hittable_8cuh.html">hittable.cuh</a></div><div class="ttdoc">Definicja klasy hittable oraz hit_record.</div></div>
+<div class="ttc" id="ahittable__list_8cuh_html"><div class="ttname"><a href="hittable__list_8cuh.html">hittable_list.cuh</a></div><div class="ttdoc">Definicja klasy hittable_list.</div></div>
+<div class="ttc" id="asphere_8cuh_html"><div class="ttname"><a href="sphere_8cuh.html">sphere.cuh</a></div><div class="ttdoc">Definicja klasy sphere.</div></div>
+<div class="ttc" id="astructrender__params_html"><div class="ttname"><a href="structrender__params.html">render_params</a></div><div class="ttdoc">Struktura przechowujaca parametry renderowania.</div><div class="ttdef"><b>Definition</b> GPU_variables.cuh:20</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

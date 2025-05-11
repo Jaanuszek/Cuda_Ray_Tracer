@@ -39,7 +39,7 @@ class hittable
 public:
     //! @brief Funkcja czyszczaca pamiec
 	//! @details Nie moze byc to wirtualny destruktor, bo cuda sobie z tym nie radzi.
-	__device__ ~hittable() {}
+	__host__ __device__ ~hittable() {}
     //! @brief Abstrakcyjna funkcja sprawdzajaca czy promien trafil w obiekt
     //! @details Funkcja sprawdza czy promien trafia w obiekt. Jezeli tak, to ustawia informacje o trafieniu w obiekcie.
 	__device__ virtual bool hit(const ray& r, interval ray_t, hit_record& rec) const = 0;

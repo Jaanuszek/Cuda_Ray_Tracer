@@ -22,7 +22,7 @@ private:
     }
 public:
     //! @brief Konstruktor klasy dielectric, przyjmujaca wspolczynnik za³amania (refraction index).
-    __device__ dielectric(float ri) : ref_idx(ri) {}
+    __host__ __device__ dielectric(float ri) : ref_idx(ri) {}
     //! @brief Przeciazona funkcja scatter, ktora oblicza oraz odbija promien.
     //! @details Oblicza refrakcje swiatla w zaleznosci od osrodka w ktorym sie znajduje promien oraz z jakim materialem ma do czynienia (ref_idx).
     //! Jezeli wynik zalamania jest wiekszy niz 1 (nie moze byc bo sinus nie moze byc > 1), to wtedy promien jest odbijany (refLECT!).

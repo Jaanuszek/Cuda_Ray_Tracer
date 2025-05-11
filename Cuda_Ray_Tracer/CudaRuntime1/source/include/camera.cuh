@@ -80,8 +80,8 @@ private:
     __device__ ray get_ray(int index_i, int index_j, float offset_x, float offset_y) const;
 public:
     float aspect_ratio = 16.0f / 9.0f;
-    int image_width = 1920;
-    int samples_per_pixel = 500;
+    int image_width = 400;
+    int samples_per_pixel = 50;
     float vfov = 80.0f;
     vec3 lookfrom = vec3(0, 2, 1);
     vec3 lookat = vec3(0, 0, -2);

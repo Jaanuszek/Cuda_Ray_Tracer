@@ -20,7 +20,8 @@ private:
     float m_radius;
 public:
     material* mat_ptr;
-    __device__ sphere(const point3& center, float radius, material* mat);
+    __device__ __host__ sphere(const point3& center, float radius, material* mat);
+    __device__ __host__ ~sphere() { delete mat_ptr; mat_ptr = nullptr; }
 
     //! @brief Przeciazona funkcja sprawdzajaca czy promien trafia w sferê
     //! @details Funkcja korzysta z rownania okregu, obliczajac przestrzen w ktorej sie znajduje dana kula, bazujac na pozycji jej srodka.

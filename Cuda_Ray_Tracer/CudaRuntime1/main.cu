@@ -14,6 +14,14 @@
 
 int main()
 {
+    // zmienic te magiczne wartosci by byly zgodne z tymi co sa w klasie "CAMERA"
+    int xSpheresCount = 10;
+    int ySpheresCount = 10;
+    int basicSpheresCount = 5;
+    //GPU_variables::init(400, 400, basicSpheresCount + xSpheresCount * ySpheresCount);
+    //GPU_variables& gpuVars = GPU_variables::getInstance();
+    //gpuVars.destroy();
+    //h_create_world(gpuVars.getRenderParams(), xSpheresCount, ySpheresCount);
     camera cam;
     cam.render();
 }

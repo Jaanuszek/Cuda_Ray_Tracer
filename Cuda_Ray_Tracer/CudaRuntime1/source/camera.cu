@@ -6,16 +6,24 @@
 #include "include/dielectric.cuh"
 
 namespace renderKernelFunctions {
-    __device__ color ray_color(const ray& r, hittable** world, curandState* r_state)
+    __device__ color ray_color(const ray& r, hittable_list* world, curandState* r_state)
     {
         ray cur_ray = r;
         vec3 cur_attenuation = vec3(1.0f, 1.0f, 1.0f);
+        printf("====== ray_color1");
         for (int i = 0; i < 50; i++) {
             hit_record rec;
-            if ((*world)->hit(cur_ray, interval(0.0001f, constants::infinity), rec))
+            printf("====== ray_color2");
+            //printf("======= ray_color world size %d", (world)->list_size);
+            if (world)
+            {
+                printf("world exits!");
+            }
+            if (world->hit(cur_ray, interval(0.0001f, constants::infinity), rec))
             {
                 ray scattered;
                 vec3 attenutation;
+                printf("====== ray_color3");
                 if (rec.mat_ptr->scatter(cur_ray, rec, attenutation, scattered, r_state)) {
                     cur_attenuation = attenutation * cur_attenuation;
                     cur_ray = scattered;
@@ -26,6 +34,7 @@ namespace renderKernelFunctions {
                 }
             }
             else {
+                printf("====== ray_color4");
                 vec3 unit_direction = unit_vector(r.get_direction());
                 float a = 0.5f * (unit_direction.y() + 1.0f);
                 vec3 col = (1.0f - a) * color(1.0f, 1.0f, 1.0f) + a * color(0.5f, 0.7f, 1.0f);
@@ -45,7 +54,7 @@ namespace renderKernelFunctions {
         curand_init(2025, pixel_index, 0, &rand_state[pixel_index]);
     }
 
-    __global__ void render_framebuffer(vec3* d_fb, hittable** d_world, camera_params camParams, curandState *rand_state)
+    __global__ void render_framebuffer(vec3* d_fb, hittable_list* d_world, camera_params camParams, curandState *rand_state)
     {
         int i = threadIdx.x + blockDim.x * blockIdx.x; // width
         int j = threadIdx.y + blockDim.y * blockIdx.y; //height
@@ -53,7 +62,7 @@ namespace renderKernelFunctions {
         if (i >= camParams.image_width || j >= camParams.image_height) return;
 
         int pixel_index = j * camParams.image_width + i;
-
+        printf("======1");
         curandState local_rand_state = rand_state[pixel_index];
 
         vec3 color(0, 0, 0);
@@ -67,95 +76,96 @@ namespace renderKernelFunctions {
             vec3 viewPortPixelIndex = camParams.pixel00_loc + ((i + x) * camParams.pixel_delta_u) + ((j + y) * camParams.pixel_delta_v);
             vec3 ray_direction = viewPortPixelIndex - camParams.cameraCenter;
             ray r(camParams.cameraCenter, ray_direction);
+            printf("======2");
             color += renderKernelFunctions::ray_color(r, d_world, &local_rand_state);
         }
-
+        printf("======3");
         d_fb[pixel_index] = color / float(spp);
-
+        printf("======4");
         rand_state[pixel_index] = local_rand_state;
     }
 
-    __global__ void create_world(hittable** d_list, hittable** d_world, curandState* rand_state)
-    {
-        if (threadIdx.x != 0 || blockIdx.x != 0)
-        {
-            return;
-        }
-        lambertian* material_ground = new lambertian(vec3(0.5f, 0.5f, 0.5f));
-        lambertian* material_center = new lambertian(vec3(0.1f, 0.2f, 0.5f));
-        //metal* material_left = new metal (vec3(0.8f, 0.8f, 0.8f), 0.3f);
-        dielectric* material_left = new dielectric(1.50f);
-        dielectric* material_bubble = new dielectric(1.00f / 1.50f);
-        metal* material_right = new metal(vec3(0.8f, 0.6f, 0.2f), 0.0f);
-        int listIndex = 0;
-        d_list[listIndex++] = new sphere(point3(0.0f, -1000.0f, 0.0f), 1000.0f, material_ground);
-        d_list[listIndex++] = new sphere(point3(0.0f, 0.5f, -1.2f), 0.5f, material_center);
-        d_list[listIndex++] = new sphere(point3(-1.0f, 0.5f, -1.0f), 0.5f, material_left);
-        d_list[listIndex++] = new sphere(point3(-1.0f, 0.4f, -1.0f), 0.4f, material_bubble);
-        d_list[listIndex++] = new sphere(point3(1.0f, 0.5f, -1.0f), 0.5f, material_right);
+    //__global__ void create_world(hittable** d_list, hittable** d_world, curandState* rand_state)
+    //{
+    //    if (threadIdx.x != 0 || blockIdx.x != 0)
+    //    {
+    //        return;
+    //    }
+    //    lambertian* material_ground = new lambertian(vec3(0.5f, 0.5f, 0.5f));
+    //    lambertian* material_center = new lambertian(vec3(0.1f, 0.2f, 0.5f));
+    //    //metal* material_left = new metal (vec3(0.8f, 0.8f, 0.8f), 0.3f);
+    //    dielectric* material_left = new dielectric(1.50f);
+    //    dielectric* material_bubble = new dielectric(1.00f / 1.50f);
+    //    metal* material_right = new metal(vec3(0.8f, 0.6f, 0.2f), 0.0f);
+    //    int listIndex = 0;
+    //    d_list[listIndex++] = new sphere(point3(0.0f, -1000.0f, 0.0f), 1000.0f, material_ground);
+    //    d_list[listIndex++] = new sphere(point3(0.0f, 0.5f, -1.2f), 0.5f, material_center);
+    //    d_list[listIndex++] = new sphere(point3(-1.0f, 0.5f, -1.0f), 0.5f, material_left);
+    //    d_list[listIndex++] = new sphere(point3(-1.0f, 0.4f, -1.0f), 0.4f, material_bubble);
+    //    d_list[listIndex++] = new sphere(point3(1.0f, 0.5f, -1.0f), 0.5f, material_right);
 
-        int width = 10;
-        int height = 10;
-        int sizeOfNewSpheres = width * height;
-        curandState local_rand_state = *rand_state;
-        for (int i = 0; i < height; i++)
-        {
-            for (int j = 0; j < width; j++)
-            {
-                float chose_material = curand_uniform(&local_rand_state);
-                float x = -5.0f + j + 0.7f * curand_uniform(&local_rand_state);
-                float y = 0.2f;
-                float z = -1.0f - i - 0.7f * curand_uniform(&local_rand_state);
-                vec3 centerOfSphere(x, y, z);
-                material* mat_ptr = nullptr;
-                if (chose_material < 0.4f)
-                {
-                    float albedo = curand_uniform(&local_rand_state) * curand_uniform(&local_rand_state);
-                    vec3 albedoVec(
-                        curand_uniform(&local_rand_state) * curand_uniform(&local_rand_state),
-                        curand_uniform(&local_rand_state) * curand_uniform(&local_rand_state),
-                        curand_uniform(&local_rand_state) * curand_uniform(&local_rand_state)
-                    );
-                    mat_ptr = new lambertian(albedoVec);
-                    d_list[listIndex++] = new sphere(centerOfSphere, 0.2f, mat_ptr);
-                }
-                else if (chose_material < 0.8f && chose_material > 0.4f)
-                {
-                    float albedo = (curand_uniform(&local_rand_state) + 1.0f) * 0.5f;
-                    vec3 albedoVec(
-                        (curand_uniform(&local_rand_state) + 1.0f) * 0.5f,
-                        (curand_uniform(&local_rand_state) + 1.0f) * 0.5f,
-                        (curand_uniform(&local_rand_state) + 1.0f) * 0.5f
-                    );
-                    float fuzz = curand_uniform(&local_rand_state);
-                    mat_ptr = new metal(albedoVec, fuzz);
-                    d_list[listIndex++] = new sphere(centerOfSphere, 0.2f, mat_ptr);
-                }
-                else
-                {
-                    mat_ptr = new dielectric(1.50f);
-                    d_list[listIndex++] = new sphere(centerOfSphere, 0.2f, mat_ptr);
-                }
-            }
-        }
-        rand_state = &local_rand_state;
-        *d_world = new hittable_list(d_list, listIndex);
-    }
+    //    int width = 10;
+    //    int height = 10;
+    //    int sizeOfNewSpheres = width * height;
+    //    curandState local_rand_state = *rand_state;
+    //    for (int i = 0; i < height; i++)
+    //    {
+    //        for (int j = 0; j < width; j++)
+    //        {
+    //            float chose_material = curand_uniform(&local_rand_state);
+    //            float x = -5.0f + j + 0.7f * curand_uniform(&local_rand_state);
+    //            float y = 0.2f;
+    //            float z = -1.0f - i - 0.7f * curand_uniform(&local_rand_state);
+    //            vec3 centerOfSphere(x, y, z);
+    //            material* mat_ptr = nullptr;
+    //            if (chose_material < 0.4f)
+    //            {
+    //                float albedo = curand_uniform(&local_rand_state) * curand_uniform(&local_rand_state);
+    //                vec3 albedoVec(
+    //                    curand_uniform(&local_rand_state) * curand_uniform(&local_rand_state),
+    //                    curand_uniform(&local_rand_state) * curand_uniform(&local_rand_state),
+    //                    curand_uniform(&local_rand_state) * curand_uniform(&local_rand_state)
+    //                );
+    //                mat_ptr = new lambertian(albedoVec);
+    //                d_list[listIndex++] = new sphere(centerOfSphere, 0.2f, mat_ptr);
+    //            }
+    //            else if (chose_material < 0.8f && chose_material > 0.4f)
+    //            {
+    //                float albedo = (curand_uniform(&local_rand_state) + 1.0f) * 0.5f;
+    //                vec3 albedoVec(
+    //                    (curand_uniform(&local_rand_state) + 1.0f) * 0.5f,
+    //                    (curand_uniform(&local_rand_state) + 1.0f) * 0.5f,
+    //                    (curand_uniform(&local_rand_state) + 1.0f) * 0.5f
+    //                );
+    //                float fuzz = curand_uniform(&local_rand_state);
+    //                mat_ptr = new metal(albedoVec, fuzz);
+    //                d_list[listIndex++] = new sphere(centerOfSphere, 0.2f, mat_ptr);
+    //            }
+    //            else
+    //            {
+    //                mat_ptr = new dielectric(1.50f);
+    //                d_list[listIndex++] = new sphere(centerOfSphere, 0.2f, mat_ptr);
+    //            }
+    //        }
+    //    }
+    //    rand_state = &local_rand_state;
+    //    *d_world = new hittable_list(d_list, listIndex);
+    //}
 
-    __global__ void clear_world(hittable** d_list, hittable** d_world)
-    {
-        if (threadIdx.x == 0 && blockIdx.x == 0)
-        {
-            hittable_list* world = (hittable_list*)(*d_world);
-            for (int i = 0; i < world->list_size; i++)
-            {
-                sphere* s = (sphere*)(world->m_objects_ptr[i]);
-                delete s->mat_ptr;
-                delete s;
-            }
-            delete world;
-        }
-    }
+    //__global__ void clear_world(hittable** d_list, hittable** d_world)
+    //{
+    //    if (threadIdx.x == 0 && blockIdx.x == 0)
+    //    {
+    //        hittable_list* world = (hittable_list*)(*d_world);
+    //        for (int i = 0; i < world->list_size; i++)
+    //        {
+    //            sphere* s = (sphere*)(world->m_objects_ptr[i]);
+    //            delete s->mat_ptr;
+    //            delete s;
+    //        }
+    //        delete world;
+    //    }
+    //}
 }
 
 void camera::Init()
@@ -205,24 +215,24 @@ camera::camera()
     GPU_variables& gpu_vars = GPU_variables::getInstance();
     render_params* h_render_params = gpu_vars.getRenderParams();
 
-    renderKernelFunctions::init_rand_state << <gridSize, blockSize >> > (h_render_params->d_rand_state, image_width, image_height);
+    renderKernelFunctions::init_rand_state << <gridSize, blockSize >> > (h_render_params->rand_state, image_width, image_height);
     checkCudaErrors(cudaGetLastError());
     checkCudaErrors(cudaDeviceSynchronize());
-    renderKernelFunctions::create_world << <1, 1 >> > (h_render_params->d_list, h_render_params->d_world, h_render_params->d_rand_state);
-    checkCudaErrors(cudaGetLastError());
-    checkCudaErrors(cudaDeviceSynchronize());
+    //renderKernelFunctions::create_world << <1, 1 >> > (h_render_params->d_list, h_render_params->d_world, h_render_params->d_rand_state);
+    //checkCudaErrors(cudaGetLastError());
+    //checkCudaErrors(cudaDeviceSynchronize());
 }
 
 camera::~camera()
 {
     GPU_variables& gpu_vars = GPU_variables::getInstance();
-    render_params* h_render_params = gpu_vars.getRenderParams();
-    hittable** d_list = h_render_params->d_list;
-    hittable** d_world = h_render_params->d_world;
+    //render_params* h_render_params = gpu_vars.getRenderParams();
+    //hittable** d_list = h_render_params->d_list;
+    //hittable** d_world = h_render_params->d_world;
 
-    renderKernelFunctions::clear_world << <1, 1 >> > (d_list, d_world);
-    checkCudaErrors(cudaGetLastError());
-    checkCudaErrors(cudaDeviceSynchronize());
+    //renderKernelFunctions::clear_world << <1, 1 >> > (d_list, d_world);
+    //checkCudaErrors(cudaGetLastError());
+    //checkCudaErrors(cudaDeviceSynchronize());
     gpu_vars.destroy();
 }
 
@@ -242,9 +252,9 @@ void camera::render() // moze to world powinno sie tworzyc poza klasa ( w mainie
     GPU_variables& gpu_vars = GPU_variables::getInstance();
     render_params* h_render_params = gpu_vars.getRenderParams();
     // uzyc check_ptr_type w jakis madry sposob o tu
-    vec3* d_fb = h_render_params->d_fb;
-    hittable** d_world = h_render_params->d_world;
-    curandState* d_rand_state = h_render_params->d_rand_state;
+    vec3* d_fb = h_render_params->fb;
+    hittable_list* d_world = h_render_params->world;
+    curandState* d_rand_state = h_render_params->rand_state;
 
     renderKernelFunctions::render_framebuffer << <gridSize, blockSize >> > (d_fb, d_world, camParams, d_rand_state);
     checkCudaErrors(cudaGetLastError());

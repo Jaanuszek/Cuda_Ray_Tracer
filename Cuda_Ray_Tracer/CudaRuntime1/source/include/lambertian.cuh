@@ -12,7 +12,7 @@ class lambertian : public material {
 private:
 	vec3 albedo; // "Whiteness"
 public:
-	__device__ lambertian(const vec3& albedo) : albedo(albedo) {}
+	__host__ __device__ lambertian(const vec3& albedo) : albedo(albedo) {}
     //! @brief Przeciazona funkcja sprawdzajaca czy promien trafia w obiekt
     //! @details Oblicza w sposob losowy kierunek rozproszenia promienia, bazujac na normalnej w punkcie trafienia.
 	__device__ bool scatter(

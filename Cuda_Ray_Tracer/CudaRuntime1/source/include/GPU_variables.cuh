@@ -7,8 +7,15 @@
 #include "hittable_list.cuh"
 #include "sphere.cuh"
 
+//! @file GPU_variables.cuh
+//! @brief Plik naglowkowy zawierajacy definicje singletona GPU_variables
+//! @details Klasa ta jest singletonem, ktory przechowuje zmienne inicjalizowane i przechowywane na GPU
+//! uzywane w programie.
 class camera;
 
+//! @brief Struktura przechowujaca parametry renderowania
+//! @details Struktura ta przechowuje wskazniki do zmiennych inicjalizowanych i przechowywanych na GPU.
+//! Stworzona w celu uproszczenia kodu i zmniejszenia ilosci przekazywanych argumentow do funkcji.
 struct render_params
 {
     curandState* d_rand_state;
@@ -18,15 +25,20 @@ struct render_params
     camera** d_camera;
 };
 
+//! @brief Klasa realizujaca wzorzec Singletona
 class GPU_variables
 {
 private:
     int image_width;
     int image_height;
     render_params* h_render_params;
-    render_params* d_render_params; // to raczej sie narazie nie przyda ale zostawie na przyszlosc
     static GPU_variables* instance;
+    //! @brief Prywatny konstruktor klasy GPU_variables
+    //! @details inicjuje wskaznik do struktury render_params
+    //! Alokuje pamiec na GPU dla zmiennych przechowywanych w tej strukturze
     __host__ GPU_variables(int width, int height, int objCount);
+    //! @brief Prywatny destruktor klasy GPU_variables
+    //! @details Zwalnia pamiec na GPU dla zmiennych przechowywanych w strukturze render_params
     __host__ ~GPU_variables();
 public:
     __host__ GPU_variables(const GPU_variables&) = delete;

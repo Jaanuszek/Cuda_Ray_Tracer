@@ -6,20 +6,19 @@ __device__ sphere::sphere(const point3& center, float radius, material* mat)
 
 __device__ bool sphere::hit(const ray& r, interval ray_t, hit_record& rec) const {
 	vec3 oc = m_center - r.get_origin();
-	auto a = r.get_direction().length_squared(); // == dot(r.get_direction(), r.get_direction());
-	auto h = dot(r.get_direction(), oc); //auto b = 2.0f * dot(oc, r.get_direction());
-	auto c = oc.length_squared() - m_radius * m_radius; // oc.lengtj_squared() == dot(oc, oc);
-	//delta
-	auto delta = h * h - a * c; //auto delta = b * b - 4 * a * c;
+	float a = r.get_direction().length_squared(); // == dot(r.get_direction(), r.get_direction());
+	float h = dot(r.get_direction(), oc); //auto b = 2.0f * dot(oc, r.get_direction());
+	float c = oc.length_squared() - m_radius * m_radius; // oc.lengtj_squared() == dot(oc, oc);
+	float delta = h * h - a * c; //auto delta = b * b - 4 * a * c;
 	if (delta < 0)
 	{
 		return false;
 	}
 	
-	auto sqrtDelta = std::sqrt(delta);
+	float sqrtDelta = std::sqrt(delta);
 
-	// if root is not in acceptable renage, return false
-	auto root = (h - sqrtDelta) / a;
+	// if root is not in acceptable ranage, return false
+	float root = (h - sqrtDelta) / a;
 	if (!ray_t.surrounds(root)) {
 		root = (h + sqrtDelta) / a;
 		if (!ray_t.surrounds(root))

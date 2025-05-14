@@ -34,3 +34,8 @@ __device__ bool sphere::hit(const ray& r, interval ray_t, hit_record& rec) const
 
 	return true;
 }
+
+__device__ void sphere::tempFunc()
+{
+	printf("sphere\n");
+}

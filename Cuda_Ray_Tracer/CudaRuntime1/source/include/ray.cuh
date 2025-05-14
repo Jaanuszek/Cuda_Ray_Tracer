@@ -23,18 +23,18 @@ private:
     vec3 A;
 public:
     __device__ ray() {}
-    __device__ ray(const point3& origin, const vec3& direction)
+    __host__ __device__ ray(const point3& origin, const vec3& direction)
                 : B(origin), A(direction)
                 {}
 
     //! @brief Funkcja zwracaj¹ca punkt na promieniu
-    __device__ const point3& get_origin() const { return B; }
+    __host__ __device__ const point3& get_origin() const { return B; }
     //! @brief Funkcja zwracaj¹ca kierunek promienia
-    __device__ const vec3& get_direction() const { return A; }
+    __host__ __device__ const vec3& get_direction() const { return A; }
 
     //! @brief Funkcja zwracaj¹ca punkt na promieniu w czasie t
     //! @param t Czas w którym chcemy obliczyæ punkt na promieniu
-    __device__ point3 at(float x) const { return B + x * A; }
+    __host__ __device__ point3 at(float x) const { return B + x * A; }
 };
 
 #endif

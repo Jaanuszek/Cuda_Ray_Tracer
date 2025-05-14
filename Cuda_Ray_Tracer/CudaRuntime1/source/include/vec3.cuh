@@ -2,6 +2,8 @@
 #define VEC3_CUH
 
 #include <cstddef>
+#include <random>
+//#include <cstdlib>
 #include "general_includes.cuh"
 #include "cuda_runtime.h"
 #include <curand_kernel.h>
@@ -57,7 +59,7 @@ public:
     __host__ __device__ float length_squared() const {
         return element[0] * element[0] + element[1] * element[1] + element[2] * element[2];
     }
-    __device__ bool near_zero() const
+    __host__ __device__ bool near_zero() const
     {
         float s = 1e-8;
         return (fabs(element[0]) < s &&
@@ -111,6 +113,18 @@ __host__ __device__ inline vec3 unit_vector(vec3 v) {
     return v / v.length();
 }
 
+__host__ inline float random_float()
+{
+    static std::uniform_real_distribution<double> distribution(0.0, 1.0);
+    static std::mt19937 generator;
+    return distribution(generator);
+}
+
+__host__ inline float random_float(float min, float max)
+{
+    return min + (max - min) * random_float();
+}
+
 //! \brief Funkcja losujaca wektor jednostkowy
 //! \details Funkcja losuje wektor jednostkowy korzytaj¹c z
 //! generatora liczb losowych curand. Wektor jest losowany
@@ -123,6 +137,20 @@ __device__ inline vec3 random_unit_vec(curandState* r_state)
             2.0f * curand_uniform(r_state) - 1.0f,
             2.0f * curand_uniform(r_state) - 1.0f,
             2.0f * curand_uniform(r_state) - 1.0f
+        );
+        if (p.length_squared() <= 1)
+            return p / sqrt(p.length_squared());
+    }
+}
+
+__host__ __device__ inline vec3 random_unit_vec()
+{
+    while (true)
+    {
+        vec3 p(
+            2.0f * random_float() - 1.0f,
+            2.0f * random_float() - 1.0f,
+            2.0f * random_float() - 1.0f
         );
         if (p.length_squared() <= 1)
             return p / sqrt(p.length_squared());

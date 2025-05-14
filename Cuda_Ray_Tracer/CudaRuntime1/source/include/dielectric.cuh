@@ -55,6 +55,11 @@ public:
         scattered = ray(rec.p, direction);
         return true;
     }
+
+    __device__ __host__ bool host_device_scatter(const ray& r_in, const hit_record& rec, vec3& attenuation, ray& scattered, curandState* r_state)
+        const override {
+        return false;
+    }
 };
 
 #endif

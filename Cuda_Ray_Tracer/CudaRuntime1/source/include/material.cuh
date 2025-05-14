@@ -17,6 +17,12 @@ public:
 		vec3& attenuation, ray& scattered,
 		curandState* r_state
 		) const = 0;
+
+	__host__ __device__ virtual bool host_device_scatter(
+		const ray& r_in, const hit_record& rec,
+		vec3& attenuation, ray& scattered,
+		curandState* r_state
+	) const = 0;
 };
 
 #endif

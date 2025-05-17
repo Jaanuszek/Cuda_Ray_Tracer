@@ -1,14 +1,16 @@
 #ifndef LAMBERTIAN_CUH
 #define LAMBERTIAN_CUH
 
-#include "material.cuh"
+//#include "material.cuh"
+#include "hittable.cuh"
 
 //! @file lambertian.cuh
 //! @brief Definicja klasy lambertian (diffuse material)
-
+class hit_record;
 // Diffuse
 //! @brief Klasa lambertian dziedziczy po klasie material. Przechowuje informacje o albedo (kolorze) materialu.
-class lambertian : public material {
+class lambertian
+{
 private:
     vec3 albedo; // "Whiteness"
 public:
@@ -19,9 +21,9 @@ public:
         const ray& r_in, const hit_record& rec, 
         vec3& attenuation, ray& scattered,
         curandState* r_state
-    ) const override
+    ) const
     {
-        vec3 scatter_direction = rec.normal + random_unit_vec();
+        vec3 scatter_direction = rec.normal + random_unit_vec(r_state);
         if (scatter_direction.near_zero())
         {
             scatter_direction = rec.normal;
@@ -35,7 +37,7 @@ public:
         const ray& r_in, const hit_record& rec,
         vec3& attenuation, ray& scattered,
         curandState* r_state
-    ) const override
+    ) const
     {
         vec3 scatter_direction = rec.normal + random_unit_vec();
         if (scatter_direction.near_zero())

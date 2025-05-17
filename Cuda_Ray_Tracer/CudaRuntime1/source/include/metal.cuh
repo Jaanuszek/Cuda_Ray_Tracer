@@ -8,7 +8,7 @@
 
 //! @brief Definicja klasy metal
 //! @details Klasa metal dziedziczy po klasie material. Przechowuje informacje o albedo (kolorze) materialu oraz jego "szorstkoœci" (fuzz).
-class metal : public material {
+class metal {
 private:
     vec3 albedo;
     float fuzz;
@@ -24,7 +24,7 @@ public:
         const ray& r_in, const hit_record& rec,
         vec3& attenuation, ray& scattered,
         curandState* r_state
-    ) const override
+    ) const
     {
         vec3 reflected = reflect(r_in.get_direction(), rec.normal);
         reflected = unit_vector(reflected) + (fuzz * random_unit_vec(r_state));
@@ -37,7 +37,7 @@ public:
         const ray& r_in, const hit_record& rec,
         vec3& attenuation, ray& scattered,
         curandState* r_state
-    ) const override
+    ) const
     {
         return false;
     }

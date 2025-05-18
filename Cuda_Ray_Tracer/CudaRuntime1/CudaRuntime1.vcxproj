@@ -83,7 +83,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <CudaCompile Include="main.cu" />
+    <CudaCompile Include="source\box.cu" />
     <CudaCompile Include="source\camera.cu" />
+    <CudaCompile Include="source\cylinder.cu" />
     <CudaCompile Include="source\GPU_factory.cu" />
     <CudaCompile Include="source\GPU_variables.cu" />
     <CudaCompile Include="source\GPU_world.cu" />
@@ -92,8 +94,10 @@
     <CudaCompile Include="source\sphere.cu" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\include\box.cuh" />
     <ClInclude Include="source\include\camera.cuh" />
     <ClInclude Include="source\include\Color.cuh" />
+    <ClInclude Include="source\include\cylinder.cuh" />
     <ClInclude Include="source\include\dielectric.cuh" />
     <ClInclude Include="source\include\general_includes.cuh" />
     <ClInclude Include="source\include\GPU_factory.cuh" />

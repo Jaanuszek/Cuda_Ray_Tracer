@@ -5,10 +5,6 @@ __device__ sphere::sphere(const point3& center, float radius)
 }
 
 __device__ bool sphere::hit(const ray& r, interval ray_t, hit_record& rec, void* mat, MaterialType mat_type){
-    if (mat == nullptr)
-    {
-        return false;
-    }
     vec3 oc = m_center - r.get_origin();
     float a = r.get_direction().length_squared(); // == dot(r.get_direction(), r.get_direction());
     float h = dot(r.get_direction(), oc); //auto b = 2.0f * dot(oc, r.get_direction());

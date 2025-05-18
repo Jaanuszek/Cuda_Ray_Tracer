@@ -38,3 +38,15 @@ sphere* GPU_factory::createSphere(const vec3 & center, float radius)
     sphere* device_sphere_ptr = uploadToGPU(host_sphere);
     return device_sphere_ptr;
 }
+box* GPU_factory::createBox(const vec3& min, const vec3& max)
+{
+    box host_sphere = box(min, max);
+    box* device_sphere_ptr = uploadToGPU(host_sphere);
+    return device_sphere_ptr;
+}
+cylinder* GPU_factory::createCylinder(const vec3& center, float radius, float height)
+{
+    cylinder host_sphere = cylinder(center, radius, height);
+    cylinder* device_sphere_ptr = uploadToGPU(host_sphere);
+    return device_sphere_ptr;
+}

@@ -99,6 +99,25 @@ __host__ __device__ inline vec3 operator/(const vec3& v, float t) {
     return (1 / t) * v;
 }
 
+__host__ __device__ inline vec3 operator/(const vec3& v, const vec3& t) {
+    const float epsilion = 1e-8f;
+    return vec3(
+        v.x() / (fabs(t.x()) < epsilion ? epsilion : t.x()),
+        v.y() / (fabs(t.y()) < epsilion ? epsilion : t.y()),
+        v.z() / (fabs(t.z()) < epsilion ? epsilion : t.z())
+    );
+}
+
+__host__ __device__ inline vec3 operator/(float t, const vec3& v) {
+    const float epsilion = 1e-8f;
+    return vec3(
+        t / (fabs(v.x()) < epsilion ? epsilion : v.x()),
+        t / (fabs(v.y()) < epsilion ? epsilion : v.y()),
+        t / (fabs(v.z()) < epsilion ? epsilion : v.z())
+    );
+    //return vec3(t / v.x(), t / v.y(), t / v.z());
+}
+
 __host__ __device__ inline float dot(const vec3& u, const vec3& v) {
     return u.x() * v.x() + u.y() * v.y() + u.z() * v.z();
 }

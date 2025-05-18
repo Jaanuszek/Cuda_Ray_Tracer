@@ -7,6 +7,8 @@
 #include "metal.cuh"
 #include "dielectric.cuh"
 #include "sphere.cuh"
+#include "box.cuh"
+#include "cylinder.cuh"
 
 enum class ObjectType
 {
@@ -32,6 +34,8 @@ struct GenericType
 };
 
 class sphere;
+class box;
+class cylinder;
 
 class GPU_factory
 {
@@ -65,6 +69,8 @@ public:
     void* createDielectric(float reflectation_index);
 
     sphere* createSphere(const vec3& center, float radius);
+    box* createBox(const vec3& min, const vec3& max);
+    cylinder* createCylinder(const vec3& center, float radius, float height);
 };
 
 #endif

@@ -83,7 +83,7 @@ private:
     __device__ ray get_ray(int index_i, int index_j, float offset_x, float offset_y) const;
 public:
     float aspect_ratio = 16.0f / 9.0f;
-    int image_width = 800;
+    int image_width = 400;
     int samples_per_pixel = 100;
     float vfov = 80.0f;
     vec3 lookfrom = vec3(0, 2, 1);
@@ -95,7 +95,7 @@ public:
     __host__  camera(GPU_world* d_world);
     //! @brief Destruktor klasy camera
     //! @details zwalnia pamiec GPU, ktora byla zaalokowana dla obiektow klas, oraz listy obiektow w kernelu create_world.
-    __host__  ~camera();
+    __host__  ~camera() {};
 
     //! @brief Funkcja renderujaca, zwracajaca wynikowy obraz.
     //! @details Funkcja kopiuje obliczona w kernelu "render_framebuffer" tablice d_fb na CPU, iteruje po niej oraz wypisuje

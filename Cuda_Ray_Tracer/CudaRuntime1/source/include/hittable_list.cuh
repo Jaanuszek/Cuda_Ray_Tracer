@@ -13,6 +13,8 @@
 //! @details Klasa hittable_list jest lista obiektow, ktore moga byc trafione przez promien.
 //! Przechowuje tablice wskaznikow na obiekty w niej zawarte oraz przeciazona funkcje hit.
 //! Klasa dziedziczy po hittable.
+//! 
+// !!!!!!!!!!!!!! KLASA ZASTAPIONA PRZEZ GPU_WORLD.CUH!!!!!!!!!!!!!!!!!!!!1
 class hittable_list : public hittable
 {
 public:

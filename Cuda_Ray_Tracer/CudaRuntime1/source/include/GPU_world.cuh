@@ -14,7 +14,6 @@ public:
     GenericType* device_scene_ptr;
     size_t scene_size;
     __host__ GPU_world(GenericType* d_scene, size_t sceneSize) : device_scene_ptr(d_scene), scene_size(sceneSize) {}
-    //__device__ material* checkMatType(GenericType* obj);
     __device__ bool castTypeHit(GenericType* obj, const ray& r, interval ray_t, hit_record& rec);
     __device__ bool hit(const ray& r, interval ray_t, hit_record& rec);
 };

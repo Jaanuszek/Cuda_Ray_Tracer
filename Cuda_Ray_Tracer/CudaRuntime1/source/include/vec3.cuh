@@ -115,7 +115,7 @@ __host__ __device__ inline vec3 unit_vector(vec3 v) {
 
 __host__ inline float random_float()
 {
-    static std::uniform_real_distribution<double> distribution(0.0, 1.0);
+    static std::uniform_real_distribution<float> distribution(0.0, 1.0);
     static std::mt19937 generator;
     return distribution(generator);
 }

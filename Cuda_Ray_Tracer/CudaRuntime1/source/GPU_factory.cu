@@ -2,7 +2,6 @@
 
 GPU_factory::~GPU_factory()
 {
-    //std::cout << "Destructor GPU_factory\n";
     for (auto ptr : GPU_allocations)
     {
         checkCudaErrors(cudaFree(ptr));

@@ -31,7 +31,6 @@ public:
     //! Jezeli promien trafi w obiekt, ustawia informacje o trafieniu w obiekcie (hit_record& rec).
     //! Zwraca true, jezeli promien trafi w obiekt, false w przeciwnym razie.
     __device__ bool hit(const ray& r, interval ray_t, hit_record& rec, void* mat, MaterialType mat_type);
-    __device__ void tempFunc();
 };
 
 #endif

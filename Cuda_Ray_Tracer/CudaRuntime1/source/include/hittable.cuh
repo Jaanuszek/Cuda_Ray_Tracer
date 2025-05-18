@@ -33,23 +33,6 @@ public:
         front_face = dot(r.get_direction(), outward_normal) < 0.0f;
         normal = front_face ? outward_normal : -outward_normal;
     }
-
-    //__device__ bool choseScatter(const ray& r_in, const hit_record& rec, vec3& attenuation, ray& scattered,
-    //    curandState* r_state)
-    //{
-    //    switch (mat_type)
-    //    {
-    //    case (MaterialType::Lambertian):
-    //        return ((lambertian*)mat_ptr)->scatter(r_in, rec, attenuation ,scattered, r_state);
-    //    case (MaterialType::Metal):
-    //        return ((metal*)mat_ptr)->scatter(r_in, rec, attenuation, scattered, r_state);
-    //    case (MaterialType::Dielectric):
-    //        return ((dielectric*)mat_ptr)->scatter(r_in, rec, attenuation, scattered, r_state);
-
-    //    default:
-    //        return false;
-    //    }
-    //}
 };
 
 //! @brief Klasa bazowa dla wszystkich obiektow, ktore moga byc trafione przez promien

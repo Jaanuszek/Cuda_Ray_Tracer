@@ -19,8 +19,6 @@ class camera;
 struct render_params
 {
     curandState* d_rand_state;
-    hittable** d_list;
-    hittable** d_world;
     vec3* d_fb;
     camera** d_camera;
 };

@@ -9,6 +9,7 @@
 #include "sphere.cuh"
 #include "box.cuh"
 #include "cylinder.cuh"
+#include "cone.cuh"
 
 enum class ObjectType
 {
@@ -36,6 +37,7 @@ struct GenericType
 class sphere;
 class box;
 class cylinder;
+class cone;
 
 class GPU_factory
 {
@@ -71,6 +73,7 @@ public:
     sphere* createSphere(const vec3& center, float radius);
     box* createBox(const vec3& min, const vec3& max);
     cylinder* createCylinder(const vec3& center, float radius, float height);
+    cone* createCone(const vec3& center, float radius, float height);
 };
 
 #endif

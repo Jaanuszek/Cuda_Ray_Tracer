@@ -13,6 +13,9 @@ __device__ bool GPU_world::castTypeHit(GenericType* obj, const ray& r, interval 
     case (ObjectType::Cylinder):
         cylinder* c = (cylinder*)obj->object_ptr;
         return c->hit(r, ray_t, rec, obj->mat_ptr, obj->mat_type);
+    case (ObjectType::Cone):
+        cone* con = (cone*)obj->object_ptr;
+        return con->hit(r, ray_t, rec, obj->mat_ptr, obj->mat_type);
     default:
         return false;
     }

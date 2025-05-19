@@ -92,6 +92,15 @@ int main()
             d_mat_ptr9
         }
     );
+    void* d_mat_ptr10 = gpu_factory.createMetal(vec3(1.0f, 0.0f, 0.0f), 0.0f);
+    GPU_scene.push_back(
+        {
+            ObjectType::Cone,
+            (void*)gpu_factory.createCone(vec3(2.0f, 0.5f, -1.5f), 0.5f, 1.5f),
+            MaterialType::Metal,
+            d_mat_ptr10
+        }
+    );
 
     size_t sceneSize = GPU_scene.size();
     GenericType* d_obj = gpu_factory.uploadArrayToGPU(GPU_scene.data(), sceneSize);

@@ -50,3 +50,9 @@ cylinder* GPU_factory::createCylinder(const vec3& center, float radius, float he
     cylinder* device_sphere_ptr = uploadToGPU(host_sphere);
     return device_sphere_ptr;
 }
+cone* GPU_factory::createCone(const vec3& center, float radius, float height)
+{
+    cone host_sphere = cone(center, radius, height);
+    cone* device_sphere_ptr = uploadToGPU(host_sphere);
+    return device_sphere_ptr;
+}

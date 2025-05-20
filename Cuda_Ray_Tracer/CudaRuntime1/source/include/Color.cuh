@@ -18,10 +18,10 @@ using color = vec3;
 //! @param linear_component Sk³adowa koloru w formacie RGB (linear).
 __host__ inline float linear_to_gamma(float linear_component)
 {
-	if (linear_component > 0.0f)
-		return std::sqrt(linear_component);
-	
-	return 0;
+    if (linear_component > 0.0f)
+        return std::sqrt(linear_component);
+    
+    return 0;
 }
 
 //! @brief G³ówna funkcja do zapisu koloru
@@ -31,16 +31,16 @@ __host__ inline float linear_to_gamma(float linear_component)
 //! @param pixel_color Kolor, który ma zostaæ zapisany.
 __host__ inline void write_color(std::ostream& out, const color& pixel_color)
 {
-	float r = linear_to_gamma(pixel_color.x());
-	float g = linear_to_gamma(pixel_color.y());
-	float b = linear_to_gamma(pixel_color.z());
-	
+    float r = linear_to_gamma(pixel_color.x());
+    float g = linear_to_gamma(pixel_color.y());
+    float b = linear_to_gamma(pixel_color.z());
+    
     static const interval intensity(0.0f, 0.999f);
-	int rbyte = int(256 * intensity.clamp(r));
-	int gbyte = int(256 * intensity.clamp(g));
-	int bbyte = int(256 * intensity.clamp(b));
+    int rbyte = int(256 * intensity.clamp(r));
+    int gbyte = int(256 * intensity.clamp(g));
+    int bbyte = int(256 * intensity.clamp(b));
 
-	out << rbyte << ' ' << gbyte << ' ' << bbyte << '\n';
+    out << rbyte << ' ' << gbyte << ' ' << bbyte << '\n';
 }
 
 #endif

@@ -145,7 +145,6 @@ void camera::render() // moze to world powinno sie tworzyc poza klasa ( w mainie
     render_params* h_render_params = gpu_vars.getRenderParams();
     // uzyc check_ptr_type w jakis madry sposob o tu
     vec3* d_fb = h_render_params->d_fb;
-    //hittable** d_world = h_render_params->d_world;
     curandState* d_rand_state = h_render_params->d_rand_state;
 
     renderKernelFunctions::render_framebuffer << <gridSize, blockSize >> > (d_fb, d_scene, camParams, d_rand_state);

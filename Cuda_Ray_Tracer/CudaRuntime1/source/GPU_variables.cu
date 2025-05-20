@@ -12,8 +12,6 @@ GPU_variables::GPU_variables(int width, int height, int objCount)
 
     // alokacja wskaznikow w tymczasowej strukturze
     checkCudaErrors(cudaMalloc((void**)&h_render_params->d_rand_state, sizeof(curandState) * picSize));
-    checkCudaErrors(cudaMalloc((void**)&h_render_params->d_list, sizeof(hittable*) * objCount));
-    checkCudaErrors(cudaMalloc((void**)&h_render_params->d_world, sizeof(hittable*)));
     checkCudaErrors(cudaMalloc((void**)&h_render_params->d_fb, sizeof(vec3) * picSize));
     checkCudaErrors(cudaMalloc((void**)&h_render_params->d_camera, sizeof(camera*)));
 }
@@ -23,10 +21,6 @@ GPU_variables::~GPU_variables()
     if (h_render_params) {
         checkCudaErrors(cudaFree(h_render_params->d_rand_state));
         h_render_params->d_rand_state = nullptr;
-        checkCudaErrors(cudaFree(h_render_params->d_list));
-        h_render_params->d_list = nullptr;
-        checkCudaErrors(cudaFree(h_render_params->d_world));
-        h_render_params->d_world = nullptr;
         checkCudaErrors(cudaFree(h_render_params->d_fb));
         h_render_params->d_fb = nullptr;
         checkCudaErrors(cudaFree(h_render_params->d_camera));

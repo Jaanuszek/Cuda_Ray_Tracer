@@ -7,7 +7,7 @@
 //! @brief Definicja klasy dielectric (material dielektryczny)
 
 //! @brief Klasa dielectric dziedziczy po klasie material. Przechowuje informacje o wspolczynniku za³amania (refraction index) materialu.
-class dielectric : public material {
+class dielectric {
 private:
     float ref_idx;
 
@@ -22,13 +22,13 @@ private:
     }
 public:
     //! @brief Konstruktor klasy dielectric, przyjmujaca wspolczynnik za³amania (refraction index).
-    __device__ dielectric(float ri) : ref_idx(ri) {}
+    __device__ __host__ dielectric(float ri) : ref_idx(ri) {}
     //! @brief Przeciazona funkcja scatter, ktora oblicza oraz odbija promien.
     //! @details Oblicza refrakcje swiatla w zaleznosci od osrodka w ktorym sie znajduje promien oraz z jakim materialem ma do czynienia (ref_idx).
     //! Jezeli wynik zalamania jest wiekszy niz 1 (nie moze byc bo sinus nie moze byc > 1), to wtedy promien jest odbijany (refLECT!).
     //! Jezeli nie, to promien jest za³amywany (refRACT!).
     __device__ bool scatter(const ray& r_in, const hit_record& rec, vec3& attenuation, ray& scattered, curandState* r_state)
-        const override {
+        const {
         attenuation = vec3(1.0f, 1.0f, 1.0f);
         // jezeli trafiamy w zewnêtrzn¹ powierzchnie, to promien przechodzi z powietrza do szk³a 1.0/ref_idx
         // jezeli w wewnêtrzn¹, to promien przechodzi ze szk³a do powietrza ref_idx
@@ -54,6 +54,11 @@ public:
 
         scattered = ray(rec.p, direction);
         return true;
+    }
+
+    __device__ __host__ bool host_device_scatter(const ray& r_in, const hit_record& rec, vec3& attenuation, ray& scattered, curandState* r_state)
+        const {
+        return false;
     }
 };
 

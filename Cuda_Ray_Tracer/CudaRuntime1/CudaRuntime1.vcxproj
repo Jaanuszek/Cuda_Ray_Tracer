@@ -83,23 +83,35 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <CudaCompile Include="main.cu" />
+    <CudaCompile Include="source\box.cu" />
     <CudaCompile Include="source\camera.cu" />
+    <CudaCompile Include="source\cone.cu" />
+    <CudaCompile Include="source\cylinder.cu" />
+    <CudaCompile Include="source\GPU_factory.cu" />
     <CudaCompile Include="source\GPU_variables.cu" />
+    <CudaCompile Include="source\GPU_world.cu" />
     <CudaCompile Include="source\hittable_list.cu" />
     <CudaCompile Include="source\interval.cu" />
     <CudaCompile Include="source\sphere.cu" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\include\box.cuh" />
     <ClInclude Include="source\include\camera.cuh" />
     <ClInclude Include="source\include\Color.cuh" />
+    <ClInclude Include="source\include\cone.cuh" />
+    <ClInclude Include="source\include\cylinder.cuh" />
     <ClInclude Include="source\include\dielectric.cuh" />
     <ClInclude Include="source\include\general_includes.cuh" />
+    <ClInclude Include="source\include\GPU_factory.cuh" />
     <ClInclude Include="source\include\GPU_variables.cuh" />
+    <ClInclude Include="source\include\GPU_world.cuh" />
     <ClInclude Include="source\include\hittable.cuh" />
     <ClInclude Include="source\include\hittable_list.cuh" />
     <ClInclude Include="source\include\interval.cuh" />
+    <ClInclude Include="source\include\json.hpp" />
     <ClInclude Include="source\include\lambertian.cuh" />
     <ClInclude Include="source\include\material.cuh" />
+    <ClInclude Include="source\include\MaterialDispatch.cuh" />
     <ClInclude Include="source\include\metal.cuh" />
     <ClInclude Include="source\include\ray.cuh" />
     <ClInclude Include="source\include\sphere.cuh" />

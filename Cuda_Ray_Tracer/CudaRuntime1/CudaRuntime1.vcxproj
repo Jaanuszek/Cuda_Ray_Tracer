@@ -108,6 +108,7 @@
     <ClInclude Include="source\include\hittable.cuh" />
     <ClInclude Include="source\include\hittable_list.cuh" />
     <ClInclude Include="source\include\interval.cuh" />
+    <ClInclude Include="source\include\json.hpp" />
     <ClInclude Include="source\include\lambertian.cuh" />
     <ClInclude Include="source\include\material.cuh" />
     <ClInclude Include="source\include\MaterialDispatch.cuh" />

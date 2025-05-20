@@ -15,9 +15,11 @@
 #include "source/include/metal.cuh"
 #include "source/include/GPU_factory.cuh"
 #include "source/include/GPU_world.cuh"
+#include "source/include/json.hpp"
 
 int main()
 {
+    nlohmann::json j;
     std::vector<GenericType> GPU_scene;
     GPU_factory gpu_factory;
 

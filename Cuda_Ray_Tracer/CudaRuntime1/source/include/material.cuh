@@ -1,8 +1,8 @@
 #ifndef MATERIAL_CUH
 #define MATERIAL_CUH
 
-#include "hittable.cuh"
-#include "ray.cuh"
+//#include "hittable.cuh"
+//#include "ray.cuh"
 
 //! @file material.cuh
 //! @brief Definicja klasy material oraz funkcji scatter

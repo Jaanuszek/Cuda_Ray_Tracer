@@ -117,7 +117,7 @@ __device__ ray camera::get_ray(int index_i, int index_j, float offset_x, float o
     return ray(cameraCenter, ray_direction);
 }
 
-camera::camera(GPU_world* d_world) : d_scene(d_world)
+camera::camera(camera_essentials cam_params, GPU_world* d_world) : d_scene(d_world)
 {
     Init();
     GPU_variables::init(image_width, image_height, 5 + 10 * 10);

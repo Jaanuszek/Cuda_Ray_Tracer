@@ -13,6 +13,7 @@
 
 enum class ObjectType
 {
+    NONE,
     Sphere,
     Cube,
     Cone,
@@ -21,6 +22,7 @@ enum class ObjectType
 
 enum class MaterialType
 {
+    NONE,
     Lambertian,
     Metal,
     Dielectric

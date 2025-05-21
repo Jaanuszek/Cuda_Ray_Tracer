@@ -16,6 +16,7 @@
 #include "source/include/GPU_factory.cuh"
 #include "source/include/GPU_world.cuh"
 #include "source/include/json.hpp"
+#include "source/include/JsonParser.cuh"
 
 int main()
 {
@@ -110,6 +111,25 @@ int main()
     GPU_world h_scene(d_obj, sceneSize);
     GPU_world* d_scene = gpu_factory.uploadToGPU(h_scene);
 
-    camera cam(d_scene);
-    cam.render();
+    std::string pathToJsonConfig = "JSON_config/cuda_ray_tracer_JSON.json";
+
+    JsonParser parser(pathToJsonConfig, GPU_scene);
+    std::vector<ShapeWrapper> test = parser.getShapesVector();
+
+    for (const auto& i : test)
+    {
+        if (i.obj_type == ObjectType::Sphere)
+        {
+            const auto& s = cuda::std::get<jsonParserStructs::Sphere>(i.obj_data);
+            std::cout << s.center.x() << " " << s.center.y() << " " << s.center.z() << std::endl;
+        }
+        if (i.mat_type == MaterialType::Metal)
+        {
+            const auto& m = cuda::std::get<jsonParserStructs::MetalValues>(i.mat_data);
+            std::cout << m.fuzz << std::endl;
+        }
+    }
+
+    //camera cam(d_scene);
+    //cam.render();
 }

@@ -1,0 +1,89 @@
+{
+  "image" : {
+    "image_width" : 400,
+    "samples_per_pixels" : 100
+  },
+  "camera" : {
+    "fov" : 120.0,
+    "camera_pos" : [0.0, 2.0, 2.0],
+    "look_at" : [0.0, 0.0, -2.0],
+    "vector_up" : [0.0, 1.0, 0.0]
+  },
+  "objects" : [
+    {
+      "material" : {
+        "type" : "Lambertian",
+        "Albedo" : [0.5, 0.5, 0.5]
+      },
+      "object_type" : 
+      {
+        "type" : "Sphere",
+        "center" : [0.0, -1000.0, 0.0],
+        "radius" : 0.5
+      }
+    },
+    {
+      "material" : {
+        "type" : "Dielectric",
+        "reflaction_index" : 1.5
+      },
+      "object_type" : 
+      {
+        "type" : "Sphere",
+        "center" : [-1.0, 0.5, -1.0],
+        "radius" : 0.5
+      }
+    },
+    {
+      "material" : {
+        "type" : "Metal",
+        "Albedo" : [0.8, 0.6, 0.2],
+        "fuzz" : 0.0
+      },
+      "object_type" : 
+      {
+        "type" : "Sphere",
+        "center" : [1.0, 0.5, -1.0],
+        "radius" : 0.5
+      }
+    },
+    {
+      "material" : {
+        "type" : "Lambertian",
+        "Albedo" : [0.7, 0.3, 0.3]
+      },
+      "object_type" : 
+      {
+        "type" : "Cube",
+        "min_vertex" : [-3.0, 0.5, 0.0],
+        "max_vertex" : [-2.0, 1.5, -1.0]
+      }
+    },
+    {
+      "material" : {
+        "type" : "Lambertian",
+        "Albedo" : [0.7, 0.3, 0.3]
+      },
+      "object_type" : 
+      {
+        "type" : "Cylinder",
+        "center" : [0.0, 1.0, -3.2],
+        "radius" : 1.0,
+        "height" : 2.0
+      }
+    },
+    {
+      "material" : {
+        "type" : "Lambertian",
+        "Albedo" : [1.0, 0.0, 0.0]
+      },
+      "object_type" : 
+      {
+        "type" : "Cone",
+        "center" : [2.0, 0.5, -1.5],
+        "radius" : 0.5,
+        "height" : 1.5
+      }
+    }
+  ]
+}

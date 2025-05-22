@@ -20,116 +20,29 @@
 
 int main()
 {
-    nlohmann::json j;
-    std::vector<GenericType> GPU_scene;
+    std::string JsonFilePath = __FILE__;
+    JsonFilePath = JsonFilePath.substr(0, JsonFilePath.find_last_of("/\\"));
+    JsonFilePath = JsonFilePath + "\\JSON_config\\cuda_ray_tracer_JSON.json";
+
+    JsonParser parser(JsonFilePath);
+    ParsedData parsed_data = parser.getParsedData();
+    std::vector<ShapeWrapper> test = parsed_data.shapesVector;
+
+    camera_essentials cam_params;
+    cam_params.image_width = parsed_data.img_params.image_width;
+    cam_params.samples_per_pixels = parsed_data.img_params.samples_per_pixel;
+    cam_params.fov = parsed_data.cam_params.fov;
+    cam_params.camera_pos = parsed_data.cam_params.camera_pos;
+    cam_params.look_at = parsed_data.cam_params.look_at;
+    cam_params.up = parsed_data.cam_params.vector_up;
+
     GPU_factory gpu_factory;
-
-    void *d_mat_ptr = gpu_factory.createLambertian(vec3(0.5f, 0.5f, 0.5f));
-    GPU_scene.push_back(
-        { ObjectType::Sphere,
-            (void*)gpu_factory.createSphere(point3(0.0f, -1000.0f, 0.0f), 1000.0f),
-            MaterialType::Lambertian,
-            d_mat_ptr
-        }
-    );
-    void* d_mat_ptr2 = gpu_factory.createLambertian(vec3(0.1f, 0.2f, 0.5f));
-    GPU_scene.push_back(
-        {
-            ObjectType::Sphere,
-            (void*)gpu_factory.createSphere(point3(0.0f, 0.5f, -1.2f), 0.5f),
-            MaterialType::Lambertian,
-            d_mat_ptr2
-        }
-    );
-    void* d_mat_ptr4 = gpu_factory.createDielectric(1.50f);
-    GPU_scene.push_back(
-        {
-            ObjectType::Sphere,
-            (void*)gpu_factory.createSphere(point3(-1.0f, 0.5f, -1.0f), 0.5f),
-            MaterialType::Dielectric,
-            d_mat_ptr4
-        }
-    );
-    void* d_mat_ptr5 = gpu_factory.createDielectric(1.00f / 1.50f);
-    GPU_scene.push_back(
-        {
-            ObjectType::Sphere,
-            (void*)gpu_factory.createSphere(point3(-1.0f, 0.4f, -1.0f), 0.4f),
-            MaterialType::Dielectric,
-            d_mat_ptr5
-        }
-    );
-    void* d_mat_ptr6 = gpu_factory.createMetal(vec3(0.8f, 0.6f, 0.2f), 0.0f);
-    GPU_scene.push_back(
-        {
-            ObjectType::Sphere,
-            (void*)gpu_factory.createSphere(point3(1.0f, 0.5f, -1.0f), 0.5f),
-            MaterialType::Metal,
-            d_mat_ptr6
-        }
-    );
-    void* d_mat_ptr7 = gpu_factory.createMetal(vec3(0.8f, 0.6f, 0.2f), 0.0f);
-    GPU_scene.push_back(
-        {
-            ObjectType::Cube,
-            (void*)gpu_factory.createBox(vec3(2.0f, 0.5f, 0.0f), vec3(3.0f, 1.5f, -1.0f)),
-            MaterialType::Metal,
-            d_mat_ptr7
-        }
-    ); 
-    void* d_mat_ptr8 = gpu_factory.createLambertian(vec3(0.7f, 0.3f, 0.3f));
-    GPU_scene.push_back(
-        {
-            ObjectType::Cube,
-            (void*)gpu_factory.createBox(vec3(-3.0f, 0.5f, 0.0f), vec3(-2.0f, 1.5f, -1.0f)),
-            MaterialType::Lambertian,
-            d_mat_ptr8
-        }
-    );
-    void* d_mat_ptr9 = gpu_factory.createMetal(vec3(0.7f, 0.3f, 0.3f), 0.2f);
-    GPU_scene.push_back(
-        {
-            ObjectType::Cylinder,
-            (void*)gpu_factory.createCylinder(vec3(0.0f, 1.0f, -3.2f), 1.0f, 2.0f),
-            MaterialType::Metal,
-            d_mat_ptr9
-        }
-    );
-    void* d_mat_ptr10 = gpu_factory.createMetal(vec3(1.0f, 0.0f, 0.0f), 0.0f);
-    GPU_scene.push_back(
-        {
-            ObjectType::Cone,
-            (void*)gpu_factory.createCone(vec3(2.0f, 0.5f, -1.5f), 0.5f, 1.5f),
-            MaterialType::Metal,
-            d_mat_ptr10
-        }
-    );
-
-    size_t sceneSize = GPU_scene.size();
-    GenericType* d_obj = gpu_factory.uploadArrayToGPU(GPU_scene.data(), sceneSize);
-
-    GPU_world h_scene(d_obj, sceneSize);
+    gpu_factory.CreateAndGetScene(parsed_data.shapesVector);
+    std::vector<GenericType> gpu_scene = gpu_factory.getGpuScene();
+    GenericType* d_obj = gpu_factory.uploadArrayToGPU(gpu_scene.data(), gpu_scene.size());
+    GPU_world h_scene(d_obj, gpu_scene.size());
     GPU_world* d_scene = gpu_factory.uploadToGPU(h_scene);
 
-    std::string pathToJsonConfig = "JSON_config/cuda_ray_tracer_JSON.json";
-
-    JsonParser parser(pathToJsonConfig, GPU_scene);
-    std::vector<ShapeWrapper> test = parser.getShapesVector();
-
-    for (const auto& i : test)
-    {
-        if (i.obj_type == ObjectType::Sphere)
-        {
-            const auto& s = cuda::std::get<jsonParserStructs::Sphere>(i.obj_data);
-            std::cout << s.center.x() << " " << s.center.y() << " " << s.center.z() << std::endl;
-        }
-        if (i.mat_type == MaterialType::Metal)
-        {
-            const auto& m = cuda::std::get<jsonParserStructs::MetalValues>(i.mat_data);
-            std::cout << m.fuzz << std::endl;
-        }
-    }
-
-    //camera cam(d_scene);
-    //cam.render();
+    camera cam(cam_params, d_scene);
+    cam.render();
 }

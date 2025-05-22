@@ -10,23 +10,8 @@
 #include "box.cuh"
 #include "cylinder.cuh"
 #include "cone.cuh"
-
-enum class ObjectType
-{
-    NONE,
-    Sphere,
-    Cube,
-    Cone,
-    Cylinder
-};
-
-enum class MaterialType
-{
-    NONE,
-    Lambertian,
-    Metal,
-    Dielectric
-};
+#include "general_includes.cuh"
+#include <type_traits>
 
 struct GenericType
 {
@@ -40,11 +25,13 @@ class sphere;
 class box;
 class cylinder;
 class cone;
+struct ShapeWrapper;
 
 class GPU_factory
 {
 private:
     std::vector<void*> GPU_allocations;
+    std::vector<GenericType> GPU_scene;
 public:
     ~GPU_factory();
 
@@ -76,6 +63,10 @@ public:
     box* createBox(const vec3& min, const vec3& max);
     cylinder* createCylinder(const vec3& center, float radius, float height);
     cone* createCone(const vec3& center, float radius, float height);
+
+    void CreateAndGetScene(const std::vector<ShapeWrapper>& shapeWrapper);
+    const std::vector<GenericType>& getGpuScene() { return GPU_scene; }
+    const size_t getSceneVecSize() const { return GPU_scene.size(); }
 };
 
 #endif

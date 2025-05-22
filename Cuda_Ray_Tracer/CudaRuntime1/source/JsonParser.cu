@@ -1,6 +1,6 @@
 #include "include/JsonParser.cuh"
 
-JsonParser::JsonParser(const std::string& pathToFile, std::vector<GenericType>& scene)
+JsonParser::JsonParser(const std::string& pathToFile)
 {
     try {
         std::ifstream jsonFile(pathToFile);
@@ -9,10 +9,7 @@ JsonParser::JsonParser(const std::string& pathToFile, std::vector<GenericType>& 
             std::cerr << "[JSONPARSER ERROR] Cannot open a file\n";
             return;
         }
-
         serializedJson = nlohmann::json::parse(jsonFile);
-
-        //std::cout << serializedJson << std::endl;
         parseJson();
     }
     catch (const nlohmann::json::parse_error& e)
@@ -21,7 +18,7 @@ JsonParser::JsonParser(const std::string& pathToFile, std::vector<GenericType>& 
     }
 }
 
-jsonParserStructs::LambertianValues JsonParser::getLambertianValues(nlohmann::json_abi_v3_12_0::json keyValue)
+jsonParserStructs::LambertianValues JsonParser::getLambertianValues(const nlohmann::json& keyValue)
 {
     jsonParserStructs::LambertianValues val;
     if (keyValue.contains("Albedo")) {
@@ -46,7 +43,7 @@ jsonParserStructs::LambertianValues JsonParser::getLambertianValues(nlohmann::js
     }
     return val;
 }
-jsonParserStructs::MetalValues JsonParser::getMetalValues(nlohmann::json_abi_v3_12_0::json keyValue)
+jsonParserStructs::MetalValues JsonParser::getMetalValues(const nlohmann::json& keyValue)
 {
     jsonParserStructs::MetalValues val;
     if (keyValue.contains("Albedo")) {
@@ -73,7 +70,7 @@ jsonParserStructs::MetalValues JsonParser::getMetalValues(nlohmann::json_abi_v3_
     }
     return val;
 }
-jsonParserStructs::DielectircValues JsonParser::getDielectircValues(nlohmann::json_abi_v3_12_0::json keyValue)
+jsonParserStructs::DielectircValues JsonParser::getDielectircValues(const nlohmann::json& keyValue)
 {
     jsonParserStructs::DielectircValues val;
     if (keyValue.contains("reflaction_index")) {
@@ -87,7 +84,7 @@ jsonParserStructs::DielectircValues JsonParser::getDielectircValues(nlohmann::js
     return val;
 }
 
-jsonParserStructs::Sphere JsonParser::getSphereValues(nlohmann::json_abi_v3_12_0::json keyValue)
+jsonParserStructs::Sphere JsonParser::getSphereValues(const nlohmann::json& keyValue)
 {
     jsonParserStructs::Sphere val;
     if (keyValue.contains("center"))
@@ -120,7 +117,7 @@ jsonParserStructs::Sphere JsonParser::getSphereValues(nlohmann::json_abi_v3_12_0
     }
     return val;
 }
-jsonParserStructs::Cube JsonParser::getCubeValues(nlohmann::json_abi_v3_12_0::json keyValue)
+jsonParserStructs::Cube JsonParser::getCubeValues(const nlohmann::json& keyValue)
 {
     jsonParserStructs::Cube val;
     if (keyValue.contains("min_vertex")) {
@@ -164,9 +161,9 @@ jsonParserStructs::Cube JsonParser::getCubeValues(nlohmann::json_abi_v3_12_0::js
     }
     return val;
 }
-jsonParserStructs::CylinderAndCone JsonParser::getCylinderAndConeValues(nlohmann::json_abi_v3_12_0::json keyValue)
+jsonParserStructs::Cylinder JsonParser::getCylinderValues(const nlohmann::json& keyValue)
 {
-    jsonParserStructs::CylinderAndCone val;
+    jsonParserStructs::Cylinder val;
     if (keyValue.contains("center"))
     {
         const auto& centerArray = keyValue["center"];
@@ -180,46 +177,122 @@ jsonParserStructs::CylinderAndCone JsonParser::getCylinderAndConeValues(nlohmann
         else
         {
             std::cerr << "Center must be an array of 3 floats\n";
-            return jsonParserStructs::CylinderAndCone{};
+            return jsonParserStructs::Cylinder{};
         }
     }
     else {
-        std::cerr << "missing center in either cylinder or cone\n";
-        return jsonParserStructs::CylinderAndCone{};
+        std::cerr << "missing center in cylinder\n";
+        return jsonParserStructs::Cylinder{};
     }
     if (keyValue.contains("radius"))
     {
         val.radius = keyValue["radius"].get<float>();
     }
     else {
-        std::cerr << "Missing radius in either cylinder or cone\n";
-        return jsonParserStructs::CylinderAndCone{};
+        std::cerr << "Missing radius in cylinder\n";
+        return jsonParserStructs::Cylinder{};
     }
     if (keyValue.contains("height")) {
         val.height = keyValue["height"].get<float>();
     }
     else {
-        std::cerr << "Missing height in either cylinder or cone\n";
-        return jsonParserStructs::CylinderAndCone{};
+        std::cerr << "Missing height in cylinder \n";
+        return jsonParserStructs::Cylinder{};
+    }
+    return val;
+}
+
+jsonParserStructs::Cone JsonParser::getConeValues(const nlohmann::json& keyValue)
+{
+    jsonParserStructs::Cone val;
+    if (keyValue.contains("center"))
+    {
+        const auto& centerArray = keyValue["center"];
+        if (centerArray.is_array() && centerArray.size() == 3)
+        {
+            float x = centerArray[0].get<float>();
+            float y = centerArray[1].get<float>();
+            float z = centerArray[2].get<float>();
+            val.center = vec3(x, y, z);
+        }
+        else
+        {
+            std::cerr << "Center must be an array of 3 floats\n";
+            return jsonParserStructs::Cone{};
+        }
+    }
+    else {
+        std::cerr << "missing center in cone\n";
+        return jsonParserStructs::Cone{};
+    }
+    if (keyValue.contains("radius"))
+    {
+        val.radius = keyValue["radius"].get<float>();
+    }
+    else {
+        std::cerr << "Missing radius in cone\n";
+        return jsonParserStructs::Cone{};
+    }
+    if (keyValue.contains("height")) {
+        val.height = keyValue["height"].get<float>();
+    }
+    else {
+        std::cerr << "Missing height in cone\n";
+        return jsonParserStructs::Cone{};
     }
     return val;
 }
 void JsonParser::parseJson()
 {
-
     if (serializedJson.contains("image"))
     {
+        jsonParserStructs::parsed_image_params img_par;
         const auto& image = serializedJson["image"];
-        std::cout << image << std::endl;
         if (image.contains("image_width") && image.contains("samples_per_pixels"))
         {
-            std::cout << image["image_width"].template get<int>() << std::endl;
-            std::cout << image["samples_per_pixels"].template get<int>() << std::endl;
+            img_par.image_width = image["image_width"].template get<int>();
+            img_par.samples_per_pixel = image["samples_per_pixels"].template get<int>();
         }
         else
         {
-            // Dodac tu jakies defaultowe wartosci
+            img_par.image_width = 400;
+            img_par.samples_per_pixel = 50;
         }
+        parsedData.img_params = img_par;
+    }
+    if (serializedJson.contains("camera"))
+    {
+        jsonParserStructs::parsed_camera_params cam_par;
+        const auto& camera = serializedJson["camera"];
+        if (camera.contains("fov"))
+        {
+            cam_par.fov = camera["fov"].get<float>();
+        }
+        if (camera.contains("camera_pos") && camera["camera_pos"].is_array() && camera["camera_pos"].size() == 3)
+        {
+            const auto& cam_pos = camera["camera_pos"];
+            float x = cam_pos[0].get<float>();
+            float y = cam_pos[1].get<float>();
+            float z = cam_pos[2].get<float>();
+            cam_par.camera_pos = vec3(x, y, z);
+        }
+        if (camera.contains("look_at") && camera["look_at"].is_array() && camera["look_at"].size() == 3)
+        {
+            const auto& lookAt = camera["look_at"];
+            float x = lookAt[0].get<float>();
+            float y = lookAt[1].get<float>();
+            float z = lookAt[2].get<float>();
+            cam_par.look_at = vec3(x, y, z);
+        }
+        if (camera.contains("vector_up") && camera["vector_up"].is_array() && camera["vector_up"].size() == 3)
+        {
+            const auto& vectorUp = camera["vector_up"];
+            float x = vectorUp[0].get<float>();
+            float y = vectorUp[1].get<float>();
+            float z = vectorUp[2].get<float>();
+            cam_par.vector_up = vec3(x, y, z);
+        }
+        parsedData.cam_params = cam_par;
     }
     if (serializedJson.contains("objects"))
     {
@@ -275,13 +348,13 @@ void JsonParser::parseJson()
                 }
                 else if (obj_type["type"] == "Cylinder")
                 {
-                    objType = ObjectType::Cone;
-                    objData = getCylinderAndConeValues(obj_type);
+                    objType = ObjectType::Cylinder;
+                    objData = getCylinderValues(obj_type);
                 }
                 else if (obj_type["type"] == "Cone")
                 {
-                    objType = ObjectType::Cylinder;
-                    objData = getCylinderAndConeValues(obj_type);
+                    objType = ObjectType::Cone;
+                    objData = getConeValues(obj_type);
                 }
                 else
                 {
@@ -290,7 +363,7 @@ void JsonParser::parseJson()
                 shape.obj_type = objType;
                 shape.obj_data = objData;
             }
-            shapesVector.push_back(shape);
+            parsedData.shapesVector.push_back(shape);
         }
     }
 }

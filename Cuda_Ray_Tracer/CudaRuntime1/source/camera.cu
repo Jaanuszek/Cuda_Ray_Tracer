@@ -119,6 +119,12 @@ __device__ ray camera::get_ray(int index_i, int index_j, float offset_x, float o
 
 camera::camera(camera_essentials cam_params, GPU_world* d_world) : d_scene(d_world)
 {
+    image_width = cam_params.image_width;
+    samples_per_pixel = cam_params.samples_per_pixels;
+    vfov = cam_params.fov;
+    lookfrom = cam_params.camera_pos;
+    lookat = cam_params.look_at;
+    vup = cam_params.up;
     Init();
     GPU_variables::init(image_width, image_height, 5 + 10 * 10);
     GPU_variables& gpu_vars = GPU_variables::getInstance();

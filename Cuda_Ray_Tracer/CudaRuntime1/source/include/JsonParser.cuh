@@ -3,87 +3,35 @@
 
 #include <vector>
 #include <fstream>
-#include <cuda/std/variant>
+#include <windows.h>
 #include "json.hpp"
 #include "GPU_factory.cuh"
 
-namespace jsonParserStructs {
-    struct parsed_image_params
-    {
-        int image_width;
-        int samples_per_pixel;
-    };
-
-    struct parsed_camera_params
-    {
-        float fov;
-        vec3 camera_pos;
-        vec3 look_at;
-        vec3 vector_up;
-    };
-
-    struct LambertianValues
-    {
-        vec3 Albedo;
-    };
-
-    struct MetalValues
-    {
-        vec3 Albedo;
-        float fuzz;
-    };
-
-    struct DielectircValues
-    {
-        float reflaction_index;
-    };
-
-    struct Sphere
-    {
-        vec3 center;
-        float radius;
-    };
-
-    struct Cube
-    {
-        vec3 min_vertex;
-        vec3 max_vertex;
-    };
-
-    struct CylinderAndCone
-    {
-        vec3 center;
-        float radius;
-        float height;
-    };
-}
-
-using mat_data_variant = cuda::std::variant<jsonParserStructs::LambertianValues, jsonParserStructs::MetalValues, jsonParserStructs::DielectircValues>;
-using obj_data_variant = cuda::std::variant<jsonParserStructs::Sphere, jsonParserStructs::Cube, jsonParserStructs::CylinderAndCone>;
-
-struct ShapeWrapper
+struct ParsedData
 {
-    MaterialType mat_type;
-    mat_data_variant mat_data;
-    ObjectType obj_type;
-    obj_data_variant obj_data;
+    jsonParserStructs::parsed_image_params img_params;
+    jsonParserStructs::parsed_camera_params cam_params;
+    std::vector<ShapeWrapper> shapesVector;
 };
+
 
 class JsonParser
 {
 private:
     nlohmann::json serializedJson;
-    std::vector<ShapeWrapper> shapesVector;
-    jsonParserStructs::LambertianValues getLambertianValues(nlohmann::json_abi_v3_12_0::json keyValue);
-    jsonParserStructs::MetalValues getMetalValues(nlohmann::json_abi_v3_12_0::json keyValue);
-    jsonParserStructs::DielectircValues getDielectircValues(nlohmann::json_abi_v3_12_0::json keyValue);
-    jsonParserStructs::Sphere getSphereValues(nlohmann::json_abi_v3_12_0::json keyValue);
-    jsonParserStructs::Cube getCubeValues(nlohmann::json_abi_v3_12_0::json keyValue);
-    jsonParserStructs::CylinderAndCone getCylinderAndConeValues(nlohmann::json_abi_v3_12_0::json keyValue);
+    ParsedData parsedData;
+    jsonParserStructs::LambertianValues getLambertianValues(const nlohmann::json& keyValue);
+    jsonParserStructs::MetalValues getMetalValues(const nlohmann::json& keyValue);
+    jsonParserStructs::DielectircValues getDielectircValues(const nlohmann::json& keyValue);
+    jsonParserStructs::Sphere getSphereValues(const nlohmann::json& keyValue);
+    jsonParserStructs::Cube getCubeValues(const nlohmann::json& keyValue);
+    jsonParserStructs::Cylinder getCylinderValues(const nlohmann::json& keyValue);
+    jsonParserStructs::Cone getConeValues(const nlohmann::json& keyValue);
     void parseJson();
 public:
-    JsonParser(const std::string& pathToFile, std::vector<GenericType>& scene);
-    const std::vector<ShapeWrapper>& getShapesVector() { return shapesVector; }
+    JsonParser(const std::string& pathToFile);
+    const ParsedData& getParsedData() { return parsedData; }
+
 };
 
 #endif

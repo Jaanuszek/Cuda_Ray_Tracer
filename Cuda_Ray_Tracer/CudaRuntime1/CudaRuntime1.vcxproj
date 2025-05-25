@@ -13,6 +13,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{2FDF79BB-BA91-83A3-25DC-DFD2DA77134E}</ProjectGuid>
     <RootNamespace>CudaRuntime1</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
@@ -47,6 +48,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;WIN64;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -66,6 +68,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;WIN64;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -79,6 +82,7 @@
       <CodeGeneration>compute_75,sm_75</CodeGeneration>
       <Include>$(ProjectDir)source\include\</Include>
       <GenerateRelocatableDeviceCode>true</GenerateRelocatableDeviceCode>
+      <Warning>InheritFromHost</Warning>
     </CudaCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -92,6 +96,9 @@
     <CudaCompile Include="source\GPU_world.cu" />
     <CudaCompile Include="source\hittable_list.cu" />
     <CudaCompile Include="source\interval.cu" />
+    <CudaCompile Include="source\JsonParser.cu">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </CudaCompile>
     <CudaCompile Include="source\sphere.cu" />
   </ItemGroup>
   <ItemGroup>
@@ -109,6 +116,7 @@
     <ClInclude Include="source\include\hittable_list.cuh" />
     <ClInclude Include="source\include\interval.cuh" />
     <ClInclude Include="source\include\json.hpp" />
+    <CudaCompile Include="source\include\JsonParser.cuh" />
     <ClInclude Include="source\include\lambertian.cuh" />
     <ClInclude Include="source\include\material.cuh" />
     <ClInclude Include="source\include\MaterialDispatch.cuh" />
@@ -116,6 +124,9 @@
     <ClInclude Include="source\include\ray.cuh" />
     <ClInclude Include="source\include\sphere.cuh" />
     <ClInclude Include="source\include\vec3.cuh" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="JSON_config\cuda_ray_tracer_JSON.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

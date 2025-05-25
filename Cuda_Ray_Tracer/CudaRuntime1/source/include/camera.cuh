@@ -29,6 +29,16 @@ struct camera_params {
     int samples_per_pixel;
 };
 
+struct camera_essentials
+{
+    int image_width;
+    int samples_per_pixels;
+    float fov;
+    vec3 camera_pos;
+    vec3 look_at;
+    vec3 up;
+};
+
 class camera;
 
 //! @brief Przestrzen nazw zawierajaca funkcje kernelowe do renderowania
@@ -83,16 +93,16 @@ private:
     __device__ ray get_ray(int index_i, int index_j, float offset_x, float offset_y) const;
 public:
     float aspect_ratio = 16.0f / 9.0f;
-    int image_width = 400;
-    int samples_per_pixel = 100;
-    float vfov = 120.0f;
-    vec3 lookfrom = vec3(0, 2, 2);
-    vec3 lookat = vec3(0, 0, -2);
-    vec3 vup = vec3(0, 1, 0);
+    int image_width;
+    int samples_per_pixel;
+    float vfov;
+    vec3 lookfrom;
+    vec3 lookat;
+    vec3 vup;
 
     //! @brief Konstruktor klasy camera
     //! @details tworzy obiekt signletona oraz wywoluje kernele inicjalizujace: "create_world" oraz "init_rand_state"
-    __host__  camera(GPU_world* d_world);
+    __host__  camera(camera_essentials cam_params, GPU_world* d_world);
     //! @brief Destruktor klasy camera
     //! @details zwalnia pamiec GPU, ktora byla zaalokowana dla obiektow klas, oraz listy obiektow w kernelu create_world.
     __host__  ~camera() {};

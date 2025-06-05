@@ -11,6 +11,7 @@
 // // Where P(t) is ray position in time
 // A is origin
 // b is direction
+// 
 // I'll change that to P(t) = A * x + B
 // so A will be direction
 // and B will be origin

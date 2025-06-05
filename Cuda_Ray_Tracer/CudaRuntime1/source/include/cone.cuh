@@ -9,7 +9,6 @@
 
 class cone
 {
-
 public:
     const vec3 center;
     float radius;

@@ -8,8 +8,6 @@
 #include "ray.cuh"
 #include "hittable.cuh"
 #include "sphere.cuh"
-#include "hittable_list.cuh"
-#include "material.cuh"
 #include "GPU_world.cuh"
 
 //! @file camera.cuh
@@ -60,14 +58,6 @@ namespace renderKernelFunctions {
     //! ray_color. Kolor jest zapisywany w tablicy d_fb. Zastosowano dodatkowo petle, ktora wraz z generowaniem liczb losowych
     //! tworzy filtr antyliasingowy, dzieki ktoremu krawedzie obiektow sa interpolowane i wygladzane.
     __global__ void render_framebuffer(vec3* d_fb, GPU_world* d_world, camera_params camParams, curandState* rand_state);
-    ////! @brief Funkcja tworzy zmienne przechowywane na GPU
-    ////! @details Funkcja inicjalizuje obiekty klas, oraz liste obiektow (d_list) przechowywanych na scenie (d_world).
-    ////! Obiekty klas sa wykorzystywane na GPU, dlatego nalezalo zaalokowac ich pamiec na GPU. W tym miejscu, mozliwe jest 
-    ////! dodanie, ustawianie pozycji i materialow obiektow, ktore maja byc renderowane.
-    //__global__ void create_world(hittable** d_list, hittable** d_world, curandState* rand_state);
-    ////! @brief Funkcja czyszczaca pamiec GPU
-    ////! @details Funkcja zwalnia pamiec GPU, ktora byla zaalokowana dla obiektow klas, oraz listy obiektow w kernelu create_world.
-    //__global__ void clear_world(hittable** d_list, hittable** d_world);
 }
 
 //! @brief Klasa camera

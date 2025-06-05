@@ -2,7 +2,6 @@
 #define GPU_FACTORY_CUH
 
 #include <vector>
-#include "material.cuh"
 #include "lambertian.cuh"
 #include "metal.cuh"
 #include "dielectric.cuh"

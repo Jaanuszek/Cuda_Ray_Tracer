@@ -7,7 +7,6 @@
 #include "source/include/general_includes.cuh"
 #include <vector>
 #include "source/include/hittable.cuh"
-#include "source/include/hittable_list.cuh"
 #include "source/include/sphere.cuh"
 #include "source/include/camera.cuh"
 #include "source/include/GPU_variables.cuh"

@@ -2,7 +2,7 @@
 
 GPU_variables* GPU_variables::instance = nullptr;
 
-GPU_variables::GPU_variables(int width, int height, int objCount)
+GPU_variables::GPU_variables(int width, int height)
 {
     int picSize = width * height;
 
@@ -31,11 +31,11 @@ GPU_variables::~GPU_variables()
     instance = nullptr;
 }
 
-void GPU_variables::init(int width, int height, int objCount)
+void GPU_variables::init(int width, int height)
 {
     if (!instance)
     {
-        instance = new GPU_variables(width, height, objCount);
+        instance = new GPU_variables(width, height);
     }
 }
 

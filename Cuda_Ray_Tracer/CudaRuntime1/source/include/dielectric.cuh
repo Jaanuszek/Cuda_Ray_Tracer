@@ -1,8 +1,6 @@
 #ifndef DIELECTRIC_CUH
 #define DIELECTRIC_CUH
 
-#include "material.cuh"
-
 //! @file dielectric.cuh
 //! @brief Definicja klasy dielectric (material dielektryczny)
 
@@ -23,7 +21,7 @@ private:
 public:
     //! @brief Konstruktor klasy dielectric, przyjmujaca wspolczynnik za³amania (refraction index).
     __device__ __host__ dielectric(float ri) : ref_idx(ri) {}
-    //! @brief Przeciazona funkcja scatter, ktora oblicza oraz odbija promien.
+    //! @brief funkcja scatter, ktora oblicza oraz odbija promien.
     //! @details Oblicza refrakcje swiatla w zaleznosci od osrodka w ktorym sie znajduje promien oraz z jakim materialem ma do czynienia (ref_idx).
     //! Jezeli wynik zalamania jest wiekszy niz 1 (nie moze byc bo sinus nie moze byc > 1), to wtedy promien jest odbijany (refLECT!).
     //! Jezeli nie, to promien jest za³amywany (refRACT!).
@@ -54,11 +52,6 @@ public:
 
         scattered = ray(rec.p, direction);
         return true;
-    }
-
-    __device__ __host__ bool host_device_scatter(const ray& r_in, const hit_record& rec, vec3& attenuation, ray& scattered, curandState* r_state)
-        const {
-        return false;
     }
 };
 

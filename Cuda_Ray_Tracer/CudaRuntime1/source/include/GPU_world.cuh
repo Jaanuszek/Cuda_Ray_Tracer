@@ -3,13 +3,9 @@
 
 #include "GPU_factory.cuh"
 
-// Chcialbym tutaj wlasnie zaimplementowac parser JSON zeby za pomoca jsona tworzyc kolejne obiekty itp
-
 class GPU_world
 {
 private:
-    //GenericType* device_scene_ptr;
-    //size_t scene_size;
 public:
     GenericType* device_scene_ptr;
     size_t scene_size;

@@ -126,7 +126,7 @@ camera::camera(camera_essentials cam_params, GPU_world* d_world) : d_scene(d_wor
     lookat = cam_params.look_at;
     vup = cam_params.up;
     Init();
-    GPU_variables::init(image_width, image_height, 5 + 10 * 10);
+    GPU_variables::init(image_width, image_height);
     GPU_variables& gpu_vars = GPU_variables::getInstance();
     render_params* h_render_params = gpu_vars.getRenderParams();
 
@@ -153,7 +153,17 @@ void camera::render() // moze to world powinno sie tworzyc poza klasa ( w mainie
     vec3* d_fb = h_render_params->d_fb;
     curandState* d_rand_state = h_render_params->d_rand_state;
 
+    //cudaEvent_t start, stop;
+    //cudaEventCreate(&start);
+    //cudaEventCreate(&stop);
+    //cudaEventRecord(start, 0);
     renderKernelFunctions::render_framebuffer << <gridSize, blockSize >> > (d_fb, d_scene, camParams, d_rand_state);
+    //cudaEventRecord(stop, 0);
+    //float elapsedTime;
+    //cudaEventSynchronize(stop);
+    //cudaEventElapsedTime(&elapsedTime, start, stop);
+    //std::clog << "Execution time of main kernel: "<< elapsedTime << "ms, for image width: " << image_width << 
+    //    ", image_height: " << image_height << ", samples_per_pixel: " << samples_per_pixel << std::endl;
     checkCudaErrors(cudaGetLastError());
     checkCudaErrors(cudaDeviceSynchronize());
     checkCudaErrors(cudaMemcpy(fb.data(), d_fb, image_width * image_height * sizeof(vec3), cudaMemcpyDeviceToHost));

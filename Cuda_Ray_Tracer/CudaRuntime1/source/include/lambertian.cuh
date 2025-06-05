@@ -1,7 +1,6 @@
 #ifndef LAMBERTIAN_CUH
 #define LAMBERTIAN_CUH
 
-//#include "material.cuh"
 #include "hittable.cuh"
 
 //! @file lambertian.cuh
@@ -15,7 +14,7 @@ private:
     vec3 albedo; // "Whiteness"
 public:
     __host__ __device__ lambertian(const vec3& albedo) : albedo(albedo) {}
-    //! @brief Przeciazona funkcja sprawdzajaca czy promien trafia w obiekt
+    //! @brief funkcja sprawdzajaca czy promien trafia w obiekt
     //! @details Oblicza w sposob losowy kierunek rozproszenia promienia, bazujac na normalnej w punkcie trafienia.
     __device__ bool scatter(
         const ray& r_in, const hit_record& rec, 
@@ -31,27 +30,6 @@ public:
         scattered = ray(rec.p, scatter_direction);
         attenuation = albedo;
         return true;
-    }
-
-    __host__ __device__ bool host_device_scatter(
-        const ray& r_in, const hit_record& rec,
-        vec3& attenuation, ray& scattered,
-        curandState* r_state
-    ) const
-    {
-        vec3 scatter_direction = rec.normal + random_unit_vec();
-        if (scatter_direction.near_zero())
-        {
-            scatter_direction = rec.normal;
-        }
-        scattered = ray(rec.p, scatter_direction);
-        attenuation = albedo;
-        return true;
-    }
-
-    __device__ void tempFunc()
-    {
-        printf("lambertian\n");
     }
 };
 

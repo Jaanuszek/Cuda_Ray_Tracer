@@ -64,7 +64,6 @@ namespace renderKernelFunctions {
         {
             float x = curand_uniform(&local_rand_state) -0.5f;
             float y = curand_uniform(&local_rand_state) -0.5f;
-            // dla czytelnosci podmienic to z get_ray w przyszlosci
             vec3 viewPortPixelIndex = camParams.pixel00_loc + ((i + x) * camParams.pixel_delta_u) + ((j + y) * camParams.pixel_delta_v);
             vec3 ray_direction = viewPortPixelIndex - camParams.cameraCenter;
             ray r(camParams.cameraCenter, ray_direction);

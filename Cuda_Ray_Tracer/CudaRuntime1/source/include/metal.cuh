@@ -30,20 +30,6 @@ public:
         attenuation = albedo;
         return (dot(scattered.get_direction(), rec.normal) > 0);
     }
-
-    __host__ __device__ bool host_device_scatter(
-        const ray& r_in, const hit_record& rec,
-        vec3& attenuation, ray& scattered,
-        curandState* r_state
-    ) const
-    {
-        return false;
-    }
-
-    __host__ __device__ bool tempFunc()
-    {
-        return false;
-    }
 };
 
 #endif
